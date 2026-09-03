@@ -1,0 +1,512 @@
+// GameHub 3D Build Game
+// Original prototype - BuildNow-style gameplay
+
+const canvas = document.createElement("canvas");
+canvas.id = "gameCanvas";
+document.body.appendChild(canvas);
+
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+// =========================
+// PLAYER
+// =========================
+
+const player = {
+    x: 0,
+    y: 2,
+    z: 0,
+
+    vx: 0,
+    vy: 0,
+    vz: 0,
+
+    speed: 0.15,
+    sprintSpeed: 0.25,
+
+    health: 100,
+    shield: 100,
+
+    yaw: 0,
+    pitch: 0,
+
+    onGround: false
+};
+
+// =========================
+// WORLD
+// =========================
+
+const blocks = [];
+
+function createBlock(x, y, z, type = "wall") {
+    blocks.push({
+        x,
+        y,
+        z,
+        type,
+        health: 150
+    });
+}
+
+// Floor
+for (let x = -20; x <= 20; x++) {
+    for (let z = -20; z <= 20; z++) {
+        createBlock(x, -1, z, "floor");
+    }
+}
+
+// Practice structures
+for (let x = -5; x <= 5; x++) {
+    createBlock(x, 0, -8, "wall");
+}
+
+for (let z = -8; z <= 2; z++) {
+    createBlock(5, 0, z, "wall");
+}
+
+// =========================
+// BUILDING
+// =========================
+
+let buildMode = false;
+let selectedBuild = "wall";
+
+function placeBuild() {
+    const distance = 4;
+
+    const x =
+        Math.round(player.x + Math.sin(player.yaw) * distance);
+
+    const z =
+        Math.round(player.z + Math.cos(player.yaw) * distance);
+
+    createBlock(x, 0, z, selectedBuild);
+}
+
+function deleteBuild() {
+    if (blocks.length === 0) return;
+
+    blocks.pop();
+}
+
+// =========================
+// WEAPONS
+// =========================
+
+const weapons = [
+    {
+        name: "Rifle",
+        damage: 25,
+        fireRate: 250,
+        range: 100
+    },
+    {
+        name: "Shotgun",
+        damage: 70,
+        fireRate: 800,
+        range: 30
+    },
+    {
+        name: "SMG",
+        damage: 15,
+        fireRate: 100,
+        range: 60
+    }
+];
+
+let weapon = 0;
+let lastShot = 0;
+
+function shoot() {
+
+    const now = Date.now();
+
+    if (now - lastShot < weapons[weapon].fireRate) {
+        return;
+    }
+
+    lastShot = now;
+
+    console.log(
+        "SHOT:",
+        weapons[weapon].name
+    );
+
+    // This will later be connected to
+    // the multiplayer server.
+}
+
+// =========================
+// INPUT
+// =========================
+
+const keys = {};
+
+window.addEventListener("keydown", e => {
+
+    keys[e.key.toLowerCase()] = true;
+
+    if (e.key === "1") weapon = 0;
+    if (e.key === "2") weapon = 1;
+    if (e.key === "3") weapon = 2;
+
+    if (e.key.toLowerCase() === "q") {
+        buildMode = !buildMode;
+    }
+
+    if (e.key.toLowerCase() === "e") {
+        placeBuild();
+    }
+
+    if (e.key.toLowerCase() === "r") {
+        deleteBuild();
+    }
+
+    if (e.key.toLowerCase() === "z") {
+        selectedBuild = "wall";
+    }
+
+    if (e.key.toLowerCase() === "x") {
+        selectedBuild = "floor";
+    }
+
+    if (e.key.toLowerCase() === "c") {
+        selectedBuild = "ramp";
+    }
+});
+
+window.addEventListener("keyup", e => {
+    keys[e.key.toLowerCase()] = false;
+});
+
+window.addEventListener("mousedown", e => {
+
+    if (e.button === 0) {
+
+        if (buildMode) {
+            placeBuild();
+        } else {
+            shoot();
+        }
+    }
+});
+
+// =========================
+// MOUSE LOOK
+// =========================
+
+let mouseLocked = false;
+
+canvas.addEventListener("click", () => {
+
+    canvas.requestPointerLock();
+
+});
+
+document.addEventListener("mousemove", e => {
+
+    if (!mouseLocked) return;
+
+    player.yaw -= e.movementX * 0.002;
+    player.pitch -= e.movementY * 0.002;
+
+    player.pitch = Math.max(
+        -1.2,
+        Math.min(1.2, player.pitch)
+    );
+});
+
+document.addEventListener("pointerlockchange", () => {
+    mouseLocked =
+        document.pointerLockElement === canvas;
+});
+
+// =========================
+// MOVEMENT
+// =========================
+
+function updatePlayer() {
+
+    let speed = keys["shift"]
+        ? player.sprintSpeed
+        : player.speed;
+
+    let forward = 0;
+    let side = 0;
+
+    if (keys["w"]) forward++;
+    if (keys["s"]) forward--;
+
+    if (keys["a"]) side--;
+    if (keys["d"]) side++;
+
+    const sin = Math.sin(player.yaw);
+    const cos = Math.cos(player.yaw);
+
+    player.vx =
+        (sin * forward + cos * side) * speed;
+
+    player.vz =
+        (cos * forward - sin * side) * speed;
+
+    player.x += player.vx;
+    player.z += player.vz;
+
+    // Gravity
+
+    player.vy -= 0.01;
+
+    player.y += player.vy;
+
+    // Ground
+
+    if (player.y <= 2) {
+        player.y = 2;
+        player.vy = 0;
+        player.onGround = true;
+    }
+
+    // Jump
+
+    if (
+        keys[" "] &&
+        player.onGround
+    ) {
+        player.vy = 0.22;
+        player.onGround = false;
+    }
+}
+
+// =========================
+// SIMPLE 3D PROJECTION
+// =========================
+
+function project(x, y, z) {
+
+    const dx = x - player.x;
+    const dy = y - player.y;
+    const dz = z - player.z;
+
+    const sin = Math.sin(player.yaw);
+    const cos = Math.cos(player.yaw);
+
+    const cameraX =
+        dx * cos - dz * sin;
+
+    const cameraZ =
+        dx * sin + dz * cos;
+
+    if (cameraZ <= 0.1) {
+        return null;
+    }
+
+    const scale =
+        500 / cameraZ;
+
+    return {
+        x: canvas.width / 2 +
+            cameraX * scale,
+
+        y: canvas.height / 2 -
+            dy * scale,
+
+        scale
+    };
+}
+
+// =========================
+// DRAW BLOCK
+// =========================
+
+function drawBlock(block) {
+
+    const p = project(
+        block.x,
+        block.y,
+        block.z
+    );
+
+    if (!p) return;
+
+    const size =
+        Math.max(5, p.scale);
+
+    ctx.strokeStyle = "#111";
+    ctx.lineWidth = 2;
+
+    if (block.type === "floor") {
+        ctx.fillStyle = "#777";
+    } else if (block.type === "ramp") {
+        ctx.fillStyle = "#aa7733";
+    } else {
+        ctx.fillStyle = "#5555aa";
+    }
+
+    ctx.fillRect(
+        p.x - size / 2,
+        p.y - size / 2,
+        size,
+        size
+    );
+
+    ctx.strokeRect(
+        p.x - size / 2,
+        p.y - size / 2,
+        size,
+        size
+    );
+}
+
+// =========================
+// HUD
+// =========================
+
+function drawHUD() {
+
+    ctx.fillStyle = "white";
+    ctx.font = "18px Arial";
+
+    ctx.fillText(
+        "Health: " + player.health,
+        20,
+        35
+    );
+
+    ctx.fillText(
+        "Shield: " + player.shield,
+        20,
+        60
+    );
+
+    ctx.fillText(
+        "Weapon: " +
+        weapons[weapon].name,
+        20,
+        85
+    );
+
+    ctx.fillText(
+        "Build: " +
+        (buildMode ? "ON" : "OFF"),
+        20,
+        110
+    );
+
+    ctx.fillText(
+        "WASD Move • SPACE Jump • SHIFT Sprint",
+        20,
+        canvas.height - 70
+    );
+
+    ctx.fillText(
+        "Q Build Mode • E Build • R Remove",
+        20,
+        canvas.height - 45
+    );
+
+    ctx.fillText(
+        "1 Rifle • 2 Shotgun • 3 SMG",
+        20,
+        canvas.height - 20
+    );
+
+    // Crosshair
+
+    ctx.strokeStyle = "white";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        canvas.width / 2 - 10,
+        canvas.height / 2
+    );
+
+    ctx.lineTo(
+        canvas.width / 2 + 10,
+        canvas.height / 2
+    );
+
+    ctx.moveTo(
+        canvas.width / 2,
+        canvas.height / 2 - 10
+    );
+
+    ctx.lineTo(
+        canvas.width / 2,
+        canvas.height / 2 + 10
+    );
+
+    ctx.stroke();
+}
+
+// =========================
+// GAME LOOP
+// =========================
+
+function gameLoop() {
+
+    updatePlayer();
+
+    ctx.fillStyle = "#20252b";
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // Sky
+
+    ctx.fillStyle = "#79b8e8";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height / 2
+    );
+
+    // Ground
+
+    ctx.fillStyle = "#4b6b3c";
+
+    ctx.fillRect(
+        0,
+        canvas.height / 2,
+        canvas.width,
+        canvas.height / 2
+    );
+
+    // Sort distant blocks first
+
+    blocks
+        .slice()
+        .sort((a, b) => {
+
+            const da =
+                (a.x - player.x) ** 2 +
+                (a.z - player.z) ** 2;
+
+            const db =
+                (b.x - player.x) ** 2 +
+                (b.z - player.z) ** 2;
+
+            return db - da;
+
+        })
+        .forEach(drawBlock);
+
+    drawHUD();
+
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
