@@ -4,39 +4,178 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GameHub</title>
+
 <style>
-:root{--bg:#eef3f8;--panel:rgba(255,255,255,.92);--text:#172033;--muted:#6c778b;--accent:#2563eb;--border:#dfe5ee}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,system-ui,sans-serif;background:radial-gradient(circle at 15% 10%,#2563eb18,transparent 30%),radial-gradient(circle at 85% 0%,#6366f118,transparent 25%),var(--bg);color:var(--text)}
-button,input,select{font:inherit}button{cursor:pointer}
-.topbar{height:70px;background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 25px;gap:20px;position:sticky;top:0;z-index:5}
-.logo{font-size:24px;font-weight:800}.search{flex:1;max-width:550px;margin:auto}.search input{width:100%;padding:13px 18px;border:1px solid var(--border);border-radius:12px;outline:none;background:white}
-.wrap{max-width:1250px;margin:auto;padding:30px 22px}.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:25px}
-.controls button,.controls select{border:1px solid var(--border);background:white;border-radius:10px;padding:10px 15px}
-.controls button.active{background:var(--accent);color:white}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:20px;min-height:210px;box-shadow:0 8px 25px #14233c0d;display:flex;flex-direction:column}
-.icon{height:85px;border-radius:15px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:14px}
-.name{font-size:19px;font-weight:750}.desc{font-size:13px;color:var(--muted);margin:7px 0 15px;line-height:1.4}.cat{font-size:12px;color:var(--muted);margin-bottom:auto}
-.play{margin-top:15px;width:100%;border:0;border-radius:10px;background:var(--accent);color:white;padding:11px;font-weight:bold}
-.empty{text-align:center;color:var(--muted);padding:60px}
-.player{position:fixed;inset:0;background:#05070b;z-index:20;display:none;flex-direction:column}
-.playerbar{height:55px;background:#111827;color:white;display:flex;align-items:center;padding:0 15px;gap:12px}
-.playerbar button{border:0;border-radius:8px;padding:8px 13px}.frame{flex:1;border:0;width:100%;background:white}
-@media(max-width:600px){.topbar{padding:0 12px}.logo{font-size:20px}.wrap{padding:20px 12px}.grid{grid-template-columns:repeat(2,1fr)}}
+:root{
+  --bg:#eef3f8;
+  --panel:rgba(255,255,255,.92);
+  --text:#172033;
+  --muted:#6c778b;
+  --accent:#2563eb;
+  --border:#dfe5ee
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,system-ui,sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%,#2563eb18,transparent 30%),
+    radial-gradient(circle at 85% 0%,#6366f118,transparent 25%),
+    var(--bg);
+  color:var(--text)
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+.topbar{
+  height:70px;
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  padding:0 25px;
+  gap:20px;
+  position:sticky;
+  top:0;
+  z-index:5
+}
+.logo{font-size:24px;font-weight:800}
+.search{flex:1;max-width:550px;margin:auto}
+.search input{
+  width:100%;
+  padding:13px 18px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  outline:none;
+  background:white
+}
+
+.wrap{max-width:1250px;margin:auto;padding:30px 22px}
+
+.controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:25px
+}
+.controls button{
+  border:1px solid var(--border);
+  background:white;
+  border-radius:10px;
+  padding:10px 15px
+}
+.controls button.active{
+  background:var(--accent);
+  color:white
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:18px
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+  min-height:210px;
+  box-shadow:0 8px 25px #14233c0d;
+  display:flex;
+  flex-direction:column
+}
+.icon{
+  height:85px;
+  border-radius:15px;
+  background:#f1f5f9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  margin-bottom:14px
+}
+.name{font-size:19px;font-weight:750}
+.desc{
+  font-size:13px;
+  color:var(--muted);
+  margin:7px 0 15px;
+  line-height:1.4
+}
+.cat{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:auto
+}
+.play{
+  margin-top:15px;
+  width:100%;
+  border:0;
+  border-radius:10px;
+  background:var(--accent);
+  color:white;
+  padding:11px;
+  font-weight:bold
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:60px
+}
+
+.player{
+  position:fixed;
+  inset:0;
+  background:#05070b;
+  z-index:20;
+  display:none;
+  flex-direction:column
+}
+.playerbar{
+  height:55px;
+  background:#111827;
+  color:white;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+  gap:12px
+}
+.playerbar button{
+  border:0;
+  border-radius:8px;
+  padding:8px 13px
+}
+.frame{
+  flex:1;
+  border:0;
+  width:100%;
+  background:white
+}
+
+@media(max-width:600px){
+  .topbar{padding:0 12px}
+  .logo{font-size:20px}
+  .wrap{padding:20px 12px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
+
 <body>
 
 <header class="topbar">
   <div class="logo">🎮 GameHub</div>
+
   <div class="search">
     <input id="search" placeholder="Search games...">
   </div>
 </header>
 
 <main class="wrap">
+
   <div class="controls">
     <button class="active" data-cat="All">All Games</button>
+    <button data-cat="Building">Building</button>
     <button data-cat="Battle Royale">Battle Royale</button>
     <button data-cat="Multiplayer">Multiplayer</button>
     <button data-cat="Shooter">Shooter</button>
@@ -44,122 +183,344 @@ button,input,select{font:inherit}button{cursor:pointer}
   </div>
 
   <div id="grid" class="grid"></div>
+
 </main>
 
 <div id="player" class="player">
+
   <div class="playerbar">
     <button onclick="closeGame()">✕ Close</button>
     <strong id="playerTitle">Game</strong>
     <button onclick="newTab()">↗ New Tab</button>
   </div>
-  <iframe id="frame" class="frame" allow="fullscreen; autoplay; gamepad"></iframe>
+
+  <iframe
+    id="frame"
+    class="frame"
+    allow="fullscreen; autoplay; gamepad"
+  ></iframe>
+
 </div>
 
 <script>
+
 const games=[
- {name:"Snake",cat:"Arcade",emoji:"🐍",url:"builtin"},
- {name:"TOSIOS",cat:"Multiplayer",emoji:"🔫",url:"https://tosios.online/"},
- {name:"Suroi",cat:"Battle Royale",emoji:"🪖",url:"https://suroi.io/"},
- {name:"Bomb Arena",cat:"Multiplayer",emoji:"💣",url:"https://limitless-brook-9339.herokuapp.com/"},
- {name:"Node-Mayhem",cat:"Shooter",emoji:"💥",url:"https://felixrieseberg.github.io/Node-Mayhem/"},
- {name:"GameDoh",cat:"Arcade",emoji:"🕹️",url:"https://freemany.github.io/gamedoh/"},
- {name:"Fortzone Battle Royale",cat:"Battle Royale",emoji:"🪂",url:"https://www.y8.com/games/fortzone_battle_royale/webgl"}
+
+  {
+    name:"BuildNow GG",
+    cat:"Building",
+    emoji:"🏗️",
+    url:"https://buildnow-gg.io/buildnow-gg",
+    desc:"Third-person building and shooting with multiplayer modes."
+  },
+
+  {
+    name:"1v1.LOL",
+    cat:"Building",
+    emoji:"🔨",
+    url:"https://1v1lol.org/",
+    desc:"Build structures and battle other players."
+  },
+
+  {
+    name:"Craftnite.io",
+    cat:"Building",
+    emoji:"⛏️",
+    url:"https://craftnite.io/",
+    desc:"Minecraft-style building combined with Fortnite-style shooting."
+  },
+
+  {
+    name:"ZombsRoyale.io",
+    cat:"Battle Royale",
+    emoji:"🧟",
+    url:"https://zombsroyale.io/",
+    desc:"100-player real-time battle royale."
+  },
+
+  {
+    name:"Krunker",
+    cat:"Shooter",
+    emoji:"🔫",
+    url:"https://krunker.io/",
+    desc:"Fast multiplayer browser FPS."
+  },
+
+  {
+    name:"Shell Shockers",
+    cat:"Shooter",
+    emoji:"🥚",
+    url:"https://shellshock.io/",
+    desc:"Multiplayer first-person shooter."
+  },
+
+  {
+    name:"TOSIOS",
+    cat:"Multiplayer",
+    emoji:"🎯",
+    url:"https://tosios.online/",
+    desc:"Open-source multiplayer browser shooter."
+  },
+
+  {
+    name:"GameDoh",
+    cat:"Arcade",
+    emoji:"🕹️",
+    url:"https://freemany.github.io/gamedoh/",
+    desc:"Collection of browser games."
+  },
+
+  {
+    name:"Snake",
+    cat:"Arcade",
+    emoji:"🐍",
+    url:"builtin",
+    desc:"Classic Snake."
+  }
+
 ];
 
-let category="All",current=null;
+let category="All";
+let current=null;
 
 function render(){
- const q=document.getElementById("search").value.toLowerCase();
- const list=games.filter(g=>(category==="All"||g.cat===category)&&g.name.toLowerCase().includes(q));
- document.getElementById("grid").innerHTML=list.length?list.map((g,i)=>`
- <div class="card">
-   <div class="icon">${g.emoji}</div>
-   <div class="name">${g.name}</div>
-   <div class="desc">${description(g.name)}</div>
-   <div class="cat">${g.cat}</div>
-   <button class="play" onclick="play(${games.indexOf(g)})">PLAY</button>
- </div>`).join(""):`<div class="empty">No games found.</div>`;
-}
 
-function description(n){
- const d={
-  "Snake":"Classic Snake arcade game.",
-  "TOSIOS":"Open-source multiplayer browser shooter.",
-  "Suroi":"Open-source 2D battle royale.",
-  "Bomb Arena":"Multiplayer HTML5 arena game.",
-  "Node-Mayhem":"Browser-based multiplayer shooter.",
-  "GameDoh":"Collection of browser games.",
-  "Fortzone Battle Royale":"3D battle royale with building and weapons."
- };
- return d[n]||"Browser game.";
+  const q=document
+    .getElementById("search")
+    .value
+    .toLowerCase();
+
+  const list=games.filter(g=>
+    (category==="All"||g.cat===category) &&
+    g.name.toLowerCase().includes(q)
+  );
+
+  document.getElementById("grid").innerHTML=
+
+    list.length
+
+    ?
+
+    list.map(g=>`
+
+      <div class="card">
+
+        <div class="icon">${g.emoji}</div>
+
+        <div class="name">
+          ${g.name}
+        </div>
+
+        <div class="desc">
+          ${g.desc}
+        </div>
+
+        <div class="cat">
+          ${g.cat}
+        </div>
+
+        <button
+          class="play"
+          onclick="play(${games.indexOf(g)})"
+        >
+          PLAY
+        </button>
+
+      </div>
+
+    `).join("")
+
+    :
+
+    `<div class="empty">
+      No games found.
+    </div>`;
 }
 
 function play(i){
- current=games[i];
- if(current.url==="builtin"){snake();return}
- document.getElementById("playerTitle").textContent=current.name;
- document.getElementById("frame").src=current.url;
- document.getElementById("player").style.display="flex";
+
+  current=games[i];
+
+  if(current.url==="builtin"){
+    snake();
+    return;
+  }
+
+  document.getElementById("playerTitle")
+    .textContent=current.name;
+
+  document.getElementById("frame")
+    .src=current.url;
+
+  document.getElementById("player")
+    .style.display="flex";
 }
 
 function closeGame(){
- document.getElementById("frame").src="about:blank";
- document.getElementById("player").style.display="none";
+
+  document.getElementById("frame")
+    .src="about:blank";
+
+  document.getElementById("player")
+    .style.display="none";
 }
 
 function newTab(){
- if(current&&current.url!=="builtin")window.open(current.url,"_blank");
+
+  if(current && current.url!=="builtin"){
+    window.open(current.url,"_blank");
+  }
+
 }
 
 document.getElementById("search").oninput=render;
 
 document.querySelectorAll("[data-cat]").forEach(b=>{
- b.onclick=()=>{
-  document.querySelectorAll("[data-cat]").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
-  category=b.dataset.cat;
-  render();
- };
+
+  b.onclick=()=>{
+
+    document
+      .querySelectorAll("[data-cat]")
+      .forEach(x=>x.classList.remove("active"));
+
+    b.classList.add("active");
+
+    category=b.dataset.cat;
+
+    render();
+
+  };
+
 });
 
 function snake(){
- const p=document.getElementById("player");
- document.getElementById("playerTitle").textContent="Snake";
- document.getElementById("frame").srcdoc=`
- <style>
- body{margin:0;background:#111;color:white;font-family:Arial;text-align:center}
- canvas{background:#222;border:2px solid white;margin-top:20px}
- </style>
- <h2>🐍 Snake</h2>
- <canvas id=c width=400 height=400></canvas>
- <p>Use the arrow keys to move.</p>
- <script>
- const c=document.getElementById('c'),x=c.getContext('2d');
- let s=[{x:200,y:200}],d={x:20,y:0},food={x:100,y:100};
- onkeydown=e=>{
-  if(e.key==='ArrowUp'&&d.y===0)d={x:0,y:-20};
-  if(e.key==='ArrowDown'&&d.y===0)d={x:0,y:20};
-  if(e.key==='ArrowLeft'&&d.x===0)d={x:-20,y:0};
-  if(e.key==='ArrowRight'&&d.x===0)d={x:20,y:0};
- };
- setInterval(()=>{
-  let h={x:s[0].x+d.x,y:s[0].y+d.y};
-  if(h.x<0||h.x>=400||h.y<0||h.y>=400||s.some(a=>a.x===h.x&&a.y===h.y)){
-   s=[{x:200,y:200}];d={x:20,y:0};return;
-  }
-  s.unshift(h);
-  if(h.x===food.x&&h.y===food.y)
-   food={x:Math.floor(Math.random()*20)*20,y:Math.floor(Math.random()*20)*20};
-  else s.pop();
-  x.clearRect(0,0,400,400);
-  x.fillStyle='lime';s.forEach(a=>x.fillRect(a.x,a.y,18,18));
-  x.fillStyle='red';x.fillRect(food.x,food.y,18,18);
- },120);
- <\/script>`;
- p.style.display="flex";
+
+  const p=document.getElementById("player");
+
+  document.getElementById("playerTitle")
+    .textContent="Snake";
+
+  document.getElementById("frame").srcdoc=`
+
+    <style>
+
+      body{
+        margin:0;
+        background:#111;
+        color:white;
+        font-family:Arial;
+        text-align:center
+      }
+
+      canvas{
+        background:#222;
+        border:2px solid white;
+        margin-top:20px
+      }
+
+    </style>
+
+    <h2>🐍 Snake</h2>
+
+    <canvas id="c" width="400" height="400"></canvas>
+
+    <p>Use the arrow keys to move.</p>
+
+    <script>
+
+      const c=document.getElementById('c');
+      const x=c.getContext('2d');
+
+      let s=[{x:200,y:200}];
+
+      let d={x:20,y:0};
+
+      let food={
+        x:100,
+        y:100
+      };
+
+      onkeydown=e=>{
+
+        if(e.key==='ArrowUp'&&d.y===0)
+          d={x:0,y:-20};
+
+        if(e.key==='ArrowDown'&&d.y===0)
+          d={x:0,y:20};
+
+        if(e.key==='ArrowLeft'&&d.x===0)
+          d={x:-20,y:0};
+
+        if(e.key==='ArrowRight'&&d.x===0)
+          d={x:20,y:0};
+
+      };
+
+      setInterval(()=>{
+
+        let h={
+          x:s[0].x+d.x,
+          y:s[0].y+d.y
+        };
+
+        if(
+          h.x<0||
+          h.x>=400||
+          h.y<0||
+          h.y>=400||
+          s.some(a=>a.x===h.x&&a.y===h.y)
+        ){
+
+          s=[{x:200,y:200}];
+          d={x:20,y:0};
+
+          return;
+        }
+
+        s.unshift(h);
+
+        if(
+          h.x===food.x&&
+          h.y===food.y
+        ){
+
+          food={
+            x:Math.floor(Math.random()*20)*20,
+            y:Math.floor(Math.random()*20)*20
+          };
+
+        }else{
+          s.pop();
+        }
+
+        x.clearRect(0,0,400,400);
+
+        x.fillStyle='lime';
+
+        s.forEach(a=>
+          x.fillRect(a.x,a.y,18,18)
+        );
+
+        x.fillStyle='red';
+
+        x.fillRect(
+          food.x,
+          food.y,
+          18,
+          18
+        );
+
+      },120);
+
+    <\/script>
+  `;
+
+  p.style.display="flex";
 }
 
 render();
+
 </script>
+
 </body>
 </html>
