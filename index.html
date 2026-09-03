@@ -2,148 +2,251 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GameHub</title>
 
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#0b1020;
- color:white
-}
-header{
- padding:25px;
- text-align:center;
- background:#151d35;
- border-bottom:2px solid #26304d
-}
-h1{margin:0;font-size:36px}
-header p{color:#9ca3af}
-#search{
- display:block;
- width:90%;
- max-width:650px;
- margin:20px auto;
- padding:15px;
- border:0;
- border-radius:12px;
- font-size:16px
-}
-.categories{
- display:flex;
- justify-content:center;
- flex-wrap:wrap;
- gap:10px;
- padding:5px 20px 20px
-}
-.categories button{
- background:#26304d;
- color:white;
- border:0;
- border-radius:9px;
- padding:11px 17px;
- cursor:pointer
-}
-.categories button:hover{background:#354263}
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:18px;
- padding:20px;
- max-width:1200px;
- margin:auto
-}
-.card{
- background:#151d35;
- border:1px solid #26304d;
- border-radius:16px;
- padding:20px;
- cursor:pointer;
- transition:.2s
-}
-.card:hover{
- transform:translateY(-5px);
- background:#1c2744
-}
-.icon{
- font-size:58px;
- text-align:center
-}
-.card h2{margin:12px 0 5px}
-.card p{
- color:#9ca3af;
- min-height:42px
-}
-.play{
- width:100%;
- border:0;
- border-radius:9px;
- padding:12px;
- background:#2563eb;
- color:white;
- font-size:16px;
- cursor:pointer
-}
-.play:hover{background:#1d4ed8}
-
-#screen{
- display:none;
- position:fixed;
- inset:0;
- background:#050505;
- z-index:10
-}
-#top{
- height:60px;
- background:#111827;
- display:flex;
- align-items:center;
- gap:12px;
- padding:10px
-}
-#top button{
- background:#374151;
- border:0;
- color:white;
- padding:10px 15px;
- border-radius:8px;
- cursor:pointer
-}
-#area{
- height:calc(100vh - 60px);
- display:flex;
- align-items:center;
- justify-content:center
-}
-canvas{
- max-width:96%;
- max-height:96%;
- border:2px solid #374151;
- background:#111
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-#lobby{
- display:none;
- text-align:center;
- padding:40px
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top right, #263b68 0%, transparent 35%),
+        linear-gradient(135deg, #080b12, #111827);
+    color: white;
+    min-height: 100vh;
 }
-#lobby input{
- padding:14px;
- width:260px;
- border-radius:8px;
- border:0;
- margin:8px
+
+header {
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    background: rgba(8, 11, 18, .92);
+    border-bottom: 1px solid #293246;
+    position: sticky;
+    top: 0;
+    z-index: 20;
 }
-#lobby button{
- padding:14px 25px;
- border:0;
- border-radius:8px;
- background:#2563eb;
- color:white;
- cursor:pointer;
- margin:8px
+
+.logo {
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #4da3ff;
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+}
+
+nav button {
+    border: 0;
+    background: transparent;
+    color: #cbd5e1;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+nav button:hover {
+    background: #1e293b;
+    color: white;
+}
+
+.hero {
+    padding: 55px 7% 35px;
+}
+
+.hero h1 {
+    font-size: clamp(40px, 6vw, 75px);
+    line-height: .95;
+    margin-bottom: 18px;
+}
+
+.hero h1 span {
+    color: #4da3ff;
+}
+
+.hero p {
+    color: #aab4c5;
+    font-size: 18px;
+    max-width: 700px;
+    line-height: 1.5;
+}
+
+.section {
+    padding: 25px 7% 60px;
+}
+
+.section-title {
+    font-size: 28px;
+    margin-bottom: 22px;
+}
+
+.games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: linear-gradient(145deg, #151c2c, #0e1420);
+    border: 1px solid #293449;
+    border-radius: 16px;
+    padding: 22px;
+    min-height: 230px;
+    transition: .2s;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #4da3ff;
+}
+
+.icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: #202c42;
+    display: grid;
+    place-items: center;
+    font-size: 31px;
+    margin-bottom: 18px;
+}
+
+.card h3 {
+    font-size: 21px;
+    margin-bottom: 9px;
+}
+
+.card p {
+    color: #8995aa;
+    min-height: 45px;
+    line-height: 1.35;
+    margin-bottom: 17px;
+}
+
+.play {
+    border: 0;
+    border-radius: 9px;
+    padding: 11px 17px;
+    background: #3289ff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.play:hover {
+    background: #1f75e8;
+}
+
+.external {
+    background: #334155;
+}
+
+.room-box {
+    background: #0d1420;
+    border: 1px solid #293449;
+    border-radius: 16px;
+    padding: 25px;
+    max-width: 700px;
+    margin-bottom: 30px;
+}
+
+.room-box h2 {
+    margin-bottom: 8px;
+}
+
+.room-box p {
+    color: #8995aa;
+    margin-bottom: 18px;
+}
+
+.room-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+input, select {
+    background: #182235;
+    color: white;
+    border: 1px solid #34415a;
+    border-radius: 8px;
+    padding: 12px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #4da3ff;
+}
+
+footer {
+    border-top: 1px solid #293246;
+    padding: 25px 7%;
+    color: #68758b;
+    text-align: center;
+}
+
+#gameScreen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: #05070b;
+}
+
+#gameScreen iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+#closeGame {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 101;
+    border: 0;
+    border-radius: 8px;
+    background: #ef4444;
+    color: white;
+    padding: 11px 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media(max-width:700px) {
+    header {
+        padding: 0 15px;
+    }
+
+    nav button {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .hero {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 </style>
 </head>
@@ -151,884 +254,360 @@ canvas{
 <body>
 
 <header>
-<h1>🎮 GameHub</h1>
-<p>Games • TOSIOS • Battle Royale</p>
+    <div class="logo">🎮 Game<span>Hub</span></div>
+
+    <nav>
+        <button onclick="scrollToGames()">Games</button>
+        <button onclick="scrollToRooms()">Rooms</button>
+    </nav>
 </header>
 
-<input id="search" placeholder="🔎 Search games...">
+<section class="hero">
+    <h1>PLAY.<br><span>BUILD.</span><br>FIGHT.</h1>
 
-<div class="categories">
-<button onclick="showCategory('all')">All Games</button>
-<button onclick="showCategory('battle')">Battle Royale</button>
-<button onclick="showCategory('shooter')">Shooters</button>
-<button onclick="showCategory('arcade')">Arcade</button>
-</div>
+    <p>
+        Your own browser gaming hub featuring battle royale,
+        build fights, box fights, multiplayer games, and more.
+    </p>
+</section>
 
-<div id="games" class="grid"></div>
+<section class="section" id="rooms">
 
-<div id="screen">
+    <div class="section-title">🔐 Private Multiplayer Rooms</div>
 
-<div id="top">
-<button onclick="closeGame()">← Back</button>
-<strong id="title"></strong>
-</div>
+    <div class="room-box">
 
-<div id="area"></div>
+        <h2>Create or Join a Match</h2>
+
+        <p>
+            Create a private room and give your friends the
+            room code so they can join from their computers.
+        </p>
+
+        <div class="room-controls">
+
+            <select id="mode">
+                <option value="battle-royale">Battle Royale</option>
+                <option value="1v1-build">1v1 Build Fight</option>
+                <option value="box-fight">1v1 Box Fight</option>
+                <option value="2v2-box">2v2 Box Fight</option>
+            </select>
+
+            <button class="play" onclick="createRoom()">
+                Create Room
+            </button>
+
+            <input
+                id="roomCode"
+                maxlength="6"
+                placeholder="ROOM CODE"
+            >
+
+            <button class="play" onclick="joinRoom()">
+                Join Room
+            </button>
+
+        </div>
+
+        <p id="roomStatus" style="margin-top:15px;"></p>
+
+    </div>
+
+</section>
+
+<section class="section" id="games">
+
+    <div class="section-title">🔥 Featured Games</div>
+
+    <div class="games">
+
+        <div class="card">
+            <div class="icon">🌎</div>
+            <h3>Battle Royale</h3>
+            <p>
+                Large multiplayer survival battle with
+                building, weapons and the shrinking zone.
+            </p>
+            <button class="play" onclick="startGame('battle-royale')">
+                PLAY
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🧱</div>
+            <h3>1v1 Build Fight</h3>
+            <p>
+                Fight another player using walls,
+                ramps, floors and roofs.
+            </p>
+            <button class="play" onclick="startGame('1v1-build')">
+                PLAY
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">📦</div>
+            <h3>1v1 Box Fight</h3>
+            <p>
+                Build, edit and fight inside a compact
+                combat arena.
+            </p>
+            <button class="play" onclick="startGame('box-fight')">
+                PLAY
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">👥</div>
+            <h3>2v2 Box Fight</h3>
+            <p>
+                Team up with a friend and battle another
+                two-player team.
+            </p>
+            <button class="play" onclick="startGame('2v2-box')">
+                PLAY
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🔫</div>
+            <h3>TOSIOS</h3>
+            <p>
+                Fast-paced multiplayer browser shooter.
+            </p>
+            <button class="play external" onclick="openExternal('https://tosios.online/')">
+                PLAY
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🐍</div>
+            <h3>Snake</h3>
+            <p>
+                Classic arcade game built directly into
+                GameHub.
+            </p>
+            <button class="play" onclick="startSnake()">
+                PLAY
+            </button>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    GameHub • Original browser gaming project
+</footer>
+
+<div id="gameScreen">
+
+    <button id="closeGame" onclick="closeGame()">
+        ✕ EXIT
+    </button>
+
+    <iframe
+        id="gameFrame"
+        allow="fullscreen; autoplay; gamepad"
+        allowfullscreen>
+    </iframe>
 
 </div>
 
 <script>
 
-const games=[
+const gameScreen = document.getElementById("gameScreen");
+const gameFrame = document.getElementById("gameFrame");
+const roomStatus = document.getElementById("roomStatus");
 
-{
- name:"Battle Royale",
- icon:"🏗️",
- category:"battle",
- description:"3D Fortnite-style building and shooting demo.",
- start:battleRoyale
-},
-
-{
- name:"TOSIOS",
- icon:"🔫",
- category:"shooter",
- description:"Multiplayer browser shooter.",
- url:"https://tosios.online/"
-},
-
-{
- name:"Snake",
- icon:"🐍",
- category:"arcade",
- description:"Classic Snake.",
- start:snake
-},
-
-{
- name:"Space Shooter",
- icon:"🚀",
- category:"shooter",
- description:"Destroy incoming enemies.",
- start:space
-},
-
-{
- name:"Dodge",
- icon:"💥",
- category:"arcade",
- description:"Avoid everything falling from the sky.",
- start:dodge
-},
-
-{
- name:"Breakout",
- icon:"🧱",
- category:"arcade",
- description:"Break the blocks.",
- start:breakout
+function scrollToGames() {
+    document.getElementById("games")
+        .scrollIntoView({ behavior: "smooth" });
 }
 
-];
-
-const gamesBox=document.getElementById("games");
-
-function render(list=games){
-
- gamesBox.innerHTML="";
-
- list.forEach(g=>{
-
-  const card=document.createElement("div");
-
-  card.className="card";
-
-  card.innerHTML=`
-  <div class="icon">${g.icon}</div>
-  <h2>${g.name}</h2>
-  <p>${g.description}</p>
-  <button class="play">PLAY</button>
-  `;
-
-  card.onclick=()=>{
-
-   if(g.url){
-    window.open(g.url,"_blank");
-   }else{
-    openGame(g);
-   }
-
-  };
-
-  gamesBox.appendChild(card);
-
- });
-
+function scrollToRooms() {
+    document.getElementById("rooms")
+        .scrollIntoView({ behavior: "smooth" });
 }
 
-function showCategory(cat){
-
- if(cat==="all")render();
- else render(games.filter(g=>g.category===cat));
-
+function openExternal(url) {
+    window.open(url, "_blank");
 }
 
-document.getElementById("search").oninput=e=>{
+/*
+    Multiplayer game launcher.
 
- const q=e.target.value.toLowerCase();
+    The actual 3D game will be loaded by game.js.
+*/
+function startGame(mode) {
 
- render(
-  games.filter(g=>
-   g.name.toLowerCase().includes(q) ||
-   g.category.includes(q)
-  )
- );
+    gameScreen.style.display = "block";
 
-};
+    /*
+       For now this loads a local game page.
 
-let animation;
+       Once the 3D game files are connected,
+       game.js will handle the actual gameplay.
+    */
 
-function openGame(g){
-
- document.getElementById("screen").style.display="block";
- document.getElementById("title").textContent=g.name;
- document.getElementById("area").innerHTML="";
-
- g.start();
-
+    gameFrame.src =
+        "game.html?mode=" +
+        encodeURIComponent(mode);
 }
 
-function closeGame(){
-
- cancelAnimationFrame(animation);
-
- document.getElementById("screen").style.display="none";
- document.getElementById("area").innerHTML="";
-
+function closeGame() {
+    gameFrame.src = "";
+    gameScreen.style.display = "none";
 }
 
-
-/* =========================
-   BATTLE ROYALE
-========================= */
-
-function battleRoyale(){
-
- const c=document.createElement("canvas");
-
- c.width=1100;
- c.height=650;
-
- document.getElementById("area").appendChild(c);
-
- const x=c.getContext("2d");
-
- let player={
-  x:550,
-  y:430,
-  hp:100,
-  shield:50
- };
-
- let keys={};
-
- let bullets=[];
- let builds=[];
- let enemies=[];
-
- let score=0;
- let material=100;
-
- document.onkeydown=e=>{
-
-  keys[e.key.toLowerCase()]=true;
-
-  if(e.key===" "){
-   shoot();
-  }
-
-  if(e.key.toLowerCase()==="q"){
-   build();
-  }
-
- };
-
- document.onkeyup=e=>{
-  keys[e.key.toLowerCase()]=false;
- };
-
- function shoot(){
-
-  bullets.push({
-   x:player.x,
-   y:player.y,
-   dx:0,
-   dy:-10
-  });
-
- }
-
- function build(){
-
-  if(material<=0)return;
-
-  builds.push({
-   x:player.x-45,
-   y:player.y-45
-  });
-
-  material-=10;
-
- }
-
- function spawnEnemy(){
-
-  enemies.push({
-   x:50+Math.random()*1000,
-   y:50+Math.random()*250,
-   hp:100
-  });
-
- }
-
- for(let i=0;i<7;i++)spawnEnemy();
-
- function distance(a,b){
-
-  return Math.hypot(
-   a.x-b.x,
-   a.y-b.y
-  );
-
- }
-
- function loop(){
-
-  x.clearRect(0,0,c.width,c.height);
-
-  /* SKY */
-
-  x.fillStyle="#79bdf2";
-  x.fillRect(0,0,c.width,c.height);
-
-  /* DISTANT LAND */
-
-  x.fillStyle="#668b4d";
-  x.fillRect(0,250,c.width,400);
-
-  /* TERRAIN */
-
-  for(let i=0;i<15;i++){
-
-   let tx=i*90;
-
-   x.fillStyle="#789c57";
-   x.fillRect(tx,300+(i%3)*30,120,350);
-
-  }
-
-  /* WATER */
-
-  x.fillStyle="#3b82c4";
-  x.fillRect(0,560,c.width,90);
-
-  /* TREES */
-
-  for(let i=0;i<12;i++){
-
-   let tx=(i*97)%1050;
-   let ty=260+(i%4)*35;
-
-   x.fillStyle="#513d2c";
-   x.fillRect(tx,ty,14,55);
-
-   x.fillStyle="#245c36";
-
-   x.beginPath();
-   x.arc(tx+7,ty,30,0,Math.PI*2);
-   x.fill();
-
-  }
-
-  /* MOVEMENT */
-
-  let speed=5;
-
-  if(keys.w)player.y-=speed;
-  if(keys.s)player.y+=speed;
-  if(keys.a)player.x-=speed;
-  if(keys.d)player.x+=speed;
-
-  player.x=Math.max(20,Math.min(1080,player.x));
-  player.y=Math.max(80,Math.min(540,player.y));
-
-  /* BUILDINGS */
-
-  builds.forEach(b=>{
-
-   x.fillStyle="#9b6338";
-   x.fillRect(b.x,b.y,90,90);
-
-   x.strokeStyle="#d69b61";
-   x.lineWidth=4;
-   x.strokeRect(b.x,b.y,90,90);
-
-   x.beginPath();
-   x.moveTo(b.x,b.y);
-   x.lineTo(b.x+90,b.y+90);
-   x.moveTo(b.x+90,b.y);
-   x.lineTo(b.x,b.y+90);
-   x.stroke();
-
-  });
-
-  /* ENEMIES */
-
-  enemies.forEach(e=>{
-
-   let d=distance(player,e);
-
-   if(d<250){
-
-    let dx=player.x-e.x;
-    let dy=player.y-e.y;
-
-    let len=Math.hypot(dx,dy);
-
-    e.x+=(dx/len)*.7;
-    e.y+=(dy/len)*.7;
-
-   }
-
-   x.fillStyle="#7f1d1d";
-   x.fillRect(e.x-18,e.y-25,36,50);
-
-   x.fillStyle="#111";
-   x.fillRect(e.x-20,e.y-38,40,7);
-
-   x.fillStyle="#22c55e";
-   x.fillRect(e.x-20,e.y-38,40*(e.hp/100),7);
-
-  });
-
-  /* BULLETS */
-
-  bullets.forEach(b=>{
-
-   b.x+=b.dx;
-   b.y+=b.dy;
-
-   x.fillStyle="#ffe600";
-   x.beginPath();
-   x.arc(b.x,b.y,5,0,Math.PI*2);
-   x.fill();
-
-  });
-
-  bullets.forEach((b,bi)=>{
-
-   enemies.forEach((e,ei)=>{
-
-    if(distance(b,e)<25){
-
-     e.hp-=35;
-     bullets.splice(bi,1);
-
-     if(e.hp<=0){
-
-      enemies.splice(ei,1);
-      score++;
-
-      setTimeout(spawnEnemy,1000);
-
-     }
-
+/*
+    Room system.
+    These functions are ready for the multiplayer
+    WebSocket server.
+*/
+
+let socket = null;
+
+function connectServer() {
+
+    /*
+       IMPORTANT:
+       Replace this with your multiplayer server address
+       once server.js is deployed.
+
+       Example:
+       wss://your-server.example.com
+    */
+
+    const SERVER_URL =
+        window.GAMEHUB_SERVER || "";
+
+    if (!SERVER_URL) {
+        roomStatus.textContent =
+            "Multiplayer server isn't connected yet. The room system will work after server.js is deployed.";
+        return null;
     }
 
-   });
+    socket = new WebSocket(SERVER_URL);
 
-  });
+    socket.onopen = () => {
+        roomStatus.textContent =
+            "Connected to multiplayer server!";
+    };
 
-  /* PLAYER */
+    socket.onclose = () => {
+        roomStatus.textContent =
+            "Disconnected from multiplayer server.";
+    };
 
-  x.save();
+    socket.onerror = () => {
+        roomStatus.textContent =
+            "Could not connect to multiplayer server.";
+    };
 
-  x.translate(player.x,player.y);
+    socket.onmessage = event => {
 
-  /* shadow */
+        const data = JSON.parse(event.data);
 
-  x.fillStyle="rgba(0,0,0,.3)";
-  x.beginPath();
-  x.ellipse(0,28,25,10,0,0,Math.PI*2);
-  x.fill();
+        if (data.type === "roomCreated") {
 
-  /* body */
+            roomStatus.textContent =
+                "Room created! Code: " +
+                data.code;
 
-  x.fillStyle="#2563eb";
-  x.fillRect(-18,-15,36,40);
+            document.getElementById("roomCode")
+                .value = data.code;
+        }
 
-  /* head */
+        if (data.type === "joinedRoom") {
 
-  x.fillStyle="#f2c7a5";
-  x.beginPath();
-  x.arc(0,-30,15,0,Math.PI*2);
-  x.fill();
+            roomStatus.textContent =
+                "Joined room " +
+                data.code +
+                " • Team " +
+                data.team;
+        }
 
-  /* helmet */
+        if (data.type === "error") {
 
-  x.fillStyle="#1e3a8a";
-  x.fillRect(-16,-42,32,10);
+            roomStatus.textContent =
+                data.message;
+        }
+    };
 
-  /* gun */
-
-  x.fillStyle="#222";
-  x.fillRect(-5,5,8,35);
-
-  x.restore();
-
-  /* HUD */
-
-  x.fillStyle="rgba(0,0,0,.65)";
-  x.fillRect(15,15,280,115);
-
-  x.fillStyle="white";
-  x.font="20px Arial";
-
-  x.fillText("🏆 Eliminations: "+score,30,45);
-  x.fillText("🧱 Materials: "+material,30,75);
-  x.fillText("WASD = Move",30,105);
-
-  /* HEALTH */
-
-  x.fillStyle="#222";
-  x.fillRect(800,25,250,20);
-
-  x.fillStyle="#22c55e";
-  x.fillRect(800,25,250*(player.hp/100),20);
-
-  x.fillStyle="#222";
-  x.fillRect(800,55,250,20);
-
-  x.fillStyle="#38bdf8";
-  x.fillRect(800,55,250*(player.shield/50),20);
-
-  x.fillStyle="white";
-  x.font="16px Arial";
-  x.fillText("HP",1060,42);
-  x.fillText("Shield",1060,72);
-
-  x.fillText("SPACE = Shoot   Q = Build",800,105);
-
-  /* storm circle */
-
-  x.strokeStyle="rgba(190,100,255,.8)";
-  x.lineWidth=5;
-
-  x.beginPath();
-  x.arc(550,350,260,0,Math.PI*2);
-  x.stroke();
-
-  animation=requestAnimationFrame(loop);
-
- }
-
- loop();
-
+    return socket;
 }
 
+function createRoom() {
 
-/* =========================
-   SNAKE
-========================= */
+    const mode =
+        document.getElementById("mode").value;
 
-function snake(){
+    if (!socket) {
 
- const c=document.createElement("canvas");
- c.width=600;
- c.height=600;
+        if (!connectServer()) return;
 
- document.getElementById("area").appendChild(c);
+        setTimeout(() => {
 
- const x=c.getContext("2d");
+            socket.send(JSON.stringify({
+                type: "createRoom",
+                mode
+            }));
 
- let body=[{x:300,y:300}];
- let dx=20,dy=0;
+        }, 500);
 
- let food={
-  x:Math.floor(Math.random()*30)*20,
-  y:Math.floor(Math.random()*30)*20
- };
-
- let score=0;
-
- document.onkeydown=e=>{
-
-  if(e.key==="ArrowUp"&&dy===0){dx=0;dy=-20}
-  if(e.key==="ArrowDown"&&dy===0){dx=0;dy=20}
-  if(e.key==="ArrowLeft"&&dx===0){dx=-20;dy=0}
-  if(e.key==="ArrowRight"&&dx===0){dx=20;dy=0}
-
- };
-
- function loop(){
-
-  x.fillStyle="#111";
-  x.fillRect(0,0,600,600);
-
-  let head={
-   x:body[0].x+dx,
-   y:body[0].y+dy
-  };
-
-  if(
-   head.x<0||head.x>=600||
-   head.y<0||head.y>=600||
-   body.some(b=>b.x===head.x&&b.y===head.y)
-  ){
-
-   alert("Game Over! Score: "+score);
-   closeGame();
-   return;
-
-  }
-
-  body.unshift(head);
-
-  if(head.x===food.x&&head.y===food.y){
-
-   score++;
-
-   food={
-    x:Math.floor(Math.random()*30)*20,
-    y:Math.floor(Math.random()*30)*20
-   };
-
-  }else body.pop();
-
-  x.fillStyle="#22c55e";
-
-  body.forEach(b=>{
-   x.fillRect(b.x,b.y,18,18);
-  });
-
-  x.fillStyle="red";
-  x.fillRect(food.x,food.y,18,18);
-
-  x.fillStyle="white";
-  x.font="20px Arial";
-  x.fillText("Score: "+score,10,25);
-
-  setTimeout(()=>{
-   animation=requestAnimationFrame(loop);
-  },80);
-
- }
-
- loop();
-
-}
-
-
-/* =========================
-   SPACE SHOOTER
-========================= */
-
-function space(){
-
- const c=document.createElement("canvas");
- c.width=800;
- c.height=500;
-
- document.getElementById("area").appendChild(c);
-
- const x=c.getContext("2d");
-
- let player={x:380,y:450};
- let bullets=[];
- let enemies=[];
- let keys={};
- let score=0;
-
- document.onkeydown=e=>{
-
-  keys[e.key]=true;
-
-  if(e.key===" ")
-   bullets.push({
-    x:player.x+20,
-    y:player.y,
-    dy:-9
-   });
-
- };
-
- document.onkeyup=e=>keys[e.key]=false;
-
- setInterval(()=>{
-
-  enemies.push({
-   x:Math.random()*760,
-   y:-30,
-   dy:2+Math.random()*2
-  });
-
- },600);
-
- function loop(){
-
-  x.fillStyle="#020617";
-  x.fillRect(0,0,800,500);
-
-  if(keys.ArrowLeft)player.x-=6;
-  if(keys.ArrowRight)player.x+=6;
-
-  player.x=Math.max(0,Math.min(760,player.x));
-
-  x.fillStyle="#38bdf8";
-  x.fillRect(player.x,player.y,40,25);
-
-  bullets.forEach(b=>b.y+=b.dy);
-  enemies.forEach(e=>e.y+=e.dy);
-
-  x.fillStyle="yellow";
-
-  bullets.forEach(b=>x.fillRect(b.x,b.y,5,15));
-
-  x.fillStyle="red";
-
-  enemies.forEach(e=>x.fillRect(e.x,e.y,30,25));
-
-  bullets.forEach((b,bi)=>{
-
-   enemies.forEach((e,ei)=>{
-
-    if(
-     b.x<e.x+30&&
-     b.x+5>e.x&&
-     b.y<e.y+25&&
-     b.y+15>e.y
-    ){
-
-     bullets.splice(bi,1);
-     enemies.splice(ei,1);
-     score++;
-
+        return;
     }
 
-   });
-
-  });
-
-  x.fillStyle="white";
-  x.font="20px Arial";
-  x.fillText("Score: "+score,10,25);
-  x.fillText("← → Move   SPACE Shoot",570,25);
-
-  animation=requestAnimationFrame(loop);
-
- }
-
- loop();
-
+    socket.send(JSON.stringify({
+        type: "createRoom",
+        mode
+    }));
 }
 
+function joinRoom() {
 
-/* =========================
-   DODGE
-========================= */
+    const code =
+        document.getElementById("roomCode")
+            .value
+            .trim()
+            .toUpperCase();
 
-function dodge(){
+    if (code.length !== 6) {
 
- const c=document.createElement("canvas");
- c.width=800;
- c.height=500;
+        roomStatus.textContent =
+            "Enter a 6-character room code.";
 
- document.getElementById("area").appendChild(c);
+        return;
+    }
 
- const x=c.getContext("2d");
+    if (!socket) {
 
- let player=380;
- let blocks=[];
- let score=0;
+        if (!connectServer()) return;
 
- document.onkeydown=e=>{
+        setTimeout(() => {
 
-  if(e.key==="ArrowLeft")player-=15;
-  if(e.key==="ArrowRight")player+=15;
+            socket.send(JSON.stringify({
+                type: "joinRoom",
+                code
+            }));
 
- };
+        }, 500);
 
- setInterval(()=>{
+        return;
+    }
 
-  blocks.push({
-   x:Math.random()*770,
-   y:-30
-  });
-
- },300);
-
- function loop(){
-
-  x.fillStyle="#111827";
-  x.fillRect(0,0,800,500);
-
-  player=Math.max(0,Math.min(770,player));
-
-  x.fillStyle="#38bdf8";
-  x.fillRect(player,450,30,30);
-
-  blocks.forEach(b=>b.y+=5);
-
-  x.fillStyle="#f97316";
-
-  blocks.forEach(b=>x.fillRect(b.x,b.y,30,30));
-
-  blocks.forEach(b=>{
-
-   if(
-    player<b.x+30&&
-    player+30>b.x&&
-    450<b.y+30&&
-    480>b.y
-   ){
-
-    alert("You lost! Score: "+score);
-    closeGame();
-
-   }
-
-  });
-
-  blocks=blocks.filter(b=>b.y<550);
-
-  score++;
-
-  x.fillStyle="white";
-  x.font="20px Arial";
-  x.fillText("Score: "+score,10,25);
-
-  animation=requestAnimationFrame(loop);
-
- }
-
- loop();
-
+    socket.send(JSON.stringify({
+        type: "joinRoom",
+        code
+    }));
 }
 
+function startSnake() {
 
-/* =========================
-   BREAKOUT
-========================= */
-
-function breakout(){
-
- const c=document.createElement("canvas");
- c.width=800;
- c.height=500;
-
- document.getElementById("area").appendChild(c);
-
- const x=c.getContext("2d");
-
- let paddle=350;
-
- let ball={
-  x:400,
-  y:400,
-  dx:4,
-  dy:-4
- };
-
- let bricks=[];
-
- for(let r=0;r<5;r++){
-
-  for(let col=0;col<10;col++){
-
-   bricks.push({
-    x:50+col*70,
-    y:50+r*25,
-    alive:true
-   });
-
-  }
-
- }
-
- document.onkeydown=e=>{
-
-  if(e.key==="ArrowLeft")paddle-=20;
-  if(e.key==="ArrowRight")paddle+=20;
-
- };
-
- function loop(){
-
-  x.fillStyle="#050505";
-  x.fillRect(0,0,800,500);
-
-  ball.x+=ball.dx;
-  ball.y+=ball.dy;
-
-  if(ball.x<0||ball.x>800)ball.dx*=-1;
-  if(ball.y<0)ball.dy*=-1;
-
-  if(
-   ball.y>450&&
-   ball.x>paddle&&
-   ball.x<paddle+100
-  )ball.dy=-Math.abs(ball.dy);
-
-  bricks.forEach(b=>{
-
-   if(
-    b.alive&&
-    ball.x>b.x&&
-    ball.x<b.x+60&&
-    ball.y>b.y&&
-    ball.y<b.y+20
-   ){
-
-    b.alive=false;
-    ball.dy*=-1;
-
-   }
-
-  });
-
-  if(ball.y>500){
-
-   alert("Game Over");
-   closeGame();
-   return;
-
-  }
-
-  x.fillStyle="#38bdf8";
-  x.fillRect(paddle,470,100,15);
-
-  x.fillStyle="white";
-
-  bricks.forEach(b=>{
-
-   if(b.alive)
-    x.fillRect(b.x,b.y,60,20);
-
-  });
-
-  x.beginPath();
-  x.arc(ball.x,ball.y,8,0,Math.PI*2);
-  x.fill();
-
-  animation=requestAnimationFrame(loop);
-
- }
-
- loop();
-
+    alert(
+        "Snake will be added to the local GameHub game collection."
+    );
 }
-
-render();
 
 </script>
 
