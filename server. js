@@ -1,0 +1,282 @@
+const http = require("http");
+const WebSocket = require("ws");
+
+const PORT = process.env.PORT || 3000;
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, {
+        "Content-Type": "text/plain"
+    });
+
+    res.end("GameHub multiplayer server is running!");
+});
+
+const wss = new WebSocket.Server({
+    server
+});
+
+const rooms = {};
+
+function makeRoomCode() {
+    const characters = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    let code = "";
+
+    for (let i = 0; i < 6; i++) {
+        code += characters[
+            Math.floor(Math.random() * characters.length)
+        ];
+    }
+
+    return code;
+}
+
+function send(player, message) {
+    if (player.readyState === WebSocket.OPEN) {
+        player.send(JSON.stringify(message));
+    }
+}
+
+function broadcast(room, message) {
+    room.players.forEach(player => {
+        send(player.socket, message);
+    });
+}
+
+wss.on("connection", socket => {
+
+    const player = {
+        socket,
+        id: Math.random().toString(36).substring(2),
+        room: null,
+        team: null,
+        x: 0,
+        y: 2,
+        z: 0,
+        health: 100,
+        shield: 100
+    };
+
+    send(socket, {
+        type: "connected",
+        id: player.id
+    });
+
+    socket.on("message", data => {
+
+        let message;
+
+        try {
+            message = JSON.parse(data);
+        } catch {
+            return;
+        }
+
+        // CREATE ROOM
+        if (message.type === "createRoom") {
+
+            let code;
+
+            do {
+                code = makeRoomCode();
+            } while (rooms[code]);
+
+            rooms[code] = {
+                code,
+                mode: message.mode || "1v1",
+                players: []
+            };
+
+            rooms[code].players.push(player);
+
+            player.room = code;
+            player.team = 1;
+
+            send(socket, {
+                type: "roomCreated",
+                code,
+                mode: rooms[code].mode,
+                team: player.team
+            });
+
+            broadcast(
+                rooms[code],
+                {
+                    type: "players",
+                    players: getPlayers(rooms[code])
+                }
+            );
+        }
+
+        // JOIN ROOM
+        if (message.type === "joinRoom") {
+
+            const code =
+                String(message.code || "").toUpperCase();
+
+            const room = rooms[code];
+
+            if (!room) {
+                send(socket, {
+                    type: "error",
+                    message: "Room not found."
+                });
+
+                return;
+            }
+
+            if (room.players.length >= 4) {
+                send(socket, {
+                    type: "error",
+                    message: "Room is full."
+                });
+
+                return;
+            }
+
+            room.players.push(player);
+
+            player.room = code;
+
+            // 1v1 / 2v2 teams
+            if (room.players.length % 2 === 1) {
+                player.team = 1;
+            } else {
+                player.team = 2;
+            }
+
+            send(socket, {
+                type: "joinedRoom",
+                code,
+                mode: room.mode,
+                team: player.team
+            });
+
+            broadcast(
+                room,
+                {
+                    type: "players",
+                    players: getPlayers(room)
+                }
+            );
+        }
+
+        // PLAYER MOVEMENT
+        if (message.type === "move") {
+
+            player.x = Number(message.x) || 0;
+            player.y = Number(message.y) || 2;
+            player.z = Number(message.z) || 0;
+
+            if (player.room) {
+
+                const room =
+                    rooms[player.room];
+
+                if (room) {
+
+                    broadcast(room, {
+                        type: "playerMoved",
+                        id: player.id,
+                        x: player.x,
+                        y: player.y,
+                        z: player.z
+                    });
+
+                }
+            }
+        }
+
+        // SHOOTING
+        if (message.type === "shoot") {
+
+            if (!player.room) return;
+
+            const room =
+                rooms[player.room];
+
+            if (!room) return;
+
+            broadcast(room, {
+                type: "shot",
+                id: player.id,
+                direction: message.direction
+            });
+        }
+
+        // BUILDING
+        if (message.type === "build") {
+
+            if (!player.room) return;
+
+            const room =
+                rooms[player.room];
+
+            if (!room) return;
+
+            broadcast(room, {
+                type: "build",
+                id: player.id,
+                block: message.block
+            });
+        }
+
+        // START MATCH
+        if (message.type === "startMatch") {
+
+            if (!player.room) return;
+
+            const room =
+                rooms[player.room];
+
+            if (!room) return;
+
+            broadcast(room, {
+                type: "matchStarted"
+            });
+        }
+    });
+
+    socket.on("close", () => {
+
+        if (!player.room) return;
+
+        const room =
+            rooms[player.room];
+
+        if (!room) return;
+
+        room.players =
+            room.players.filter(
+                p => p !== player
+            );
+
+        broadcast(room, {
+            type: "players",
+            players: getPlayers(room)
+        });
+
+        if (room.players.length === 0) {
+            delete rooms[player.room];
+        }
+    });
+});
+
+function getPlayers(room) {
+
+    return room.players.map(player => ({
+        id: player.id,
+        team: player.team,
+        x: player.x,
+        y: player.y,
+        z: player.z,
+        health: player.health,
+        shield: player.shield
+    }));
+}
+
+server.listen(PORT, () => {
+    console.log(
+        `GameHub multiplayer server running on port ${PORT}`
+    );
+});
