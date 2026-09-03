@@ -1,526 +1,1312 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GameHub</title>
 
 <style>
-:root{
-  --bg:#eef3f8;
-  --panel:rgba(255,255,255,.92);
-  --text:#172033;
-  --muted:#6c778b;
-  --accent:#2563eb;
-  --border:#dfe5ee
-}
 *{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:Arial,system-ui,sans-serif;
-  background:
-    radial-gradient(circle at 15% 10%,#2563eb18,transparent 30%),
-    radial-gradient(circle at 85% 0%,#6366f118,transparent 25%),
-    var(--bg);
-  color:var(--text)
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#111827;
+    color:white;
 }
-button,input,select{font:inherit}
-button{cursor:pointer}
-
-.topbar{
-  height:70px;
-  background:var(--panel);
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  padding:0 25px;
-  gap:20px;
-  position:sticky;
-  top:0;
-  z-index:5
+header{
+    background:#1f2937;
+    padding:22px;
+    text-align:center;
+    border-bottom:2px solid #374151;
 }
-.logo{font-size:24px;font-weight:800}
-.search{flex:1;max-width:550px;margin:auto}
-.search input{
-  width:100%;
-  padding:13px 18px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  outline:none;
-  background:white
+header h1{
+    margin:0;
+    font-size:32px;
 }
-
-.wrap{max-width:1250px;margin:auto;padding:30px 22px}
-
-.controls{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:25px
+header p{
+    color:#9ca3af;
 }
-.controls button{
-  border:1px solid var(--border);
-  background:white;
-  border-radius:10px;
-  padding:10px 15px
+.search{
+    width:90%;
+    max-width:600px;
+    margin:20px auto;
+    display:block;
+    padding:15px;
+    border-radius:12px;
+    border:0;
+    font-size:16px;
 }
-.controls button.active{
-  background:var(--accent);
-  color:white
+.categories{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:10px 20px 25px;
 }
-
+.categories button{
+    background:#374151;
+    color:white;
+    border:0;
+    padding:10px 16px;
+    border-radius:9px;
+    cursor:pointer;
+}
+.categories button:hover{
+    background:#4b5563;
+}
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
-  gap:18px
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+    padding:20px;
+    max-width:1200px;
+    margin:auto;
 }
 .card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:20px;
-  min-height:210px;
-  box-shadow:0 8px 25px #14233c0d;
-  display:flex;
-  flex-direction:column
+    background:#1f2937;
+    border:1px solid #374151;
+    border-radius:15px;
+    padding:20px;
+    cursor:pointer;
+    transition:.2s;
+}
+.card:hover{
+    transform:translateY(-4px);
+    background:#273449;
 }
 .icon{
-  height:85px;
-  border-radius:15px;
-  background:#f1f5f9;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:48px;
-  margin-bottom:14px
+    font-size:55px;
+    text-align:center;
 }
-.name{font-size:19px;font-weight:750}
-.desc{
-  font-size:13px;
-  color:var(--muted);
-  margin:7px 0 15px;
-  line-height:1.4
+.card h2{
+    margin:12px 0 5px;
 }
-.cat{
-  font-size:12px;
-  color:var(--muted);
-  margin-bottom:auto
+.card p{
+    color:#9ca3af;
+    min-height:40px;
 }
 .play{
-  margin-top:15px;
-  width:100%;
-  border:0;
-  border-radius:10px;
-  background:var(--accent);
-  color:white;
-  padding:11px;
-  font-weight:bold
+    width:100%;
+    padding:12px;
+    border:0;
+    border-radius:9px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+.play:hover{
+    background:#1d4ed8;
 }
 
-.empty{
-  text-align:center;
-  color:var(--muted);
-  padding:60px
+/* Game screen */
+#gameScreen{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#050505;
+    z-index:100;
 }
-
-.player{
-  position:fixed;
-  inset:0;
-  background:#05070b;
-  z-index:20;
-  display:none;
-  flex-direction:column
+#gameTop{
+    height:60px;
+    background:#111827;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 15px;
 }
-.playerbar{
-  height:55px;
-  background:#111827;
-  color:white;
-  display:flex;
-  align-items:center;
-  padding:0 15px;
-  gap:12px
+#gameTop button{
+    background:#374151;
+    color:white;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
 }
-.playerbar button{
-  border:0;
-  border-radius:8px;
-  padding:8px 13px
+#gameArea{
+    height:calc(100vh - 60px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
-.frame{
-  flex:1;
-  border:0;
-  width:100%;
-  background:white
-}
-
-@media(max-width:600px){
-  .topbar{padding:0 12px}
-  .logo{font-size:20px}
-  .wrap{padding:20px 12px}
-  .grid{grid-template-columns:repeat(2,1fr)}
+canvas{
+    max-width:95%;
+    max-height:95%;
+    background:#000;
+    border:2px solid #374151;
 }
 </style>
 </head>
 
 <body>
 
-<header class="topbar">
-  <div class="logo">🎮 GameHub</div>
-
-  <div class="search">
-    <input id="search" placeholder="Search games...">
-  </div>
+<header>
+    <h1>🎮 GameHub</h1>
+    <p>Your personal browser game collection</p>
 </header>
 
-<main class="wrap">
+<input id="search" class="search" placeholder="🔎 Search games...">
 
-  <div class="controls">
-    <button class="active" data-cat="All">All Games</button>
-    <button data-cat="Building">Building</button>
-    <button data-cat="Battle Royale">Battle Royale</button>
-    <button data-cat="Multiplayer">Multiplayer</button>
-    <button data-cat="Shooter">Shooter</button>
-    <button data-cat="Arcade">Arcade</button>
-  </div>
+<div class="categories">
+    <button onclick="filterGames('all')">All Games</button>
+    <button onclick="filterGames('arcade')">Arcade</button>
+    <button onclick="filterGames('shooter')">Shooter</button>
+    <button onclick="filterGames('racing')">Racing</button>
+    <button onclick="filterGames('sports')">Sports</button>
+    <button onclick="filterGames('puzzle')">Puzzle</button>
+</div>
 
-  <div id="grid" class="grid"></div>
+<div id="games" class="grid"></div>
 
-</main>
-
-<div id="player" class="player">
-
-  <div class="playerbar">
-    <button onclick="closeGame()">✕ Close</button>
-    <strong id="playerTitle">Game</strong>
-    <button onclick="newTab()">↗ New Tab</button>
-  </div>
-
-  <iframe
-    id="frame"
-    class="frame"
-    allow="fullscreen; autoplay; gamepad"
-  ></iframe>
-
+<div id="gameScreen">
+    <div id="gameTop">
+        <button onclick="closeGame()">← Back</button>
+        <strong id="gameTitle">Game</strong>
+    </div>
+    <div id="gameArea"></div>
 </div>
 
 <script>
 
-const games=[
+const games = [
 
-  {
-    name:"BuildNow GG",
-    cat:"Building",
-    emoji:"🏗️",
-    url:"https://buildnow-gg.io/buildnow-gg",
-    desc:"Third-person building and shooting with multiplayer modes."
-  },
-
-  {
-    name:"1v1.LOL",
-    cat:"Building",
-    emoji:"🔨",
-    url:"https://1v1lol.org/",
-    desc:"Build structures and battle other players."
-  },
-
-  {
-    name:"Craftnite.io",
-    cat:"Building",
-    emoji:"⛏️",
-    url:"https://craftnite.io/",
-    desc:"Minecraft-style building combined with Fortnite-style shooting."
-  },
-
-  {
-    name:"ZombsRoyale.io",
-    cat:"Battle Royale",
-    emoji:"🧟",
-    url:"https://zombsroyale.io/",
-    desc:"100-player real-time battle royale."
-  },
-
-  {
-    name:"Krunker",
-    cat:"Shooter",
-    emoji:"🔫",
-    url:"https://krunker.io/",
-    desc:"Fast multiplayer browser FPS."
-  },
-
-  {
-    name:"Shell Shockers",
-    cat:"Shooter",
-    emoji:"🥚",
-    url:"https://shellshock.io/",
-    desc:"Multiplayer first-person shooter."
-  },
-
-  {
-    name:"TOSIOS",
-    cat:"Multiplayer",
-    emoji:"🎯",
-    url:"https://tosios.online/",
-    desc:"Open-source multiplayer browser shooter."
-  },
-
-  {
-    name:"GameDoh",
-    cat:"Arcade",
-    emoji:"🕹️",
-    url:"https://freemany.github.io/gamedoh/",
-    desc:"Collection of browser games."
-  },
-
-  {
+{
     name:"Snake",
-    cat:"Arcade",
-    emoji:"🐍",
-    url:"builtin",
-    desc:"Classic Snake."
-  }
+    icon:"🐍",
+    category:"arcade",
+    description:"Eat the apples and grow as long as possible.",
+    start:snake
+},
+
+{
+    name:"Space Shooter",
+    icon:"🚀",
+    category:"shooter",
+    description:"Destroy enemy ships and survive.",
+    start:spaceShooter
+},
+
+{
+    name:"Asteroids",
+    icon:"☄️",
+    category:"shooter",
+    description:"Destroy asteroids before they destroy you.",
+    start:asteroids
+},
+
+{
+    name:"Car Racer",
+    icon:"🏎️",
+    category:"racing",
+    description:"Avoid traffic and survive as long as possible.",
+    start:carRacer
+},
+
+{
+    name:"Target Blaster",
+    icon:"🎯",
+    category:"shooter",
+    description:"Click targets as quickly as you can.",
+    start:targetBlaster
+},
+
+{
+    name:"Dodge",
+    icon:"💥",
+    category:"arcade",
+    description:"Move around and avoid falling blocks.",
+    start:dodge
+},
+
+{
+    name:"Breakout",
+    icon:"🧱",
+    category:"arcade",
+    description:"Break every block with the ball.",
+    start:breakout
+},
+
+{
+    name:"Flappy",
+    icon:"🐦",
+    category:"arcade",
+    description:"Fly through the pipes.",
+    start:flappy
+},
+
+{
+    name:"Pong",
+    icon:"🏓",
+    category:"sports",
+    description:"Classic paddle battle against the computer.",
+    start:pong
+},
+
+{
+    name:"2048",
+    icon:"🔢",
+    category:"puzzle",
+    description:"Combine matching numbers to reach 2048.",
+    start:game2048
+}
 
 ];
 
-let category="All";
-let current=null;
+let currentGame=null;
+let animation=null;
 
-function render(){
+function renderGames(list=games){
 
-  const q=document
-    .getElementById("search")
-    .value
-    .toLowerCase();
+    const box=document.getElementById("games");
 
-  const list=games.filter(g=>
-    (category==="All"||g.cat===category) &&
-    g.name.toLowerCase().includes(q)
-  );
+    box.innerHTML="";
 
-  document.getElementById("grid").innerHTML=
+    list.forEach((g,i)=>{
 
-    list.length
+        const card=document.createElement("div");
 
-    ?
+        card.className="card";
 
-    list.map(g=>`
+        card.innerHTML=`
+            <div class="icon">${g.icon}</div>
+            <h2>${g.name}</h2>
+            <p>${g.description}</p>
+            <button class="play">PLAY</button>
+        `;
 
-      <div class="card">
+        card.onclick=()=>openGame(g);
 
-        <div class="icon">${g.emoji}</div>
+        box.appendChild(card);
 
-        <div class="name">
-          ${g.name}
-        </div>
+    });
 
-        <div class="desc">
-          ${g.desc}
-        </div>
-
-        <div class="cat">
-          ${g.cat}
-        </div>
-
-        <button
-          class="play"
-          onclick="play(${games.indexOf(g)})"
-        >
-          PLAY
-        </button>
-
-      </div>
-
-    `).join("")
-
-    :
-
-    `<div class="empty">
-      No games found.
-    </div>`;
 }
 
-function play(i){
+function filterGames(category){
 
-  current=games[i];
+    if(category==="all"){
+        renderGames();
+        return;
+    }
 
-  if(current.url==="builtin"){
-    snake();
-    return;
-  }
+    renderGames(games.filter(g=>g.category===category));
 
-  document.getElementById("playerTitle")
-    .textContent=current.name;
+}
 
-  document.getElementById("frame")
-    .src=current.url;
+document.getElementById("search").addEventListener("input",e=>{
 
-  document.getElementById("player")
-    .style.display="flex";
+    const text=e.target.value.toLowerCase();
+
+    renderGames(
+        games.filter(g=>
+            g.name.toLowerCase().includes(text) ||
+            g.category.includes(text)
+        )
+    );
+
+});
+
+function openGame(game){
+
+    currentGame=game;
+
+    document.getElementById("gameScreen").style.display="block";
+
+    document.getElementById("gameTitle").textContent=game.name;
+
+    document.getElementById("gameArea").innerHTML="";
+
+    game.start();
+
 }
 
 function closeGame(){
 
-  document.getElementById("frame")
-    .src="about:blank";
+    cancelAnimationFrame(animation);
 
-  document.getElementById("player")
-    .style.display="none";
-}
+    document.getElementById("gameScreen").style.display="none";
 
-function newTab(){
-
-  if(current && current.url!=="builtin"){
-    window.open(current.url,"_blank");
-  }
+    document.getElementById("gameArea").innerHTML="";
 
 }
 
-document.getElementById("search").oninput=render;
+function canvas(w=800,h=500){
 
-document.querySelectorAll("[data-cat]").forEach(b=>{
+    const c=document.createElement("canvas");
 
-  b.onclick=()=>{
+    c.width=w;
+    c.height=h;
 
-    document
-      .querySelectorAll("[data-cat]")
-      .forEach(x=>x.classList.remove("active"));
+    document.getElementById("gameArea").appendChild(c);
 
-    b.classList.add("active");
+    return c;
 
-    category=b.dataset.cat;
+}
 
-    render();
 
-  };
-
-});
+/* SNAKE */
 
 function snake(){
 
-  const p=document.getElementById("player");
+    const c=canvas(600,600);
+    const x=c.getContext("2d");
 
-  document.getElementById("playerTitle")
-    .textContent="Snake";
+    let snake=[{x:300,y:300}];
 
-  document.getElementById("frame").srcdoc=`
+    let dx=20;
+    let dy=0;
 
-    <style>
+    let food={
+        x:Math.floor(Math.random()*30)*20,
+        y:Math.floor(Math.random()*30)*20
+    };
 
-      body{
-        margin:0;
-        background:#111;
-        color:white;
-        font-family:Arial;
-        text-align:center
-      }
+    let score=0;
 
-      canvas{
-        background:#222;
-        border:2px solid white;
-        margin-top:20px
-      }
+    document.onkeydown=e=>{
 
-    </style>
+        if(e.key==="ArrowUp"&&dy===0){dx=0;dy=-20}
+        if(e.key==="ArrowDown"&&dy===0){dx=0;dy=20}
+        if(e.key==="ArrowLeft"&&dx===0){dx=-20;dy=0}
+        if(e.key==="ArrowRight"&&dx===0){dx=20;dy=0}
 
-    <h2>🐍 Snake</h2>
+    };
 
-    <canvas id="c" width="400" height="400"></canvas>
+    function loop(){
 
-    <p>Use the arrow keys to move.</p>
+        x.fillStyle="#111";
+        x.fillRect(0,0,600,600);
 
-    <script>
-
-      const c=document.getElementById('c');
-      const x=c.getContext('2d');
-
-      let s=[{x:200,y:200}];
-
-      let d={x:20,y:0};
-
-      let food={
-        x:100,
-        y:100
-      };
-
-      onkeydown=e=>{
-
-        if(e.key==='ArrowUp'&&d.y===0)
-          d={x:0,y:-20};
-
-        if(e.key==='ArrowDown'&&d.y===0)
-          d={x:0,y:20};
-
-        if(e.key==='ArrowLeft'&&d.x===0)
-          d={x:-20,y:0};
-
-        if(e.key==='ArrowRight'&&d.x===0)
-          d={x:20,y:0};
-
-      };
-
-      setInterval(()=>{
-
-        let h={
-          x:s[0].x+d.x,
-          y:s[0].y+d.y
+        let head={
+            x:snake[0].x+dx,
+            y:snake[0].y+dy
         };
 
         if(
-          h.x<0||
-          h.x>=400||
-          h.y<0||
-          h.y>=400||
-          s.some(a=>a.x===h.x&&a.y===h.y)
+            head.x<0||
+            head.x>=600||
+            head.y<0||
+            head.y>=600||
+            snake.some(s=>s.x===head.x&&s.y===head.y)
         ){
 
-          s=[{x:200,y:200}];
-          d={x:20,y:0};
+            alert("Game Over! Score: "+score);
+            closeGame();
+            return;
 
-          return;
         }
 
-        s.unshift(h);
+        snake.unshift(head);
 
-        if(
-          h.x===food.x&&
-          h.y===food.y
-        ){
+        if(head.x===food.x&&head.y===food.y){
 
-          food={
-            x:Math.floor(Math.random()*20)*20,
-            y:Math.floor(Math.random()*20)*20
-          };
+            score++;
+
+            food={
+                x:Math.floor(Math.random()*30)*20,
+                y:Math.floor(Math.random()*30)*20
+            };
 
         }else{
-          s.pop();
+            snake.pop();
         }
 
-        x.clearRect(0,0,400,400);
+        x.fillStyle="lime";
 
-        x.fillStyle='lime';
+        snake.forEach(s=>x.fillRect(s.x,s.y,18,18));
 
-        s.forEach(a=>
-          x.fillRect(a.x,a.y,18,18)
-        );
+        x.fillStyle="red";
+        x.fillRect(food.x,food.y,18,18);
 
-        x.fillStyle='red';
+        x.fillStyle="white";
+        x.font="20px Arial";
+        x.fillText("Score: "+score,10,25);
 
-        x.fillRect(
-          food.x,
-          food.y,
-          18,
-          18
-        );
+        setTimeout(()=>animation=requestAnimationFrame(loop),90);
 
-      },120);
+    }
 
-    <\/script>
-  `;
+    loop();
 
-  p.style.display="flex";
 }
 
-render();
+
+/* SPACE SHOOTER */
+
+function spaceShooter(){
+
+    const c=canvas();
+    const x=c.getContext("2d");
+
+    let player={x:380,y:450};
+
+    let bullets=[];
+    let enemies=[];
+
+    let keys={};
+    let score=0;
+
+    document.onkeydown=e=>keys[e.key]=true;
+    document.onkeyup=e=>keys[e.key]=false;
+
+    function shoot(){
+
+        bullets.push({
+            x:player.x+18,
+            y:player.y
+        });
+
+    }
+
+    document.onkeydown=e=>{
+
+        keys[e.key]=true;
+
+        if(e.key===" ")shoot();
+
+    };
+
+    function spawn(){
+
+        enemies.push({
+            x:Math.random()*760,
+            y:-30,
+            speed:2+Math.random()*2
+        });
+
+    }
+
+    setInterval(spawn,700);
+
+    function loop(){
+
+        x.fillStyle="#020617";
+        x.fillRect(0,0,800,500);
+
+        if(keys.ArrowLeft)player.x-=6;
+        if(keys.ArrowRight)player.x+=6;
+
+        player.x=Math.max(0,Math.min(760,player.x));
+
+        x.fillStyle="#38bdf8";
+        x.fillRect(player.x,player.y,40,25);
+
+        bullets.forEach(b=>b.y-=8);
+
+        x.fillStyle="yellow";
+
+        bullets.forEach(b=>x.fillRect(b.x,b.y,5,15));
+
+        enemies.forEach(e=>e.y+=e.speed);
+
+        x.fillStyle="red";
+
+        enemies.forEach(e=>x.fillRect(e.x,e.y,30,25));
+
+        bullets.forEach((b,bi)=>{
+
+            enemies.forEach((e,ei)=>{
+
+                if(
+                    b.x<e.x+30 &&
+                    b.x+5>e.x &&
+                    b.y<e.y+25 &&
+                    b.y+15>e.y
+                ){
+
+                    enemies.splice(ei,1);
+                    bullets.splice(bi,1);
+                    score++;
+
+                }
+
+            });
+
+        });
+
+        x.fillStyle="white";
+        x.font="20px Arial";
+        x.fillText("Score: "+score,10,25);
+        x.fillText("Arrow keys + SPACE",570,25);
+
+        animation=requestAnimationFrame(loop);
+
+    }
+
+    loop();
+
+}
+
+
+/* ASTEROIDS */
+
+function asteroids(){
+
+    const c=canvas();
+    const x=c.getContext("2d");
+
+    let player={x:400,y:250};
+
+    let rocks=[];
+
+    for(let i=0;i<8;i++){
+
+        rocks.push({
+            x:Math.random()*800,
+            y:Math.random()*500,
+            dx:Math.random()*4-2,
+            dy:Math.random()*4-2,
+            r:20+Math.random()*20
+        });
+
+    }
+
+    let keys={};
+
+    document.onkeydown=e=>keys[e.key]=true;
+    document.onkeyup=e=>keys[e.key]=false;
+
+    function loop(){
+
+        x.fillStyle="black";
+        x.fillRect(0,0,800,500);
+
+        if(keys.ArrowLeft)player.x-=4;
+        if(keys.ArrowRight)player.x+=4;
+        if(keys.ArrowUp)player.y-=4;
+        if(keys.ArrowDown)player.y+=4;
+
+        player.x=(player.x+800)%800;
+        player.y=(player.y+500)%500;
+
+        x.fillStyle="white";
+        x.beginPath();
+        x.arc(player.x,player.y,10,0,Math.PI*2);
+        x.fill();
+
+        rocks.forEach(r=>{
+
+            r.x+=r.dx;
+            r.y+=r.dy;
+
+            r.x=(r.x+800)%800;
+            r.y=(r.y+500)%500;
+
+            x.strokeStyle="white";
+            x.beginPath();
+            x.arc(r.x,r.y,r.r,0,Math.PI*2);
+            x.stroke();
+
+        });
+
+        x.font="20px Arial";
+        x.fillText("Move with Arrow Keys",10,25);
+
+        animation=requestAnimationFrame(loop);
+
+    }
+
+    loop();
+
+}
+
+
+/* CAR RACER */
+
+function carRacer(){
+
+    const c=canvas(500,600);
+    const x=c.getContext("2d");
+
+    let car=230;
+    let enemies=[];
+
+    let score=0;
+
+    document.onkeydown=e=>{
+
+        if(e.key==="ArrowLeft")car-=15;
+        if(e.key==="ArrowRight")car+=15;
+
+    };
+
+    setInterval(()=>{
+
+        enemies.push({
+            x:100+Math.random()*280,
+            y:-80,
+            speed:4
+        });
+
+    },700);
+
+    function loop(){
+
+        x.fillStyle="#222";
+        x.fillRect(0,0,500,600);
+
+        x.fillStyle="#444";
+        x.fillRect(80,0,340,600);
+
+        x.fillStyle="white";
+
+        for(let y=0;y<600;y+=80)
+            x.fillRect(245,y,10,40);
+
+        car=Math.max(90,Math.min(370,car));
+
+        x.fillStyle="blue";
+        x.fillRect(car,500,45,70);
+
+        enemies.forEach(e=>e.y+=e.speed);
+
+        x.fillStyle="red";
+
+        enemies.forEach(e=>x.fillRect(e.x,e.y,45,70));
+
+        enemies.forEach(e=>{
+
+            if(
+                car<e.x+45 &&
+                car+45>e.x &&
+                500<e.y+70 &&
+                570>e.y
+            ){
+
+                alert("Crash! Score: "+score);
+                closeGame();
+
+            }
+
+        });
+
+        enemies=enemies.filter(e=>e.y<650);
+
+        score++;
+
+        x.fillStyle="white";
+        x.font="20px Arial";
+        x.fillText("Score: "+score,10,25);
+
+        animation=requestAnimationFrame(loop);
+
+    }
+
+    loop();
+
+}
+
+
+/* TARGET BLASTER */
+
+function targetBlaster(){
+
+    const c=canvas();
+    const x=c.getContext("2d");
+
+    let target={
+        x:Math.random()*750,
+        y:Math.random()*450
+    };
+
+    let score=0;
+    let time=30;
+
+    c.onclick=e=>{
+
+        const r=c.getBoundingClientRect();
+
+        let mx=e.clientX-r.left;
+        let my=e.clientY-r.top;
+
+        if(
+            Math.hypot(mx-target.x,my-target.y)<30
+        ){
+
+            score++;
+
+            target={
+                x:30+Math.random()*740,
+                y:50+Math.random()*420
+            };
+
+        }
+
+    };
+
+    let timer=setInterval(()=>{
+
+        time--;
+
+        if(time<=0){
+
+            clearInterval(timer);
+
+            alert("Score: "+score);
+
+            closeGame();
+
+        }
+
+    },1000);
+
+    function loop(){
+
+        x.fillStyle="#111";
+        x.fillRect(0,0,800,500);
+
+        x.fillStyle="red";
+        x.beginPath();
+        x.arc(target.x,target.y,30,0,Math.PI*2);
+        x.fill();
+
+        x.fillStyle="white";
+        x.font="20px Arial";
+        x.fillText("Score: "+score+"   Time: "+time,10,25);
+
+        animation=requestAnimationFrame(loop);
+
+    }
+
+    loop();
+
+}
+
+
+/* DODGE */
+
+function dodge(){
+
+    const c=canvas();
+    const x=c.getContext("2d");
+
+    let player=380;
+    let blocks=[];
+    let score=0;
+
+    document.onkeydown=e=>{
+
+        if(e.key==="ArrowLeft")player-=15;
+        if(e.key==="ArrowRight")player+=15;
+
+    };
+
+    setInterval(()=>{
+
+        blocks.push({
+            x:Math.random()*770,
+            y:-30
+        });
+
+    },300);
+
+    function loop(){
+
+        x.fillStyle="#111";
+        x.fillRect(0,0,800,500);
+
+        player=Math.max(0,Math.min(770,player));
+
+        x.fillStyle="cyan";
+        x.fillRect(player,450,30,30);
+
+        blocks.forEach(b=>b.y+=5);
+
+        x.fillStyle="orange";
+
+        blocks.forEach(b=>x.fillRect(b.x,b.y,30,30));
+
+        blocks.forEach(b=>{
+
+            if(
+                player<b.x+30 &&
+                player+30>b.x &&
+                450<b.y+30 &&
+                480>b.y
+            ){
+
+                alert("You lost! Score: "+score);
+                closeGame();
+
+            }
+
+        });
+
+        blocks=blocks.filter(b=>b.y<550);
+
+        score++;
+
+        x.fillStyle="white";
+        x.font="20px Arial";
+        x.fillText("Score: "+score,10,25);
+
+        animation=requestAnimationFrame(loop);
+
+    }
+
+    loop();
+
+}
+
+
+/* BREAKOUT */
+
+function breakout(){
+
+    const c=canvas();
+    const x=c.getContext("2d");
+
+    let px=350;
+    let ball={x:400,y:400,dx:4,dy:-4};
+
+    let bricks=[];
+
+    for(let r=0;r<5;r++)
+        for(let col=0;col<10;col++)
+            bricks.push({
+                x:50+col*70,
+                y:50+r*25,
+                alive:true
+            });
+
+    document.onkeydown=e=>{
+
+        if(e.key==="ArrowLeft")px-=20;
+        if(e.key==="ArrowRight")px+=20;
+
+    };
+
+    function loop(){
+
+        x.fillStyle="black";
+        x.fillRect(0,0,800,500);
+
+        ball.x+=ball.dx;
+        ball.y+=ball.dy;
+
+        if(ball.x<0||ball.x>800)ball.dx*=-1;
+        if(ball.y<0)ball.dy*=-1;
+
+        if(
+            ball.y>450 &&
+            ball.x>px &&
+            ball.x<px+100
+        )ball.dy=-Math.abs(ball.dy);
+
+        bricks.forEach(b=>{
+
+            if(
+                b.alive &&
+                ball.x>b.x &&
+                ball.x<b.x+60 &&
+                ball.y>b.y &&
+                ball.y<b.y+20
+            ){
+
+                b.alive=false;
+                ball.dy*=-1;
+
+            }
+
+        });
+
+        if(ball.y>500){
+
+            alert("Game Over");
+            closeGame();
+            return;
+
+        }
+
+        x.fillStyle="cyan";
+        x.fillRect(px,470,100,15);
+
+        x.fillStyle="white";
+
+        bricks.forEach(b=>{
+
+            if(b.alive)x.fillRect(b.x,b.y,60,20);
+
+        });
+
+        x.beginPath();
+        x.arc(ball.x,ball.y,8,0,Math.PI*2);
+        x.fill();
+
+        animation=requestAnimationFrame(loop);
+
+    }
+
+    loop();
+
+}
+
+
+/* FLAPPY */
+
+function flappy(){
+
+    const c=canvas(500,600);
+    const x=c.getContext("2d");
+
+    let bird=300;
+    let velocity=0;
+
+    let pipes=[];
+    let score=0;
+
+    document.onkeydown=e=>{
+
+        if(e.key===" "||e.key==="ArrowUp")
+            velocity=-7;
+
+    };
+
+    setInterval(()=>{
+
+        let gap=150;
+        let top=100+Math.random()*250;
+
+        pipes.push({
+            x:500,
+            top:top,
+            bottom:top+gap,
+            passed:false
+        });
+
+    },1500);
+
+    function loop(){
+
+        x.fillStyle="#60a5fa";
+        x.fillRect(0,0,500,600);
+
+        velocity+=.35;
+        bird+=velocity;
+
+        x.fillStyle="yellow";
+        x.beginPath();
+        x.arc(100,bird,15,0,Math.PI*2);
+        x.fill();
+
+        pipes.forEach(p=>{
+
+            p.x-=3;
+
+            x.fillStyle="green";
+
+            x.fillRect(p.x,0,60,p.top);
+            x.fillRect(p.x,p.bottom,60,600);
+
+            if(!p.passed&&p.x<100){
+
+                p.passed=true;
+                score++;
+
+            }
+
+            if(
+                100>p.x &&
+                100<p.x+60 &&
+                (bird<p.top||bird>p.bottom)
+            ){
+
+                alert("Game Over! Score: "+score);
+                closeGame();
+
+            }
+
+        });
+
+        if(bird<0||bird>600){
+
+            alert("Game Over! Score: "+score);
+            closeGame();
+            return;
+
+        }
+
+        x.fillStyle="white";
+        x.font="22px Arial";
+        x.fillText("Score: "+score,10,30);
+        x.fillText("SPACE = flap",350,30);
+
+        animation=requestAnimationFrame(loop);
+
+    }
+
+    loop();
+
+}
+
+
+/* PONG */
+
+function pong(){
+
+    const c=canvas(800,500);
+    const x=c.getContext("2d");
+
+    let py=200;
+    let cy=200;
+
+    let ball={
+        x:400,
+        y:250,
+        dx:5,
+        dy:3
+    };
+
+    let score=0;
+
+    document.onkeydown=e=>{
+
+        if(e.key==="ArrowUp")py-=20;
+        if(e.key==="ArrowDown")py+=20;
+
+    };
+
+    function loop(){
+
+        x.fillStyle="black";
+        x.fillRect(0,0,800,500);
+
+        ball.x+=ball.dx;
+        ball.y+=ball.dy;
+
+        if(ball.y<0||ball.y>500)ball.dy*=-1;
+
+        cy+=(ball.y-cy)*.08;
+
+        if(
+            ball.x<50 &&
+            ball.y>py &&
+            ball.y<py+100
+        )ball.dx=Math.abs(ball.dx);
+
+        if(
+            ball.x>750 &&
+            ball.y>cy &&
+            ball.y<cy+100
+        )ball.dx=-Math.abs(ball.dx);
+
+        if(ball.x<0||ball.x>800){
+
+            ball={
+                x:400,
+                y:250,
+                dx:5*(ball.x<0?1:-1),
+                dy:3
+            };
+
+            score++;
+
+        }
+
+        x.fillStyle="white";
+
+        x.fillRect(20,py,20,100);
+        x.fillRect(760,cy,20,100);
+
+        x.beginPath();
+        x.arc(ball.x,ball.y,10,0,Math.PI*2);
+        x.fill();
+
+        x.font="30px Arial";
+        x.fillText(score,390,40);
+
+        animation=requestAnimationFrame(loop);
+
+    }
+
+    loop();
+
+}
+
+
+/* 2048 */
+
+function game2048(){
+
+    const c=canvas(500,500);
+    const x=c.getContext("2d");
+
+    let grid=Array(16).fill(0);
+
+    function add(){
+
+        let empty=grid
+            .map((v,i)=>v===0?i:null)
+            .filter(v=>v!==null);
+
+        if(empty.length){
+
+            let i=empty[Math.floor(Math.random()*empty.length)];
+
+            grid[i]=Math.random()<.9?2:4;
+
+        }
+
+    }
+
+    add();
+    add();
+
+    document.onkeydown=e=>{
+
+        let moved=false;
+
+        function moveRow(row){
+
+            row=row.filter(v=>v);
+
+            for(let i=0;i<row.length-1;i++){
+
+                if(row[i]===row[i+1]){
+
+                    row[i]*=2;
+                    row.splice(i+1,1);
+
+                }
+
+            }
+
+            while(row.length<4)row.push(0);
+
+            return row;
+
+        }
+
+        if(e.key==="ArrowLeft"){
+
+            for(let r=0;r<4;r++){
+
+                let old=grid.slice(r*4,r*4+4);
+
+                let n=moveRow(old);
+
+                for(let c2=0;c2<4;c2++)
+                    grid[r*4+c2]=n[c2];
+
+            }
+
+            moved=true;
+
+        }
+
+        if(e.key==="ArrowRight"){
+
+            for(let r=0;r<4;r++){
+
+                let old=grid
+                    .slice(r*4,r*4+4)
+                    .reverse();
+
+                let n=moveRow(old).reverse();
+
+                for(let c2=0;c2<4;c2++)
+                    grid[r*4+c2]=n[c2];
+
+            }
+
+            moved=true;
+
+        }
+
+        if(e.key==="ArrowUp"){
+
+            for(let col=0;col<4;col++){
+
+                let old=[
+                    grid[col],
+                    grid[col+4],
+                    grid[col+8],
+                    grid[col+12]
+                ];
+
+                let n=moveRow(old);
+
+                for(let r=0;r<4;r++)
+                    grid[r*4+col]=n[r];
+
+            }
+
+            moved=true;
+
+        }
+
+        if(e.key==="ArrowDown"){
+
+            for(let col=0;col<4;col++){
+
+                let old=[
+                    grid[col],
+                    grid[col+4],
+                    grid[col+8],
+                    grid[col+12]
+                ].reverse();
+
+                let n=moveRow(old).reverse();
+
+                for(let r=0;r<4;r++)
+                    grid[r*4+col]=n[r];
+
+            }
+
+            moved=true;
+
+        }
+
+        if(moved)add();
+
+    };
+
+    function loop(){
+
+        x.fillStyle="#111827";
+        x.fillRect(0,0,500,500);
+
+        for(let i=0;i<16;i++){
+
+            let xx=(i%4)*120+10;
+            let yy=Math.floor(i/4)*120+10;
+
+            x.fillStyle="#374151";
+            x.fillRect(xx,yy,105,105);
+
+            if(grid[i]){
+
+                x.fillStyle="white";
+                x.font="30px Arial";
+                x.textAlign="center";
+                x.textBaseline="middle";
+
+                x.fillText(
+                    grid[i],
+                    xx+52,
+                    yy+52
+                );
+
+            }
+
+        }
+
+        x.textAlign="left";
+        x.textBaseline="alphabetic";
+
+        animation=requestAnimationFrame(loop);
+
+    }
+
+    loop();
+
+}
+
+renderGames();
 
 </script>
 
 </body>
 </html>
+```
