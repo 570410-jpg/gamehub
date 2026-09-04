@@ -2,379 +2,461 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>GameHub</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#080b12;
-    color:white;
-    overflow-x:hidden;
+* {
+    box-sizing: border-box;
 }
 
-button{
-    border:0;
-    border-radius:8px;
-    padding:12px 18px;
-    font-weight:bold;
-    cursor:pointer;
-    color:white;
-    background:#5865f2;
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #070a10;
+    color: white;
 }
 
-button:hover{filter:brightness(1.15)}
-
-#top{
-    height:70px;
-    background:#101522;
-    display:flex;
-    align-items:center;
-    padding:0 25px;
-    gap:30px;
-    border-bottom:1px solid #252c3c;
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 18px;
+    background: #5865f2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.logo{
-    font-size:25px;
-    font-weight:900;
+button:hover {
+    filter: brightness(1.15);
 }
 
-.nav{
-    display:flex;
-    gap:10px;
+input,
+select {
+    background: #090d16;
+    color: white;
+    border: 1px solid #39435a;
+    border-radius: 6px;
+    padding: 10px;
 }
 
-.nav button{
-    background:transparent;
+/* TOP BAR */
+
+#top {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 0 25px;
+    background: #111722;
+    border-bottom: 1px solid #2a3345;
+    position: relative;
+    z-index: 20;
 }
 
-.nav button.active{
-    background:#5865f2;
+.logo {
+    font-size: 25px;
+    font-weight: 900;
 }
 
-.spacer{flex:1}
-
-.currency{
-    background:#181f30;
-    padding:10px 15px;
-    border-radius:8px;
+.nav {
+    display: flex;
+    gap: 5px;
 }
 
-.page{
-    display:none;
-    padding:30px;
+.nav button {
+    background: transparent;
 }
 
-.page.active{
-    display:block;
+.nav button.active {
+    background: #5865f2;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.currency {
+    background: #1b2332;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+/* PAGES */
+
+.page {
+    display: none;
+    min-height: calc(100vh - 70px);
+    padding: 30px;
+}
+
+.page.active {
+    display: block;
 }
 
 /* LOBBY */
 
-#lobby{
-    min-height:calc(100vh - 70px);
-    position:relative;
-    overflow:hidden;
+#lobby {
     background:
-      radial-gradient(circle at 50% 20%,#29385f 0,#101522 45%,#080b12 100%);
+        radial-gradient(
+            circle at 50% 15%,
+            #334d79,
+            #121927 45%,
+            #070a10 90%
+        );
 }
 
-.hero{
-    max-width:1100px;
-    margin:auto;
-    text-align:center;
-    padding-top:55px;
+.hero {
+    text-align: center;
+    max-width: 1100px;
+    margin: auto;
+    padding-top: 45px;
 }
 
-.hero h1{
-    font-size:60px;
-    margin:0;
-    text-shadow:0 5px 25px #000;
+.hero h1 {
+    font-size: 65px;
+    margin: 0;
+    text-shadow: 0 5px 30px #000;
 }
 
-.hero p{
-    color:#b9c2d8;
-    font-size:18px;
+.hero p {
+    color: #b8c2d7;
+    font-size: 19px;
 }
 
-.play{
-    font-size:22px;
-    padding:17px 55px;
-    margin-top:20px;
-    background:#2ecc71;
+.play {
+    background: #2ecc71;
+    font-size: 22px;
+    padding: 17px 65px;
+    margin-top: 15px;
 }
 
-.player-card{
-    margin:45px auto;
-    max-width:500px;
-    padding:25px;
-    background:#111827dd;
-    border:1px solid #303a52;
-    border-radius:15px;
+.player-card {
+    margin: 40px auto;
+    max-width: 500px;
+    padding: 25px;
+    background: #111827dd;
+    border: 1px solid #35415a;
+    border-radius: 16px;
 }
 
-.avatar{
-    width:130px;
-    height:180px;
-    margin:auto;
-    position:relative;
+/* CHARACTER */
+
+.avatar {
+    width: 140px;
+    height: 210px;
+    margin: auto;
 }
 
-.head{
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    background:#e2a878;
-    margin:auto;
+.head {
+    width: 62px;
+    height: 62px;
+    background: #d99d6b;
+    border-radius: 50%;
+    margin: auto;
 }
 
-.body3d{
-    width:80px;
-    height:90px;
-    background:#5865f2;
-    margin:5px auto;
-    border-radius:12px;
+.body3d {
+    width: 82px;
+    height: 95px;
+    background: #5865f2;
+    border-radius: 12px;
+    margin: 6px auto;
 }
 
-.legs{
-    display:flex;
-    justify-content:center;
-    gap:8px;
+.legs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
 }
 
-.leg{
-    width:28px;
-    height:55px;
-    background:#222b42;
-    border-radius:7px;
+.leg {
+    width: 29px;
+    height: 58px;
+    background: #20293c;
+    border-radius: 7px;
 }
 
 /* SHOP */
 
-.shop-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-    gap:20px;
-    max-width:1100px;
-    margin:auto;
+.shop-grid {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
 }
 
-.item{
-    background:#111827;
-    border:1px solid #303a52;
-    border-radius:12px;
-    padding:18px;
-    text-align:center;
+.item {
+    background: #111827;
+    border: 1px solid #303a52;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
 }
 
-.item-preview{
-    height:170px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:80px;
-    background:#0b101c;
-    border-radius:10px;
-    margin-bottom:15px;
+.item-preview {
+    height: 170px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 75px;
+    background: #0b101a;
+    border-radius: 10px;
 }
 
-.price{
-    color:#ffd84d;
-    font-weight:bold;
+.price {
+    color: #ffd84d;
+    font-weight: bold;
 }
 
 /* LOCKER */
 
-.locker{
-    max-width:1000px;
-    margin:auto;
+.locker {
+    max-width: 1000px;
+    margin: auto;
 }
 
-.loadout{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:20px;
+.loadout {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
 }
 
-.slot{
-    background:#111827;
-    padding:25px;
-    border-radius:12px;
-    border:1px solid #303a52;
-    text-align:center;
+.slot {
+    background: #111827;
+    border: 1px solid #303a52;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+}
+
+/* MODES */
+
+.mode-select {
+    max-width: 1000px;
+    margin: auto;
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.mode {
+    background: #111827;
+    border: 1px solid #303a52;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.small {
+    color: #9da8bd;
 }
 
 /* SETTINGS */
 
-.settings{
-    max-width:700px;
-    margin:auto;
+.settings {
+    max-width: 700px;
+    margin: auto;
 }
 
-.setting{
-    background:#111827;
-    margin:12px 0;
-    padding:18px;
-    border-radius:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #111827;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 10px;
 }
 
-select,input{
-    background:#080b12;
-    color:white;
-    border:1px solid #343d53;
-    padding:9px;
-    border-radius:6px;
+/* ROOM */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: #000b;
+    z-index: 100;
 }
 
-/* MODAL */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:#000b;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:100;
+.modal-box {
+    width: min(500px, 90%);
+    background: #111827;
+    border: 1px solid #3b4861;
+    border-radius: 15px;
+    padding: 25px;
 }
 
-.modal-box{
-    width:min(500px,90%);
-    background:#111827;
-    border:1px solid #3c4964;
-    padding:25px;
-    border-radius:15px;
+.modal-box input {
+    width: 100%;
+    margin: 10px 0;
+    font-size: 18px;
 }
 
-.modal input{
-    width:100%;
-    margin:10px 0;
-    font-size:18px;
-}
-
-.close{
-    float:right;
-    background:#252c3c;
+.close {
+    float: right;
+    background: #252d3c;
 }
 
 /* GAME */
 
-#gamePage{
-    padding:0;
-    height:calc(100vh - 70px);
-    background:#05070b;
+#gamePage {
+    padding: 0;
+    height: calc(100vh - 70px);
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+    background: #000;
 }
 
-#gameCanvas{
-    width:100%;
-    height:100%;
-    display:block;
-    background:linear-gradient(#6aa8d8,#c7e5f2);
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
-.hud{
-    position:absolute;
-    inset:70px 0 0 0;
-    pointer-events:none;
+.hud {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
 }
 
-.crosshair{
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    font-size:30px;
+.crosshair {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    font-weight: bold;
 }
 
-.health{
-    position:absolute;
-    left:25px;
-    bottom:25px;
-    width:260px;
+.health {
+    position: absolute;
+    left: 25px;
+    bottom: 25px;
+    width: 260px;
 }
 
-.bar{
-    height:18px;
-    background:#222;
-    margin-top:7px;
-    border-radius:10px;
-    overflow:hidden;
+.bar {
+    height: 17px;
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 5px 0 10px;
 }
 
-.hp{
-    height:100%;
-    background:#e74c3c;
-    width:100%;
+.hp {
+    width: 100%;
+    height: 100%;
+    background: #e74c3c;
 }
 
-.shield{
-    height:100%;
-    background:#3498db;
-    width:100%;
+.shield {
+    width: 100%;
+    height: 100%;
+    background: #3498db;
 }
 
-.controls{
-    position:absolute;
-    right:20px;
-    bottom:20px;
-    background:#111a;
-    padding:15px;
-    border-radius:10px;
+.controls {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background: #111a;
+    padding: 15px;
+    border-radius: 10px;
+    line-height: 1.7;
 }
 
-.mode-select{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
-    max-width:1000px;
-    margin:auto;
-}
+/* RESPONSIVE */
 
-.mode{
-    background:#111827;
-    border:1px solid #303a52;
-    padding:25px;
-    border-radius:12px;
-}
+@media (max-width: 800px) {
 
-.mode h3{
-    margin-top:0;
-}
+    #top {
+        gap: 8px;
+        padding: 0 10px;
+    }
 
-.small{
-    color:#9da8bd;
+    .logo {
+        font-size: 18px;
+    }
+
+    .nav button {
+        padding: 8px;
+        font-size: 11px;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
 }
 </style>
 </head>
 
 <body>
 
+<!-- ==============================
+     TOP NAVIGATION
+================================ -->
+
 <header id="top">
-    <div class="logo">🎮 GameHub</div>
+
+    <div class="logo">
+        🎮 GameHub
+    </div>
 
     <div class="nav">
-        <button class="active" onclick="showPage('lobby',this)">Lobby</button>
-        <button onclick="showPage('shop',this)">Shop</button>
-        <button onclick="showPage('locker',this)">Locker</button>
-        <button onclick="showPage('modes',this)">Play</button>
-        <button onclick="showPage('settings',this)">Settings</button>
+
+        <button
+            class="active"
+            onclick="showPage('lobby', this)">
+            Lobby
+        </button>
+
+        <button
+            onclick="showPage('shop', this)">
+            Shop
+        </button>
+
+        <button
+            onclick="showPage('locker', this)">
+            Locker
+        </button>
+
+        <button
+            onclick="showPage('modes', this)">
+            Play
+        </button>
+
+        <button
+            onclick="showPage('settings', this)">
+            Settings
+        </button>
+
     </div>
 
     <div class="spacer"></div>
 
-    <div class="currency">🪙 <span id="coins">2500</span></div>
+    <div class="currency">
+        🪙 <span id="coins">2500</span>
+    </div>
+
 </header>
 
 
-<!-- LOBBY -->
+<!-- ==============================
+     LOBBY
+================================ -->
 
-<section id="lobby" class="page active">
+<section
+    id="lobby"
+    class="page active">
 
     <div class="hero">
 
@@ -384,8 +466,12 @@ select,input{
             Build. Fight. Survive.
         </p>
 
-        <button class="play" onclick="showPage('modes')">
+        <button
+            class="play"
+            onclick="showPage('modes')">
+
             PLAY
+
         </button>
 
         <div class="player-card">
@@ -397,13 +483,18 @@ select,input{
                 <div class="body3d"></div>
 
                 <div class="legs">
+
                     <div class="leg"></div>
+
                     <div class="leg"></div>
+
                 </div>
 
             </div>
 
-            <h2 id="playerName">Player</h2>
+            <h2 id="playerName">
+                Player
+            </h2>
 
             <p class="small">
                 Level 1 • Ready
@@ -416,58 +507,151 @@ select,input{
 </section>
 
 
-<!-- SHOP -->
+<!-- ==============================
+     SHOP
+================================ -->
 
-<section id="shop" class="page">
+<section
+    id="shop"
+    class="page">
 
     <h1>Daily Shop</h1>
 
     <p class="small">
-        Items rotate every day.
+        New items every day.
     </p>
 
     <div class="shop-grid">
 
         <div class="item">
-            <div class="item-preview">🥷</div>
-            <h2>Shadow Runner</h2>
-            <p class="price">🪙 800</p>
-            <button onclick="buy(800,'Shadow Runner')">BUY</button>
+
+            <div class="item-preview">
+                🥷
+            </div>
+
+            <h2>
+                Shadow Runner
+            </h2>
+
+            <p class="price">
+                🪙 800
+            </p>
+
+            <button
+                onclick="buy(800,'Shadow Runner')">
+                BUY
+            </button>
+
         </div>
 
-        <div class="item">
-            <div class="item-preview">🤖</div>
-            <h2>Cyber Soldier</h2>
-            <p class="price">🪙 1200</p>
-            <button onclick="buy(1200,'Cyber Soldier')">BUY</button>
-        </div>
 
         <div class="item">
-            <div class="item-preview">⚡</div>
-            <h2>Storm Pickaxe</h2>
-            <p class="price">🪙 500</p>
-            <button onclick="buy(500,'Storm Pickaxe')">BUY</button>
+
+            <div class="item-preview">
+                🤖
+            </div>
+
+            <h2>
+                Cyber Soldier
+            </h2>
+
+            <p class="price">
+                🪙 1200
+            </p>
+
+            <button
+                onclick="buy(1200,'Cyber Soldier')">
+                BUY
+            </button>
+
         </div>
 
-        <div class="item">
-            <div class="item-preview">🔥</div>
-            <h2>Fire Emote</h2>
-            <p class="price">🪙 300</p>
-            <button onclick="buy(300,'Fire Emote')">BUY</button>
-        </div>
 
         <div class="item">
-            <div class="item-preview">👽</div>
-            <h2>Alien Outfit</h2>
-            <p class="price">🪙 1000</p>
-            <button onclick="buy(1000,'Alien Outfit')">BUY</button>
+
+            <div class="item-preview">
+                ⚡
+            </div>
+
+            <h2>
+                Storm Pickaxe
+            </h2>
+
+            <p class="price">
+                🪙 500
+            </p>
+
+            <button
+                onclick="buy(500,'Storm Pickaxe')">
+                BUY
+            </button>
+
         </div>
 
+
         <div class="item">
-            <div class="item-preview">🪽</div>
-            <h2>Sky Glider</h2>
-            <p class="price">🪙 700</p>
-            <button onclick="buy(700,'Sky Glider')">BUY</button>
+
+            <div class="item-preview">
+                🔥
+            </div>
+
+            <h2>
+                Fire Emote
+            </h2>
+
+            <p class="price">
+                🪙 300
+            </p>
+
+            <button
+                onclick="buy(300,'Fire Emote')">
+                BUY
+            </button>
+
+        </div>
+
+
+        <div class="item">
+
+            <div class="item-preview">
+                👽
+            </div>
+
+            <h2>
+                Alien Outfit
+            </h2>
+
+            <p class="price">
+                🪙 1000
+            </p>
+
+            <button
+                onclick="buy(1000,'Alien Outfit')">
+                BUY
+            </button>
+
+        </div>
+
+
+        <div class="item">
+
+            <div class="item-preview">
+                🪽
+            </div>
+
+            <h2>
+                Sky Glider
+            </h2>
+
+            <p class="price">
+                🪙 700
+            </p>
+
+            <button
+                onclick="buy(700,'Sky Glider')">
+                BUY
+            </button>
+
         </div>
 
     </div>
@@ -475,42 +659,89 @@ select,input{
 </section>
 
 
-<!-- LOCKER -->
+<!-- ==============================
+     LOCKER
+================================ -->
 
-<section id="locker" class="page">
+<section
+    id="locker"
+    class="page">
 
     <div class="locker">
 
         <h1>Locker</h1>
 
         <p class="small">
-            Customize your character.
+            Customize your loadout.
         </p>
 
         <div class="loadout">
 
             <div class="slot">
-                <div style="font-size:70px">🥷</div>
-                <h3>Outfit</h3>
-                <button onclick="changeSkin()">CHANGE</button>
+
+                <div style="font-size:70px">
+                    🥷
+                </div>
+
+                <h3>
+                    Outfit
+                </h3>
+
+                <button onclick="changeSkin()">
+                    CHANGE
+                </button>
+
             </div>
 
-            <div class="slot">
-                <div style="font-size:70px">⚡</div>
-                <h3>Pickaxe</h3>
-                <button>CHANGE</button>
-            </div>
 
             <div class="slot">
-                <div style="font-size:70px">🪽</div>
-                <h3>Glider</h3>
-                <button>CHANGE</button>
+
+                <div style="font-size:70px">
+                    ⚡
+                </div>
+
+                <h3>
+                    Pickaxe
+                </h3>
+
+                <button>
+                    CHANGE
+                </button>
+
             </div>
 
+
             <div class="slot">
-                <div style="font-size:70px">🔥</div>
-                <h3>Emote</h3>
-                <button>CHANGE</button>
+
+                <div style="font-size:70px">
+                    🪽
+                </div>
+
+                <h3>
+                    Glider
+                </h3>
+
+                <button>
+                    CHANGE
+                </button>
+
+            </div>
+
+
+            <div class="slot">
+
+                <div style="font-size:70px">
+                    🔥
+                </div>
+
+                <h3>
+                    Emote
+                </h3>
+
+                <button>
+                    CHANGE
+                </button>
+
             </div>
 
         </div>
@@ -520,103 +751,244 @@ select,input{
 </section>
 
 
-<!-- MODES -->
+<!-- ==============================
+     GAME MODES
+================================ -->
 
-<section id="modes" class="page">
+<section
+    id="modes"
+    class="page">
 
-    <h1>Play</h1>
+    <h1>
+        Play
+    </h1>
 
     <div class="mode-select">
 
-        <div class="mode">
-            <h3>🏝️ Battle Royale</h3>
-            <p class="small">
-                Fight other players and be the last player standing.
-            </p>
-            <button onclick="startGame('Battle Royale')">PLAY</button>
-        </div>
 
         <div class="mode">
-            <h3>⚔️ 1v1 Build Fight</h3>
+
+            <h3>
+                🏝️ Battle Royale
+            </h3>
+
             <p class="small">
-                Build ramps, walls and floors while fighting your opponent.
+                Fight other players and
+                be the last one standing.
             </p>
-            <button onclick="openRoom('1v1 Build Fight')">PLAY</button>
+
+            <button
+                onclick="startGame('Battle Royale')">
+                PLAY
+            </button>
+
         </div>
 
+
         <div class="mode">
-            <h3>📦 1v1 Box Fight</h3>
+
+            <h3>
+                ⚔️ 1v1 Build Fight
+            </h3>
+
+            <p class="small">
+                Build walls, floors and ramps
+                while fighting your opponent.
+            </p>
+
+            <button
+                onclick="openRoom('1v1 Build Fight')">
+                PLAY
+            </button>
+
+        </div>
+
+
+        <div class="mode">
+
+            <h3>
+                📦 1v1 Box Fight
+            </h3>
+
             <p class="small">
                 Fast close-range building combat.
             </p>
-            <button onclick="openRoom('1v1 Box Fight')">PLAY</button>
+
+            <button
+                onclick="openRoom('1v1 Box Fight')">
+                PLAY
+            </button>
+
         </div>
 
+
         <div class="mode">
-            <h3>👥 2v2 Box Fight</h3>
+
+            <h3>
+                👥 2v2 Box Fight
+            </h3>
+
             <p class="small">
-                Team up with a friend and fight another team.
+                Team up with a friend.
             </p>
-            <button onclick="openRoom('2v2 Box Fight')">PLAY</button>
+
+            <button
+                onclick="openRoom('2v2 Box Fight')">
+                PLAY
+            </button>
+
+        </div>
+
+
+        <div class="mode">
+
+            <h3>
+                🔒 Private Match
+            </h3>
+
+            <p class="small">
+                Create a private room
+                and invite your friends.
+            </p>
+
+            <button
+                onclick="openRoom('Private Match')">
+                CREATE ROOM
+            </button>
+
         </div>
 
     </div>
 
-    <br>
-
-    <button onclick="openRoom('Private Match')">
-        🔒 CREATE / JOIN PRIVATE ROOM
-    </button>
-
 </section>
 
 
-<!-- SETTINGS -->
+<!-- ==============================
+     SETTINGS
+================================ -->
 
-<section id="settings" class="page">
+<section
+    id="settings"
+    class="page">
 
     <div class="settings">
 
-        <h1>Settings</h1>
+        <h1>
+            Settings
+        </h1>
+
 
         <div class="setting">
-            <span>Mouse Sensitivity</span>
-            <input id="sens" type="range" min="1" max="100" value="50">
+
+            <span>
+                Mouse Sensitivity
+            </span>
+
+            <input
+                id="sens"
+                type="range"
+                min="1"
+                max="100"
+                value="50">
+
         </div>
 
+
         <div class="setting">
-            <span>Graphics</span>
+
+            <span>
+                Graphics
+            </span>
 
             <select>
-                <option>Low</option>
-                <option selected>Medium</option>
-                <option>High</option>
-                <option>Ultra</option>
+
+                <option>
+                    Low
+                </option>
+
+                <option selected>
+                    Medium
+                </option>
+
+                <option>
+                    High
+                </option>
+
+                <option>
+                    Ultra
+                </option>
+
             </select>
+
         </div>
 
-        <div class="setting">
-            <span>Sound</span>
-            <input type="range" min="0" max="100" value="70">
-        </div>
 
         <div class="setting">
-            <span>Music</span>
-            <input type="range" min="0" max="100" value="50">
+
+            <span>
+                Sound
+            </span>
+
+            <input
+                type="range"
+                min="0"
+                max="100"
+                value="70">
+
         </div>
 
-        <div class="setting">
-            <span>Fullscreen</span>
-            <button onclick="fullscreen()">ENABLE</button>
-        </div>
 
         <div class="setting">
-            <span>Crosshair</span>
+
+            <span>
+                Music
+            </span>
+
+            <input
+                type="range"
+                min="0"
+                max="100"
+                value="50">
+
+        </div>
+
+
+        <div class="setting">
+
+            <span>
+                Fullscreen
+            </span>
+
+            <button
+                onclick="fullscreen()">
+                ENABLE
+            </button>
+
+        </div>
+
+
+        <div class="setting">
+
+            <span>
+                Crosshair
+            </span>
+
             <select>
-                <option>Dot</option>
-                <option selected>Cross</option>
-                <option>Circle</option>
+
+                <option>
+                    Dot
+                </option>
+
+                <option selected>
+                    Cross
+                </option>
+
+                <option>
+                    Circle
+                </option>
+
             </select>
+
         </div>
 
     </div>
@@ -624,45 +996,93 @@ select,input{
 </section>
 
 
-<!-- GAME -->
+<!-- ==============================
+     GAME
+================================ -->
 
-<section id="gamePage" class="page">
+<section
+    id="gamePage"
+    class="page">
 
-    <canvas id="gameCanvas"></canvas>
+    <canvas
+        id="gameCanvas">
+    </canvas>
+
 
     <div class="hud">
 
-        <div class="crosshair">+</div>
+        <div class="crosshair">
+            +
+        </div>
+
 
         <div class="health">
 
-            <div>❤️ HEALTH</div>
-
-            <div class="bar">
-                <div class="hp" id="hp"></div>
+            <div>
+                ❤️ HEALTH
             </div>
 
-            <div>🛡️ SHIELD</div>
+            <div class="bar">
+
+                <div
+                    class="hp"
+                    id="hp">
+                </div>
+
+            </div>
+
+
+            <div>
+                🛡️ SHIELD
+            </div>
 
             <div class="bar">
-                <div class="shield" id="shield"></div>
+
+                <div
+                    class="shield"
+                    id="shield">
+                </div>
+
             </div>
 
         </div>
 
+
         <div class="controls">
 
-            <b>CONTROLS</b><br><br>
+            <b>
+                CONTROLS
+            </b>
 
-            WASD — Move<br>
-            SHIFT — Sprint<br>
-            SPACE — Jump<br>
-            Mouse — Aim<br>
-            Left Click — Shoot<br>
-            Q — Build Mode<br>
-            1 — Wall<br>
-            2 — Floor<br>
-            3 — Ramp<br>
+            <br>
+
+            WASD — Move
+            <br>
+
+            SHIFT — Sprint
+            <br>
+
+            SPACE — Jump
+            <br>
+
+            Mouse — Aim
+            <br>
+
+            Left Click — Shoot
+            <br>
+
+            Q — Build Mode
+            <br>
+
+            1 — Wall
+            <br>
+
+            2 — Floor
+            <br>
+
+            3 — Ramp
+            <br>
+
             ESC — Exit
 
         </div>
@@ -672,18 +1092,29 @@ select,input{
 </section>
 
 
-<!-- PRIVATE ROOM MODAL -->
+<!-- ==============================
+     ROOM MODAL
+================================ -->
 
-<div id="roomModal" class="modal">
+<div
+    id="roomModal"
+    class="modal">
 
     <div class="modal-box">
 
-        <button class="close" onclick="closeRoom()">X</button>
+        <button
+            class="close"
+            onclick="closeRoom()">
+            X
+        </button>
 
-        <h2 id="roomTitle">Private Match</h2>
+        <h2 id="roomTitle">
+            Private Match
+        </h2>
 
         <p>
-            Create a room or enter your friend's code.
+            Create a room or enter
+            your friend's code.
         </p>
 
         <button onclick="createRoom()">
@@ -695,169 +1126,194 @@ select,input{
         <input
             id="roomCode"
             placeholder="Enter room code"
-            maxlength="8"
-        >
+            maxlength="8">
 
         <button onclick="joinRoom()">
             JOIN ROOM
         </button>
 
-        <p id="roomStatus" class="small"></p>
+        <p
+            id="roomStatus"
+            class="small">
+        </p>
 
     </div>
 
 </div>
 
 
+<!-- ==============================
+     BASIC GAMEHUB FUNCTIONS
+================================ -->
+
 <script>
 
-/* -------------------------
-   NAVIGATION
-------------------------- */
+let coins =
+    Number(localStorage.getItem("gamehubCoins")) || 2500;
 
-function showPage(id,button){
+document.getElementById("coins")
+    .textContent = coins;
 
-    document.querySelectorAll('.page')
-        .forEach(p=>p.classList.remove('active'));
 
-    document.getElementById(id)
-        .classList.add('active');
+function showPage(id, button) {
 
-    document.querySelectorAll('.nav button')
-        .forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll(".page")
+        .forEach(page => {
+            page.classList.remove("active");
+        });
 
-    if(button)
-        button.classList.add('active');
+    const page =
+        document.getElementById(id);
+
+    if (page) {
+        page.classList.add("active");
+    }
+
+
+    document.querySelectorAll(".nav button")
+        .forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+
+    if (button) {
+        button.classList.add("active");
+    }
 
 }
 
 
-/* -------------------------
-   SHOP
-------------------------- */
+function buy(price, item) {
 
-let coins =
-    Number(localStorage.getItem('gamehubCoins')) || 2500;
+    if (coins < price) {
 
-document.getElementById('coins').textContent = coins;
-
-function buy(price,item){
-
-    if(coins < price){
-
-        alert('You do not have enough coins.');
+        alert(
+            "You do not have enough coins."
+        );
 
         return;
     }
+
 
     coins -= price;
 
-    localStorage.setItem('gamehubCoins',coins);
+    localStorage.setItem(
+        "gamehubCoins",
+        coins
+    );
 
-    document.getElementById('coins').textContent = coins;
 
-    alert('Purchased ' + item + '!');
+    document.getElementById("coins")
+        .textContent = coins;
+
+
+    alert(
+        "Purchased " + item + "!"
+    );
+
 }
 
 
-/* -------------------------
-   PLAYER
-------------------------- */
+function changeSkin() {
 
-let playerName =
-    localStorage.getItem('gamehubName') || 'Player';
-
-document.getElementById('playerName')
-    .textContent = playerName;
-
-
-function changeSkin(){
-
-    const skins=[
-        'Shadow Runner',
-        'Cyber Soldier',
-        'Alien',
-        'Storm Warrior'
-    ];
-
-    const selected =
+    const skin =
         prompt(
-            'Choose your skin:\n\n' +
-            skins.join('\n')
+            "Enter the skin you want to equip:\n\n" +
+            "Shadow Runner\n" +
+            "Cyber Soldier\n" +
+            "Alien\n" +
+            "Storm Warrior"
         );
 
-    if(selected){
+
+    if (skin) {
 
         localStorage.setItem(
-            'gamehubSkin',
-            selected
+            "gamehubSkin",
+            skin
         );
 
         alert(
-            'Equipped: ' + selected
+            "Equipped " + skin
         );
+
     }
-}
-
-
-/* -------------------------
-   ROOMS
-------------------------- */
-
-let selectedMode='';
-
-function openRoom(mode){
-
-    selectedMode=mode;
-
-    document.getElementById('roomTitle')
-        .textContent=mode;
-
-    document.getElementById('roomModal')
-        .style.display='flex';
 
 }
 
-function closeRoom(){
 
-    document.getElementById('roomModal')
-        .style.display='none';
+function fullscreen() {
+
+    document.documentElement
+        .requestFullscreen?.();
 
 }
 
-function createRoom(){
+
+let selectedMode = "";
+
+
+function openRoom(mode) {
+
+    selectedMode = mode;
+
+    document.getElementById("roomTitle")
+        .textContent = mode;
+
+    document.getElementById("roomModal")
+        .style.display = "flex";
+
+}
+
+
+function closeRoom() {
+
+    document.getElementById("roomModal")
+        .style.display = "none";
+
+}
+
+
+function createRoom() {
 
     const code =
         Math.random()
-        .toString(36)
-        .substring(2,8)
-        .toUpperCase();
+            .toString(36)
+            .substring(2, 8)
+            .toUpperCase();
 
-    document.getElementById('roomCode')
-        .value=code;
 
-    document.getElementById('roomStatus')
-        .textContent=
-        'Your room code is '+
-        code+
-        '. Give it to your friend.';
+    document.getElementById("roomCode")
+        .value = code;
+
+
+    document.getElementById("roomStatus")
+        .textContent =
+        "Room created! Give this code to your friend: " +
+        code;
 
 }
 
-function joinRoom(){
+
+function joinRoom() {
 
     const code =
-        document.getElementById('roomCode')
-        .value
-        .trim()
-        .toUpperCase();
+        document.getElementById("roomCode")
+            .value
+            .trim()
+            .toUpperCase();
 
-    if(!code){
 
-        alert('Enter a room code.');
+    if (!code) {
+
+        alert(
+            "Enter a room code."
+        );
 
         return;
+
     }
+
 
     closeRoom();
 
@@ -866,581 +1322,38 @@ function joinRoom(){
 }
 
 
-/* -------------------------
-   FULLSCREEN
-------------------------- */
+/*
+    This function is replaced by game.js
+    when the 3D engine loads.
+*/
 
-function fullscreen(){
+function startGame(mode) {
 
-    document.documentElement
-        .requestFullscreen?.();
+    showPage("gamePage");
 
-}
-
-
-/* -------------------------
-   GAME
-------------------------- */
-
-const canvas =
-    document.getElementById('gameCanvas');
-
-const ctx =
-    canvas.getContext('2d');
-
-let gameRunning=false;
-
-let player={
-    x:0,
-    y:0,
-    z:0,
-    vx:0,
-    vy:0,
-    vz:0,
-    health:100,
-    shield:100
-};
-
-let keys={};
-
-let buildMode=false;
-
-let builds=[];
-
-let bullets=[];
-
-let enemies=[
-    {x:350,y:0,z:250,health:100},
-    {x:-300,y:0,z:450,health:100},
-    {x:100,y:0,z:650,health:100}
-];
-
-function resizeCanvas(){
-
-    canvas.width=
-        window.innerWidth;
-
-    canvas.height=
-        window.innerHeight-70;
-
-}
-
-window.addEventListener(
-    'resize',
-    resizeCanvas
-);
-
-resizeCanvas();
-
-
-document.addEventListener(
-    'keydown',
-    e=>{
-
-        keys[e.key.toLowerCase()]=true;
-
-        if(e.key.toLowerCase()==='q')
-            buildMode=!buildMode;
-
-        if(e.key==='Escape')
-            stopGame();
-
-    }
-);
-
-document.addEventListener(
-    'keyup',
-    e=>{
-        keys[e.key.toLowerCase()]=false;
-    }
-);
-
-
-canvas.addEventListener(
-    'mousedown',
-    e=>{
-
-        if(!gameRunning)
-            return;
-
-        if(buildMode){
-
-            buildPiece();
-
-        }else{
-
-            shoot();
-
-        }
-
-    }
-);
-
-
-function startGame(mode){
-
-    showPage('gamePage');
-
-    gameRunning=true;
-
-    player.x=0;
-    player.y=0;
-    player.z=0;
-    player.health=100;
-    player.shield=100;
-
-    gameLoop();
-
-}
-
-
-function stopGame(){
-
-    gameRunning=false;
-
-    showPage('lobby');
-
-}
-
-
-/* -------------------------
-   MOVEMENT
-------------------------- */
-
-function updatePlayer(){
-
-    let speed=
-        keys['shift'] ? 9 : 5;
-
-    player.vx=0;
-    player.vz=0;
-
-    if(keys['w'])
-        player.vz-=speed;
-
-    if(keys['s'])
-        player.vz+=speed;
-
-    if(keys['a'])
-        player.vx-=speed;
-
-    if(keys['d'])
-        player.vx+=speed;
-
-    player.x+=player.vx;
-    player.z+=player.vz;
-
-    if(keys[' '] && player.y<=0)
-        player.vy=14;
-
-    player.vy-=0.7;
-
-    player.y+=player.vy;
-
-    if(player.y<0){
-
-        player.y=0;
-        player.vy=0;
-
-    }
-
-}
-
-
-/* -------------------------
-   CAMERA / 3D PROJECTION
-------------------------- */
-
-function project(x,y,z){
-
-    const scale=
-        500/(z-player.z+500);
-
-    return {
-
-        x:
-            canvas.width/2+
-            (x-player.x)*scale,
-
-        y:
-            canvas.height/2-
-            (y-player.y)*scale,
-
-        scale
-
-    };
-
-}
-
-
-/* -------------------------
-   WORLD
-------------------------- */
-
-function drawWorld(){
-
-    ctx.clearRect(
-        0,0,
-        canvas.width,
-        canvas.height
+    console.log(
+        "Starting " + mode
     );
-
-    /* ground */
-
-    ctx.fillStyle='#5c9149';
-
-    ctx.fillRect(
-        0,
-        canvas.height/2,
-        canvas.width,
-        canvas.height/2
-    );
-
-    /* grid */
-
-    ctx.strokeStyle='#ffffff18';
-
-    for(let z=-500;z<3000;z+=100){
-
-        const a=project(-1500,0,z);
-        const b=project(1500,0,z);
-
-        ctx.beginPath();
-        ctx.moveTo(a.x,a.y);
-        ctx.lineTo(b.x,b.y);
-        ctx.stroke();
-
-    }
-
-    for(let x=-1500;x<1500;x+=100){
-
-        const a=project(x,0,-500);
-        const b=project(x,0,3000);
-
-        ctx.beginPath();
-        ctx.moveTo(a.x,a.y);
-        ctx.lineTo(b.x,b.y);
-        ctx.stroke();
-
-    }
-
-}
-
-
-/* -------------------------
-   BUILDING
-------------------------- */
-
-function buildPiece(){
-
-    const type=
-        keys['1']?'wall':
-        keys['2']?'floor':
-        keys['3']?'ramp':
-        'wall';
-
-    builds.push({
-
-        x:
-            Math.round(player.x/100)*100,
-
-        y:
-            Math.round(player.y/100)*100,
-
-        z:
-            Math.round((player.z+400)/100)*100,
-
-        type
-
-    });
-
-}
-
-
-function drawBuilds(){
-
-    builds.forEach(b=>{
-
-        const p=
-            project(
-                b.x,
-                b.y+50,
-                b.z
-            );
-
-        const size=
-            100*p.scale;
-
-        ctx.save();
-
-        ctx.strokeStyle='#8dd7ff';
-        ctx.fillStyle='#5eb7dc55';
-
-        if(b.type==='wall'){
-
-            ctx.fillRect(
-                p.x-size/2,
-                p.y-size,
-                size,
-                size
-            );
-
-            ctx.strokeRect(
-                p.x-size/2,
-                p.y-size,
-                size,
-                size
-            );
-
-        }
-
-        if(b.type==='floor'){
-
-            ctx.beginPath();
-
-            ctx.moveTo(
-                p.x-size,
-                p.y
-            );
-
-            ctx.lineTo(
-                p.x+size,
-                p.y
-            );
-
-            ctx.lineTo(
-                p.x+size/2,
-                p.y+size/2
-            );
-
-            ctx.lineTo(
-                p.x-size/2,
-                p.y+size/2
-            );
-
-            ctx.closePath();
-
-            ctx.fill();
-            ctx.stroke();
-
-        }
-
-        if(b.type==='ramp'){
-
-            ctx.beginPath();
-
-            ctx.moveTo(
-                p.x-size,
-                p.y+size/2
-            );
-
-            ctx.lineTo(
-                p.x+size,
-                p.y
-            );
-
-            ctx.lineTo(
-                p.x+size,
-                p.y+size/2
-            );
-
-            ctx.closePath();
-
-            ctx.fill();
-            ctx.stroke();
-
-        }
-
-        ctx.restore();
-
-    });
-
-}
-
-
-/* -------------------------
-   SHOOTING
-------------------------- */
-
-function shoot(){
-
-    bullets.push({
-
-        x:player.x,
-
-        y:player.y+60,
-
-        z:player.z+100,
-
-        life:60
-
-    });
-
-}
-
-
-function updateBullets(){
-
-    bullets.forEach(b=>{
-
-        b.z+=30;
-        b.life--;
-
-        enemies.forEach(enemy=>{
-
-            const dx=
-                enemy.x-b.x;
-
-            const dz=
-                enemy.z-b.z;
-
-            const distance=
-                Math.sqrt(dx*dx+dz*dz);
-
-            if(distance<80){
-
-                enemy.health-=25;
-
-                b.life=0;
-
-            }
-
-        });
-
-    });
-
-    bullets=
-        bullets.filter(
-            b=>b.life>0
-        );
-
-}
-
-
-function drawBullets(){
-
-    bullets.forEach(b=>{
-
-        const p=
-            project(b.x,b.y,b.z);
-
-        ctx.fillStyle='yellow';
-
-        ctx.beginPath();
-
-        ctx.arc(
-            p.x,
-            p.y,
-            Math.max(2,8*p.scale),
-            0,
-            Math.PI*2
-        );
-
-        ctx.fill();
-
-    });
-
-}
-
-
-/* -------------------------
-   ENEMIES
-------------------------- */
-
-function drawEnemies(){
-
-    enemies.forEach(enemy=>{
-
-        if(enemy.health<=0)
-            return;
-
-        const p=
-            project(
-                enemy.x,
-                enemy.y+80,
-                enemy.z
-            );
-
-        const size=
-            70*p.scale;
-
-        ctx.fillStyle='#d94c4c';
-
-        ctx.fillRect(
-            p.x-size/2,
-            p.y-size,
-            size,
-            size
-        );
-
-        ctx.fillStyle='#222';
-
-        ctx.fillRect(
-            p.x-size/2,
-            p.y-size-12,
-            size,
-            6
-        );
-
-        ctx.fillStyle='#43e06f';
-
-        ctx.fillRect(
-            p.x-size/2,
-            p.y-size-12,
-            size*(enemy.health/100),
-            6
-        );
-
-    });
-
-}
-
-
-/* -------------------------
-   HUD
-------------------------- */
-
-function updateHUD(){
-
-    document.getElementById('hp')
-        .style.width=
-        player.health+'%';
-
-    document.getElementById('shield')
-        .style.width=
-        player.shield+'%';
-
-}
-
-
-/* -------------------------
-   LOOP
-------------------------- */
-
-function gameLoop(){
-
-    if(!gameRunning)
-        return;
-
-    updatePlayer();
-
-    updateBullets();
-
-    drawWorld();
-
-    drawBuilds();
-
-    drawEnemies();
-
-    drawBullets();
-
-    updateHUD();
-
-    requestAnimationFrame(gameLoop);
 
 }
 
 </script>
+
+
+<!-- ==============================
+     THREE.JS
+================================ -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js">
+</script>
+
+
+<!-- ==============================
+     YOUR 3D GAME ENGINE
+================================ -->
+
+<script src="game.js"></script>
 
 </body>
 </html>
