@@ -6,44 +6,39 @@
 <title>GameHub</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#080b12;
+    font-family:Arial,sans-serif;
+    background:#07101d;
     color:white;
-    min-height:100vh;
+    overflow:hidden;
 }
 
 button{
-    font-family:inherit;
+    border:0;
     cursor:pointer;
+    color:white;
+    font-weight:bold;
 }
 
-/* ================= LOBBY ================= */
-
-#app{
-    min-height:100vh;
+#lobby{
+    width:100vw;
+    height:100vh;
     background:
-        radial-gradient(circle at 50% 10%,#30496e 0%,transparent 35%),
-        linear-gradient(135deg,#080b12,#111c30);
+      radial-gradient(circle at 50% 25%,#294d78 0%,#101b2c 42%,#060b13 100%);
 }
 
-.topbar{
-    height:72px;
-    background:rgba(5,8,14,.94);
-    border-bottom:1px solid #29374d;
+/* TOP BAR */
+
+.top{
+    height:70px;
+    background:rgba(4,8,15,.92);
+    border-bottom:1px solid #33445d;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 28px;
-    position:sticky;
-    top:0;
-    z-index:50;
+    padding:0 25px;
 }
 
 .logo{
@@ -52,223 +47,203 @@ button{
 }
 
 .logo span{
-    color:#3d9bff;
+    color:#45a3ff;
 }
 
-.top-buttons{
+.nav{
     display:flex;
     gap:8px;
 }
 
-.top-buttons button{
-    background:#172235;
-    color:white;
-    border:1px solid #2b3a53;
-    padding:10px 15px;
+.nav button{
+    background:#172438;
+    padding:11px 16px;
     border-radius:8px;
 }
 
-.top-buttons button:hover{
-    background:#243451;
+.nav button:hover{
+    background:#29415f;
 }
 
-.profile{
+.player-info{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:10px;
 }
 
-.avatar{
-    width:42px;
-    height:42px;
+.player-icon{
+    width:40px;
+    height:40px;
+    background:#358eea;
     border-radius:50%;
-    background:#3d9bff;
     display:grid;
     place-items:center;
-    font-weight:bold;
 }
 
-.coins{
-    color:#ffd84d;
-    font-weight:bold;
-}
+/* LOBBY */
 
-/* ================= HERO ================= */
-
-.lobby{
-    min-height:calc(100vh - 72px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    overflow:hidden;
-}
-
-.lobby-content{
+.lobby-center{
+    position:absolute;
+    left:50%;
+    top:53%;
+    transform:translate(-50%,-50%);
     text-align:center;
-    z-index:5;
 }
 
 .season{
-    color:#8fa4c1;
-    letter-spacing:3px;
-    font-size:13px;
-    margin-bottom:15px;
+    color:#91a8c5;
+    letter-spacing:4px;
+    font-size:12px;
+    margin-bottom:10px;
 }
 
-.lobby-title{
-    font-size:clamp(40px,7vw,76px);
-    font-weight:900;
-    margin-bottom:8px;
+.title{
+    font-size:64px;
+    font-weight:1000;
+    text-shadow:0 8px 30px #000;
 }
 
-.lobby-title span{
-    color:#419aff;
+.title span{
+    color:#42a1ff;
 }
 
 .subtitle{
-    color:#9aa8bb;
-    margin-bottom:28px;
+    color:#aebed2;
+    margin:8px 0 18px;
 }
+
+/* 3D-STYLE CHARACTER */
 
 .character{
-    width:210px;
-    height:300px;
-    margin:0 auto 25px;
+    width:220px;
+    height:320px;
     position:relative;
+    margin:auto;
+    filter:drop-shadow(0 20px 20px rgba(0,0,0,.5));
 }
 
-/* Original stylized character */
-
-.body{
+.char-head{
     position:absolute;
-    width:92px;
-    height:145px;
-    left:59px;
-    top:85px;
-    border-radius:28px 28px 18px 18px;
-    background:linear-gradient(135deg,#3e7ed0,#172f59);
-    border:3px solid #111;
-}
-
-.head{
-    position:absolute;
-    width:78px;
-    height:78px;
-    left:66px;
-    top:10px;
-    border-radius:50%;
-    background:#d9a47d;
-    border:4px solid #111;
-}
-
-.hair{
-    position:absolute;
+    left:72px;
+    top:12px;
     width:76px;
-    height:30px;
-    left:67px;
-    top:8px;
-    border-radius:40px 40px 10px 10px;
-    background:#252525;
+    height:76px;
+    background:#d69b72;
+    border:5px solid #10141b;
+    border-radius:50%;
+    z-index:4;
 }
 
-.arm{
+.char-hair{
     position:absolute;
-    width:28px;
-    height:115px;
+    left:70px;
+    top:7px;
+    width:80px;
+    height:34px;
+    background:#20242b;
+    border-radius:50px 50px 8px 8px;
+    z-index:5;
+}
+
+.char-body{
+    position:absolute;
+    left:60px;
+    top:82px;
+    width:100px;
+    height:150px;
+    background:
+      linear-gradient(90deg,#18345a,#397ac5,#172e50);
+    border:5px solid #10141b;
+    border-radius:30px 30px 18px 18px;
+}
+
+.char-arm{
+    position:absolute;
     top:92px;
-    background:#315d9c;
-    border:3px solid #111;
+    width:30px;
+    height:125px;
+    background:#28609c;
+    border:5px solid #10141b;
     border-radius:20px;
 }
 
-.arm.left{
-    left:28px;
-    transform:rotate(9deg);
+.char-arm.left{
+    left:27px;
+    transform:rotate(8deg);
 }
 
-.arm.right{
-    right:28px;
-    transform:rotate(-9deg);
+.char-arm.right{
+    right:27px;
+    transform:rotate(-8deg);
 }
 
-.leg{
+.char-leg{
     position:absolute;
-    width:32px;
+    top:220px;
+    width:37px;
     height:95px;
-    top:218px;
-    background:#202c43;
-    border:3px solid #111;
+    background:#19283e;
+    border:5px solid #10141b;
     border-radius:15px;
 }
 
-.leg.left{
-    left:62px;
-}
+.char-leg.left{left:61px}
+.char-leg.right{right:61px}
 
-.leg.right{
-    right:62px;
-}
-
-.shadow{
+.char-shadow{
     position:absolute;
-    width:190px;
-    height:35px;
     bottom:0;
-    left:10px;
+    left:20px;
+    width:180px;
+    height:30px;
     border-radius:50%;
-    background:rgba(0,0,0,.45);
+    background:rgba(0,0,0,.6);
 }
 
-/* ================= PLAY ================= */
+/* PLAY */
 
-.play-button{
-    min-width:270px;
-    padding:18px 35px;
-    border:0;
-    border-radius:12px;
-    background:#3d9bff;
-    color:white;
+.play{
+    margin-top:8px;
+    padding:16px 70px;
+    background:#348fff;
+    border-radius:10px;
     font-size:22px;
-    font-weight:900;
-    box-shadow:0 10px 35px rgba(61,155,255,.25);
+    box-shadow:0 10px 35px rgba(40,140,255,.3);
 }
 
-.play-button:hover{
-    background:#207be0;
-    transform:translateY(-2px);
+.play:hover{
+    background:#1675e0;
+    transform:scale(1.03);
 }
 
-.mode-select{
-    margin-top:12px;
+.modes{
     display:flex;
     justify-content:center;
-    gap:8px;
     flex-wrap:wrap;
+    gap:7px;
+    margin-top:12px;
 }
 
-.mode-select button{
-    padding:10px 13px;
-    background:#151f31;
-    color:#ccd5e3;
-    border:1px solid #2c3b54;
-    border-radius:8px;
+.mode{
+    background:#18263a;
+    border:1px solid #31445e;
+    padding:9px 12px;
+    border-radius:7px;
 }
 
-.mode-select button.active{
-    background:#273e62;
-    border-color:#3d9bff;
-    color:white;
+.mode.selected{
+    border-color:#42a1ff;
+    background:#274569;
 }
 
-/* ================= PANELS ================= */
+/* PANELS */
 
 .panel{
     display:none;
     position:fixed;
     inset:0;
     z-index:100;
-    background:rgba(5,8,14,.97);
+    background:rgba(5,9,16,.98);
     overflow:auto;
     padding:35px;
 }
@@ -279,24 +254,20 @@ button{
 }
 
 .panel h1{
-    font-size:40px;
+    font-size:42px;
     margin-bottom:25px;
 }
 
 .close{
     position:fixed;
-    right:25px;
-    top:20px;
-    background:#ef4444;
-    color:white;
-    border:0;
-    border-radius:8px;
+    right:22px;
+    top:18px;
     padding:11px 17px;
-    font-weight:bold;
-    z-index:110;
+    background:#e13d4c;
+    border-radius:8px;
 }
 
-/* ================= SHOP ================= */
+/* SHOP */
 
 .shop-grid{
     display:grid;
@@ -304,159 +275,131 @@ button{
     gap:18px;
 }
 
-.item{
-    background:#121b2a;
-    border:1px solid #2b3950;
-    border-radius:15px;
-    padding:18px;
+.shop-item{
+    background:#121d2d;
+    border:1px solid #2e415c;
+    padding:17px;
+    border-radius:14px;
     text-align:center;
 }
 
-.item-art{
+.item-picture{
     height:150px;
-    border-radius:12px;
-    background:linear-gradient(135deg,#263b5c,#101725);
+    border-radius:10px;
+    background:
+      radial-gradient(circle,#35577e,#101925);
     display:grid;
     place-items:center;
-    font-size:70px;
-    margin-bottom:15px;
-}
-
-.item h3{
-    margin-bottom:8px;
+    font-size:65px;
+    margin-bottom:14px;
 }
 
 .price{
     color:#ffd84d;
-    margin-bottom:13px;
+    margin:8px;
 }
 
 .buy{
-    background:#3289ff;
-    color:white;
-    border:0;
-    padding:10px 20px;
-    border-radius:8px;
-    font-weight:bold;
+    background:#358fff;
+    padding:9px 22px;
+    border-radius:7px;
 }
 
-/* ================= LOCKER ================= */
+/* LOCKER */
 
-.locker{
+.locker-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:25px;
 }
 
-.preview{
-    min-height:500px;
-    border-radius:18px;
+.locker-preview{
+    height:520px;
     background:
-        radial-gradient(circle at 50% 35%,#304e78,transparent 30%),
-        #101827;
+      radial-gradient(circle at 50% 35%,#34577f,transparent 35%),
+      #111b2b;
+    border:1px solid #30435e;
+    border-radius:18px;
     display:grid;
     place-items:center;
 }
 
-.big-character{
-    transform:scale(1.45);
-}
-
 .loadout{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:1fr 1fr;
     gap:12px;
 }
 
 .slot{
-    background:#151f30;
-    border:1px solid #2d3b52;
-    border-radius:10px;
+    background:#141f30;
+    border:1px solid #2d405a;
     padding:20px;
+    border-radius:10px;
 }
 
-.slot strong{
+.slot small{
     display:block;
+    color:#7f91a9;
     margin-bottom:8px;
 }
 
-.slot span{
-    color:#9ca9bb;
-}
-
-/* ================= SETTINGS ================= */
-
-.settings{
-    max-width:700px;
-}
+/* SETTINGS */
 
 .setting{
-    background:#121b2a;
-    border:1px solid #2b3950;
-    border-radius:12px;
+    max-width:700px;
+    background:#131e2e;
+    border:1px solid #2d405a;
     padding:18px;
     margin-bottom:12px;
+    border-radius:10px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
 }
 
-.setting label{
-    color:#cbd5e1;
+.setting input{
+    width:230px;
 }
 
-.setting input[type=range]{
-    width:200px;
-}
-
-.setting select{
-    background:#1b2940;
+.setting select,
+.room-box input,
+.room-box select{
+    background:#1b2a40;
     color:white;
-    border:1px solid #34445e;
-    padding:8px;
+    border:1px solid #3a4d68;
+    padding:10px;
     border-radius:7px;
 }
 
-/* ================= ROOM ================= */
-
-.room{
-    max-width:700px;
-}
+/* ROOMS */
 
 .room-box{
-    background:#121b2a;
-    border:1px solid #2b3950;
-    border-radius:15px;
+    max-width:700px;
+    background:#131e2e;
+    border:1px solid #30425b;
     padding:25px;
+    border-radius:15px;
 }
 
-.room-box p{
-    color:#9ca9bb;
-    margin:10px 0 20px;
-}
-
-.room-controls{
+.room-row{
     display:flex;
-    flex-wrap:wrap;
     gap:10px;
+    margin-top:15px;
 }
 
-.room-controls input,
-.room-controls select{
-    background:#1a273b;
-    border:1px solid #34445e;
-    color:white;
-    padding:12px;
-    border-radius:8px;
+.room-row button{
+    background:#358fff;
+    padding:10px 20px;
+    border-radius:7px;
 }
 
-/* ================= GAME ================= */
+/* GAME */
 
 #game{
     display:none;
     position:fixed;
     inset:0;
-    z-index:200;
+    z-index:500;
     background:#000;
 }
 
@@ -466,26 +409,21 @@ button{
     display:block;
 }
 
-.game-title{
+.game-top{
     position:absolute;
-    top:20px;
+    top:18px;
     left:20px;
-    z-index:5;
-    font-weight:bold;
-    font-size:20px;
+    right:20px;
+    display:flex;
+    justify-content:space-between;
+    pointer-events:none;
 }
 
-.exit{
-    position:absolute;
-    top:20px;
-    right:20px;
-    z-index:10;
-    background:#ef4444;
-    border:0;
-    color:white;
-    padding:11px 18px;
+.game-top button{
+    pointer-events:auto;
+    background:#e13d4c;
+    padding:10px 16px;
     border-radius:8px;
-    font-weight:bold;
 }
 
 .crosshair{
@@ -493,58 +431,63 @@ button{
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
-    font-size:26px;
-    pointer-events:none;
+    font-size:28px;
 }
 
-.game-hud{
+.hud{
     position:absolute;
-    bottom:20px;
     left:20px;
-    z-index:5;
+    bottom:20px;
+    width:260px;
 }
 
 .bar{
-    width:240px;
+    width:100%;
     height:18px;
-    background:#111;
+    background:#101010;
     border:2px solid white;
-    margin:4px 0 10px;
+    margin:4px 0 9px;
 }
 
 .health{
-    width:100%;
     height:100%;
-    background:#e53e3e;
+    width:100%;
+    background:#e83f4c;
 }
 
 .shield{
-    width:100%;
     height:100%;
-    background:#3297ff;
+    width:100%;
+    background:#318fff;
+}
+
+.build-hud{
+    position:absolute;
+    right:20px;
+    bottom:20px;
+    background:rgba(5,10,17,.8);
+    padding:15px;
+    border-radius:10px;
+    line-height:1.8;
 }
 
 @media(max-width:700px){
 
-    .topbar{
-        padding:0 12px;
-    }
-
-    .top-buttons button{
+    .nav button{
         padding:8px;
-        font-size:12px;
+        font-size:11px;
     }
 
-    .profile{
+    .player-info{
         display:none;
     }
 
-    .locker{
-        grid-template-columns:1fr;
+    .title{
+        font-size:42px;
     }
 
-    .panel{
-        padding:20px;
+    .locker-grid{
+        grid-template-columns:1fr;
     }
 
 }
@@ -553,115 +496,103 @@ button{
 
 <body>
 
-<div id="app">
+<!-- ================= LOBBY ================= -->
 
-<header class="topbar">
+<div id="lobby">
 
-    <div class="logo">
-        🎮 Game<span>Hub</span>
-    </div>
+<header class="top">
 
-    <div class="top-buttons">
+<div class="logo">
+🎮 Game<span>Hub</span>
+</div>
 
-        <button onclick="openPanel('shop')">
-            🛍️ Shop
-        </button>
+<nav class="nav">
 
-        <button onclick="openPanel('locker')">
-            👕 Locker
-        </button>
+<button onclick="openPanel('shop')">🛍 Shop</button>
+<button onclick="openPanel('locker')">👕 Locker</button>
+<button onclick="openPanel('settings')">⚙ Settings</button>
+<button onclick="openPanel('rooms')">🔐 Rooms</button>
 
-        <button onclick="openPanel('settings')">
-            ⚙️ Settings
-        </button>
+</nav>
 
-        <button onclick="openPanel('rooms')">
-            🔐 Rooms
-        </button>
+<div class="player-info">
 
-    </div>
+<div>
+Player
+<br>
+<span style="color:#ffd84d">🪙 <span id="coins">1500</span></span>
+</div>
 
-    <div class="profile">
+<div class="player-icon">P</div>
 
-        <div>
-            <div>Player</div>
-            <div class="coins">🪙 <span id="coins">1500</span></div>
-        </div>
-
-        <div class="avatar">P</div>
-
-    </div>
+</div>
 
 </header>
 
 
-<main class="lobby">
+<div class="lobby-center">
 
-<div class="lobby-content">
+<div class="season">
+GAMEHUB • SEASON 1
+</div>
 
-    <div class="season">
-        GAMEHUB • SEASON 1
-    </div>
+<div class="title">
+READY TO <span>BUILD?</span>
+</div>
 
-    <div class="lobby-title">
-        READY TO <span>BUILD?</span>
-    </div>
-
-    <div class="subtitle">
-        Choose a mode and enter the arena.
-    </div>
+<div class="subtitle">
+Build. Fight. Survive.
+</div>
 
 
-    <div class="character">
+<div class="character">
 
-        <div class="shadow"></div>
+<div class="char-shadow"></div>
 
-        <div class="hair"></div>
-        <div class="head"></div>
+<div class="char-hair"></div>
+<div class="char-head"></div>
 
-        <div class="arm left"></div>
-        <div class="arm right"></div>
+<div class="char-arm left"></div>
+<div class="char-arm right"></div>
 
-        <div class="body"></div>
+<div class="char-body"></div>
 
-        <div class="leg left"></div>
-        <div class="leg right"></div>
-
-    </div>
-
-
-    <button class="play-button" onclick="play()">
-        PLAY
-    </button>
-
-
-    <div class="mode-select">
-
-        <button class="active"
-        onclick="selectMode(this,'Battle Royale')">
-            🌎 Battle Royale
-        </button>
-
-        <button
-        onclick="selectMode(this,'1v1 Build Fight')">
-            🧱 1v1 Build
-        </button>
-
-        <button
-        onclick="selectMode(this,'1v1 Box Fight')">
-            📦 Box Fight
-        </button>
-
-        <button
-        onclick="selectMode(this,'2v2 Box Fight')">
-            👥 2v2
-        </button>
-
-    </div>
+<div class="char-leg left"></div>
+<div class="char-leg right"></div>
 
 </div>
 
-</main>
+
+<button class="play" onclick="startGame()">
+PLAY
+</button>
+
+
+<div class="modes">
+
+<button class="mode selected"
+onclick="setMode(this,'Battle Royale')">
+🌎 Battle Royale
+</button>
+
+<button class="mode"
+onclick="setMode(this,'1v1 Build Fight')">
+🧱 1v1 Build
+</button>
+
+<button class="mode"
+onclick="setMode(this,'1v1 Box Fight')">
+📦 1v1 Box
+</button>
+
+<button class="mode"
+onclick="setMode(this,'2v2 Box Fight')">
+👥 2v2 Box
+</button>
+
+</div>
+
+</div>
 
 </div>
 
@@ -670,58 +601,58 @@ button{
 
 <div class="panel" id="shop">
 
-<button class="close" onclick="closePanels()">✕ CLOSE</button>
+<button class="close" onclick="closePanels()">CLOSE</button>
 
 <div class="panel-inner">
 
-<h1>🛍️ Daily Item Shop</h1>
+<h1>🛍 Daily Shop</h1>
 
-<p style="color:#8997aa;margin-bottom:25px">
-Items rotate daily. These are original GameHub cosmetics.
+<p style="color:#8fa0b5;margin-bottom:25px">
+New original GameHub cosmetics.
 </p>
 
 <div class="shop-grid">
 
-<div class="item">
-<div class="item-art">🧑‍🚀</div>
+<div class="shop-item">
+<div class="item-picture">🧑‍🚀</div>
 <h3>Star Runner</h3>
 <div class="price">🪙 800</div>
-<button class="buy" onclick="buyItem(800,'Star Runner')">BUY</button>
+<button class="buy" onclick="buy(800,'Star Runner')">BUY</button>
 </div>
 
-<div class="item">
-<div class="item-art">🤖</div>
+<div class="shop-item">
+<div class="item-picture">🤖</div>
 <h3>Chrome Bot</h3>
 <div class="price">🪙 1200</div>
-<button class="buy" onclick="buyItem(1200,'Chrome Bot')">BUY</button>
+<button class="buy" onclick="buy(1200,'Chrome Bot')">BUY</button>
 </div>
 
-<div class="item">
-<div class="item-art">🥷</div>
+<div class="shop-item">
+<div class="item-picture">🥷</div>
 <h3>Shadow Strike</h3>
 <div class="price">🪙 1000</div>
-<button class="buy" onclick="buyItem(1000,'Shadow Strike')">BUY</button>
+<button class="buy" onclick="buy(1000,'Shadow Strike')">BUY</button>
 </div>
 
-<div class="item">
-<div class="item-art">⚡</div>
+<div class="shop-item">
+<div class="item-picture">⚡</div>
 <h3>Energy Pickaxe</h3>
 <div class="price">🪙 500</div>
-<button class="buy" onclick="buyItem(500,'Energy Pickaxe')">BUY</button>
+<button class="buy" onclick="buy(500,'Energy Pickaxe')">BUY</button>
 </div>
 
-<div class="item">
-<div class="item-art">🚀</div>
+<div class="shop-item">
+<div class="item-picture">🚀</div>
 <h3>Rocket Glider</h3>
 <div class="price">🪙 700</div>
-<button class="buy" onclick="buyItem(700,'Rocket Glider')">BUY</button>
+<button class="buy" onclick="buy(700,'Rocket Glider')">BUY</button>
 </div>
 
-<div class="item">
-<div class="item-art">💃</div>
+<div class="shop-item">
+<div class="item-picture">💃</div>
 <h3>Victory Dance</h3>
 <div class="price">🪙 300</div>
-<button class="buy" onclick="buyItem(300,'Victory Dance')">BUY</button>
+<button class="buy" onclick="buy(300,'Victory Dance')">BUY</button>
 </div>
 
 </div>
@@ -734,65 +665,61 @@ Items rotate daily. These are original GameHub cosmetics.
 
 <div class="panel" id="locker">
 
-<button class="close" onclick="closePanels()">✕ CLOSE</button>
+<button class="close" onclick="closePanels()">CLOSE</button>
 
 <div class="panel-inner">
 
 <h1>👕 Locker</h1>
 
-<div class="locker">
+<div class="locker-grid">
 
-<div class="preview">
+<div class="locker-preview">
 
-<div class="character big-character">
+<div class="character">
 
-<div class="shadow"></div>
-<div class="hair"></div>
-<div class="head"></div>
-<div class="arm left"></div>
-<div class="arm right"></div>
-<div class="body"></div>
-<div class="leg left"></div>
-<div class="leg right"></div>
-
-</div>
+<div class="char-shadow"></div>
+<div class="char-hair"></div>
+<div class="char-head"></div>
+<div class="char-arm left"></div>
+<div class="char-arm right"></div>
+<div class="char-body"></div>
+<div class="char-leg left"></div>
+<div class="char-leg right"></div>
 
 </div>
 
-<div>
+</div>
 
 <div class="loadout">
 
 <div class="slot">
-<strong>OUTFIT</strong>
-<span>Default Runner</span>
+<small>OUTFIT</small>
+Default Runner
 </div>
 
 <div class="slot">
-<strong>PICKAXE</strong>
-<span>Energy Pickaxe</span>
+<small>PICKAXE</small>
+Energy Pickaxe
 </div>
 
 <div class="slot">
-<strong>GLIDER</strong>
-<span>Rocket Glider</span>
+<small>GLIDER</small>
+Rocket Glider
 </div>
 
 <div class="slot">
-<strong>BACK BLING</strong>
-<span>None</span>
+<small>BACK BLING</small>
+None
 </div>
 
 <div class="slot">
-<strong>EMOTE 1</strong>
-<span>Victory Dance</span>
+<small>EMOTE 1</small>
+Victory Dance
 </div>
 
 <div class="slot">
-<strong>EMOTE 2</strong>
-<span>None</span>
-</div>
-
+<small>EMOTE 2</small>
+None
 </div>
 
 </div>
@@ -807,45 +734,43 @@ Items rotate daily. These are original GameHub cosmetics.
 
 <div class="panel" id="settings">
 
-<button class="close" onclick="closePanels()">✕ CLOSE</button>
+<button class="close" onclick="closePanels()">CLOSE</button>
 
 <div class="panel-inner">
 
-<h1>⚙️ Settings</h1>
-
-<div class="settings">
+<h1>⚙ Settings</h1>
 
 <div class="setting">
-<label>Mouse Sensitivity</label>
+<span>Mouse Sensitivity</span>
 <input type="range" min="1" max="100" value="50">
 </div>
 
 <div class="setting">
-<label>Graphics Quality</label>
+<span>Graphics Quality</span>
 <select>
 <option>Low</option>
 <option selected>Medium</option>
 <option>High</option>
+<option>Ultra</option>
 </select>
 </div>
 
 <div class="setting">
-<label>Master Volume</label>
-<input type="range" min="0" max="100" value="75">
+<span>Master Volume</span>
+<input type="range" min="0" max="100" value="80">
 </div>
 
 <div class="setting">
-<label>Music Volume</label>
+<span>Music Volume</span>
 <input type="range" min="0" max="100" value="50">
 </div>
 
 <div class="setting">
-<label>Fullscreen</label>
-<button class="play" onclick="fullscreen()">
-ENTER
+<span>Fullscreen</span>
+<button onclick="document.documentElement.requestFullscreen()"
+style="background:#358fff;padding:10px;border-radius:7px">
+ENABLE
 </button>
-</div>
-
 </div>
 
 </div>
@@ -856,76 +781,73 @@ ENTER
 
 <div class="panel" id="rooms">
 
-<button class="close" onclick="closePanels()">✕ CLOSE</button>
+<button class="close" onclick="closePanels()">CLOSE</button>
 
-<div class="panel-inner room">
+<div class="panel-inner">
 
-<h1>🔐 Private Match</h1>
+<h1>🔐 Private Matches</h1>
 
 <div class="room-box">
 
-<h2>Create a Room</h2>
+<h2>Create Room</h2>
 
-<p>
-Create a private room and share the code with your friends.
-</p>
-
-<div class="room-controls">
+<div class="room-row">
 
 <select id="roomMode">
-<option>Battle Royale</option>
 <option>1v1 Build Fight</option>
 <option>1v1 Box Fight</option>
 <option>2v2 Box Fight</option>
+<option>Battle Royale</option>
 </select>
 
-<button class="play" onclick="createRoom()">
-CREATE
-</button>
+<button onclick="createRoom()">CREATE</button>
 
 </div>
 
-<hr style="border-color:#29374d;margin:25px 0">
+<hr style="margin:25px 0;border-color:#304057">
 
-<h2>Join a Room</h2>
+<h2>Join Room</h2>
 
-<div class="room-controls">
+<div class="room-row">
 
-<input id="joinCode"
-maxlength="6"
-placeholder="6-character code">
+<input id="roomCode"
+placeholder="Room code"
+maxlength="6">
 
-<button class="play" onclick="joinRoom()">
-JOIN
-</button>
+<button onclick="joinRoom()">JOIN</button>
 
 </div>
 
-<div id="roomStatus"
-style="margin-top:15px;color:#58aaff">
-</div>
+<p id="roomMessage"
+style="color:#51a7ff;margin-top:15px">
+</p>
 
 </div>
 
 </div>
+
 </div>
 
 
-<!-- ================= GAME ================= -->
+<!-- ================= 3D GAME ================= -->
 
 <div id="game">
 
-<div class="game-title">
-GAMEHUB • <span id="gameMode"></span>
+<div class="game-top">
+
+<div>
+🎮 GAMEHUB • <span id="currentMode"></span>
 </div>
 
-<button class="exit" onclick="exitGame()">EXIT</button>
+<button onclick="exitGame()">EXIT</button>
+
+</div>
 
 <canvas id="gameCanvas"></canvas>
 
 <div class="crosshair">+</div>
 
-<div class="game-hud">
+<div class="hud">
 
 <div>HEALTH</div>
 
@@ -939,9 +861,21 @@ GAMEHUB • <span id="gameMode"></span>
 <div class="shield" id="shield"></div>
 </div>
 
-<div id="gameInfo">
-WASD • SPACE • MOUSE • Q BUILD
 </div>
+
+<div class="build-hud">
+
+<b>BUILD</b><br>
+Q = Build Mode<br>
+1 = Wall<br>
+2 = Floor<br>
+3 = Ramp<br>
+4 = Roof<br>
+E = Place<br>
+WASD = Move<br>
+SHIFT = Sprint<br>
+SPACE = Jump<br>
+CLICK = Shoot
 
 </div>
 
@@ -951,20 +885,22 @@ WASD • SPACE • MOUSE • Q BUILD
 <script>
 
 /* =====================================================
-   GAMEHUB LOBBY SYSTEM
+   GAMEHUB
 ===================================================== */
 
-let selectedMode="Battle Royale";
+let mode="Battle Royale";
 
-function selectMode(button,mode){
+let coins=1500;
 
-selectedMode=mode;
+function setMode(button,newMode){
+
+mode=newMode;
 
 document
-.querySelectorAll(".mode-select button")
-.forEach(b=>b.classList.remove("active"));
+.querySelectorAll(".mode")
+.forEach(x=>x.classList.remove("selected"));
 
-button.classList.add("active");
+button.classList.add("selected");
 
 }
 
@@ -973,7 +909,7 @@ function openPanel(id){
 
 document
 .querySelectorAll(".panel")
-.forEach(p=>p.style.display="none");
+.forEach(x=>x.style.display="none");
 
 document.getElementById(id).style.display="block";
 
@@ -984,22 +920,18 @@ function closePanels(){
 
 document
 .querySelectorAll(".panel")
-.forEach(p=>p.style.display="none");
+.forEach(x=>x.style.display="none");
 
 }
 
 
-/* =====================================================
-   SHOP
-===================================================== */
+/* SHOP */
 
-let coins=1500;
-
-function buyItem(price,name){
+function buy(price,item){
 
 if(coins<price){
 
-alert("You don't have enough coins.");
+alert("Not enough coins.");
 
 return;
 
@@ -1007,24 +939,18 @@ return;
 
 coins-=price;
 
-document.getElementById("coins")
-.textContent=coins;
+document.getElementById("coins").textContent=coins;
 
-alert(
-"You bought "+name+"!"
-);
+alert("Purchased "+item+"!");
 
 }
 
 
-/* =====================================================
-   ROOMS
-===================================================== */
+/* ROOMS */
 
 function createRoom(){
 
-const chars=
-"ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
 let code="";
 
@@ -1036,36 +962,34 @@ Math.floor(Math.random()*chars.length)
 
 }
 
-document.getElementById("joinCode")
-.value=code;
+document.getElementById("roomCode").value=code;
 
-document.getElementById("roomStatus")
+document.getElementById("roomMessage")
 .textContent=
-"Room created: "+code+
-" — give this code to your friends.";
+"Room created! Share "+code+" with your friends.";
 
 }
 
 
 function joinRoom(){
 
-const code=
-document.getElementById("joinCode")
+let code=
+document.getElementById("roomCode")
 .value
-.trim()
-.toUpperCase();
+.toUpperCase()
+.trim();
 
 if(code.length!==6){
 
-document.getElementById("roomStatus")
+document.getElementById("roomMessage")
 .textContent=
-"Enter a 6-character room code.";
+"Enter a 6-character code.";
 
 return;
 
 }
 
-document.getElementById("roomStatus")
+document.getElementById("roomMessage")
 .textContent=
 "Joining room "+code+"...";
 
@@ -1073,11 +997,8 @@ document.getElementById("roomStatus")
 
 
 /* =====================================================
-   GAME
+   GAME ENGINE
 ===================================================== */
-
-const game=
-document.getElementById("game");
 
 const canvas=
 document.getElementById("gameCanvas");
@@ -1085,29 +1006,30 @@ document.getElementById("gameCanvas");
 const ctx=
 canvas.getContext("2d");
 
-let W,H;
+let W=innerWidth;
+let H=innerHeight;
 
-function resize(){
+canvas.width=W;
+canvas.height=H;
 
-W=canvas.width=innerWidth;
-H=canvas.height=innerHeight;
+addEventListener("resize",()=>{
 
-}
+W=innerWidth;
+H=innerHeight;
 
-resize();
+canvas.width=W;
+canvas.height=H;
 
-addEventListener("resize",resize);
+});
 
 
 const player={
 
 x:0,
 y:0,
-z:8,
+z:10,
 
-vx:0,
-vy:0,
-vz:0,
+velocityY:0,
 
 yaw:0,
 pitch:0,
@@ -1120,13 +1042,19 @@ ground:true
 };
 
 
-const builds=[];
+const keys={};
 
 let buildMode=false;
+let selectedBuild="wall";
 
-let buildPiece="wall";
+const structures=[];
 
-const keys={};
+const bullets=[];
+
+const enemies=[];
+
+
+/* KEYS */
 
 addEventListener("keydown",e=>{
 
@@ -1135,25 +1063,26 @@ keys[e.key.toLowerCase()]=true;
 if(e.code==="Space")
 keys.space=true;
 
-if(e.key.toLowerCase()==="q"){
-
+if(e.key.toLowerCase()==="q")
 buildMode=!buildMode;
 
-}
-
 if(e.key==="1")
-buildPiece="wall";
+selectedBuild="wall";
 
 if(e.key==="2")
-buildPiece="floor";
+selectedBuild="floor";
 
 if(e.key==="3")
-buildPiece="ramp";
+selectedBuild="ramp";
+
+if(e.key==="4")
+selectedBuild="roof";
 
 if(e.key.toLowerCase()==="e")
-placeBuild();
+placeStructure();
 
 });
+
 
 addEventListener("keyup",e=>{
 
@@ -1165,17 +1094,26 @@ keys.space=false;
 });
 
 
+/* MOUSE */
+
 let mouseLocked=false;
 
 canvas.addEventListener("click",()=>{
 
+if(!mouseLocked){
+
 canvas.requestPointerLock();
+
+}else{
+
+shoot();
+
+}
 
 });
 
-document.addEventListener(
-"pointerlockchange",
-()=>{
+
+document.addEventListener("pointerlockchange",()=>{
 
 mouseLocked=
 document.pointerLockElement===canvas;
@@ -1198,35 +1136,11 @@ Math.min(1,player.pitch));
 });
 
 
-function placeBuild(){
+/* MOVEMENT */
 
-if(!buildMode)return;
+function movePlayer(){
 
-const distance=5;
-
-builds.push({
-
-x:Math.round(
-player.x+
-Math.sin(player.yaw)*distance
-),
-
-z:Math.round(
-player.z+
-Math.cos(player.yaw)*distance
-),
-
-type:buildPiece
-
-});
-
-}
-
-
-function updatePlayer(){
-
-let speed=
-keys.shift?.20:.12;
+let speed=keys.shift?.24:.13;
 
 let forward=0;
 let side=0;
@@ -1237,30 +1151,31 @@ if(keys.s)forward--;
 if(keys.a)side--;
 if(keys.d)side++;
 
-const s=Math.sin(player.yaw);
-const c=Math.cos(player.yaw);
+const sin=Math.sin(player.yaw);
+const cos=Math.cos(player.yaw);
 
-player.x+=
-(s*forward+c*side)*speed;
+player.x+=(sin*forward+cos*side)*speed;
 
-player.z+=
-(c*forward-s*side)*speed;
+player.z+=(cos*forward-sin*side)*speed;
 
-player.vy-=.012;
 
-player.y+=player.vy;
+/* jump */
+
+player.velocityY-=.012;
+
+player.y+=player.velocityY;
 
 if(player.y<=0){
 
 player.y=0;
-player.vy=0;
+player.velocityY=0;
 player.ground=true;
 
 }
 
 if(keys.space&&player.ground){
 
-player.vy=.22;
+player.velocityY=.23;
 player.ground=false;
 
 }
@@ -1268,58 +1183,73 @@ player.ground=false;
 }
 
 
+/* PROJECT 3D */
+
 function project(x,y,z){
 
 let dx=x-player.x;
 let dy=y-player.y;
 let dz=z-player.z;
 
-let s=Math.sin(player.yaw);
-let c=Math.cos(player.yaw);
+const sin=Math.sin(player.yaw);
+const cos=Math.cos(player.yaw);
 
-let cx=dx*c-dz*s;
-let cz=dx*s+dz*c;
+let cameraX=
+dx*cos-dz*sin;
 
-if(cz<=.1)return null;
+let cameraZ=
+dx*sin+dz*cos;
 
-let scale=600/cz;
+if(cameraZ<=.1)
+return null;
+
+let scale=700/cameraZ;
 
 return{
 
-x:W/2+cx*scale,
+x:W/2+cameraX*scale,
+
 y:H/2-dy*scale,
-scale
+
+scale:scale
 
 };
 
 }
 
 
+/* WORLD */
+
 function drawWorld(){
 
-ctx.fillStyle="#78b4df";
-ctx.fillRect(0,0,W,H/2);
+/* SKY */
 
-ctx.fillStyle="#4c6e3b";
-ctx.fillRect(0,H/2,W,H/2);
+let sky=ctx.createLinearGradient(0,0,0,H);
+
+sky.addColorStop(0,"#62a8db");
+sky.addColorStop(.5,"#a8d0e8");
+sky.addColorStop(.5,"#506f3d");
+sky.addColorStop(1,"#27371e");
+
+ctx.fillStyle=sky;
+ctx.fillRect(0,0,W,H);
 
 
-/* horizon grid */
+/* TERRAIN GRID */
 
 ctx.strokeStyle="rgba(255,255,255,.12)";
+ctx.lineWidth=1;
 
 for(let i=-30;i<=30;i++){
 
-let a=project(i,0,-30);
-let b=project(i,0,30);
+let a=project(i,0,-50);
+let b=project(i,0,50);
 
 if(a&&b){
 
 ctx.beginPath();
-
 ctx.moveTo(a.x,a.y);
 ctx.lineTo(b.x,b.y);
-
 ctx.stroke();
 
 }
@@ -1327,9 +1257,34 @@ ctx.stroke();
 }
 
 
-/* builds */
+/* DISTANT OBJECTS */
 
-builds
+for(let i=-20;i<=20;i+=4){
+
+let p=project(i,0,35);
+
+if(p){
+
+let size=Math.max(3,p.scale*.8);
+
+ctx.fillStyle="#365c38";
+
+ctx.beginPath();
+
+ctx.moveTo(p.x-size*2,p.y);
+ctx.lineTo(p.x,p.y-size*3);
+ctx.lineTo(p.x+size*2,p.y);
+
+ctx.fill();
+
+}
+
+}
+
+
+/* STRUCTURES */
+
+structures
 .slice()
 .sort((a,b)=>{
 
@@ -1344,24 +1299,26 @@ let db=
 return db-da;
 
 })
-.forEach(drawBuild);
+.forEach(drawStructure);
 
 
-/* character */
+/* ENEMIES */
+
+enemies.forEach(enemy=>{
 
 let p=
 project(
-player.x,
-player.y+1.3,
-player.z
+enemy.x,
+enemy.y+1.2,
+enemy.z
 );
 
-if(p){
+if(!p)return;
 
 let size=
-Math.max(8,p.scale*1.4);
+Math.max(8,p.scale*1.3);
 
-ctx.fillStyle="#315e9e";
+ctx.fillStyle="#a83232";
 
 ctx.fillRect(
 p.x-size/2,
@@ -1370,7 +1327,47 @@ size,
 size*2
 );
 
-ctx.fillStyle="#d9a47d";
+ctx.fillStyle="#d99a70";
+
+ctx.beginPath();
+
+ctx.arc(
+p.x,
+p.y-size*2.35,
+size*.55,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+});
+
+
+/* PLAYER */
+
+let p=
+project(
+player.x,
+player.y+1.2,
+player.z
+);
+
+if(p){
+
+let size=
+Math.max(8,p.scale*1.3);
+
+ctx.fillStyle="#3378c8";
+
+ctx.fillRect(
+p.x-size/2,
+p.y-size*2,
+size,
+size*2
+);
+
+ctx.fillStyle="#d99a70";
 
 ctx.beginPath();
 
@@ -1389,23 +1386,53 @@ ctx.fill();
 }
 
 
-function drawBuild(b){
+/* BUILDING */
+
+function placeStructure(){
+
+if(!buildMode)return;
+
+let distance=5;
+
+let x=
+Math.round(
+player.x+
+Math.sin(player.yaw)*distance
+);
+
+let z=
+Math.round(
+player.z+
+Math.cos(player.yaw)*distance
+);
+
+structures.push({
+
+x:x,
+z:z,
+type:selectedBuild
+
+});
+
+}
+
+
+function drawStructure(s){
+
+let height=
+s.type==="floor"?.15:1.5;
 
 let p=
-project(
-b.x,
-b.type==="floor"?.2:1.5,
-b.z
-);
+project(s.x,height,s.z);
 
 if(!p)return;
 
 let size=
-Math.max(7,p.scale*3);
+Math.max(8,p.scale*3);
 
-if(b.type==="wall"){
+if(s.type==="wall"){
 
-ctx.fillStyle="#566fa5";
+ctx.fillStyle="#6c86a6";
 
 ctx.fillRect(
 p.x-size/2,
@@ -1414,7 +1441,7 @@ size,
 size
 );
 
-ctx.strokeStyle="#19253b";
+ctx.strokeStyle="#1b293b";
 
 ctx.strokeRect(
 p.x-size/2,
@@ -1425,33 +1452,46 @@ size
 
 }
 
-else if(b.type==="floor"){
+else if(s.type==="floor"){
 
-ctx.fillStyle="#a47a43";
+ctx.fillStyle="#9b7240";
 
 ctx.fillRect(
 p.x-size,
-p.y-size/4,
+p.y-size/5,
 size*2,
 size/2
 );
 
 }
 
-else{
+else if(s.type==="ramp"){
 
-ctx.fillStyle="#a47a43";
+ctx.fillStyle="#a77b43";
 
 ctx.beginPath();
 
 ctx.moveTo(p.x-size,p.y);
-
 ctx.lineTo(p.x,p.y-size);
-
 ctx.lineTo(p.x+size,p.y);
 
 ctx.closePath();
+ctx.fill();
 
+}
+
+else{
+
+ctx.fillStyle="#80613b";
+
+ctx.beginPath();
+
+ctx.moveTo(p.x-size,p.y-size*.4);
+ctx.lineTo(p.x,p.y-size);
+ctx.lineTo(p.x+size,p.y-size*.4);
+ctx.lineTo(p.x,p.y);
+
+ctx.closePath();
 ctx.fill();
 
 }
@@ -1459,11 +1499,115 @@ ctx.fill();
 }
 
 
-function gameLoop(){
+/* SHOOTING */
 
-if(game.style.display==="block"){
+function shoot(){
 
-updatePlayer();
+bullets.push({
+
+x:player.x,
+y:player.y+1.2,
+z:player.z,
+
+angle:player.yaw,
+
+life:100
+
+});
+
+}
+
+
+function updateBullets(){
+
+bullets.forEach(b=>{
+
+b.x+=
+Math.sin(b.angle)*.7;
+
+b.z+=
+Math.cos(b.angle)*.7;
+
+b.life--;
+
+});
+
+for(let i=bullets.length-1;i>=0;i--){
+
+if(bullets[i].life<=0)
+bullets.splice(i,1);
+
+}
+
+}
+
+
+/* DAMAGE */
+
+function damage(amount){
+
+if(player.shield>0){
+
+let absorbed=
+Math.min(player.shield,amount);
+
+player.shield-=absorbed;
+
+amount-=absorbed;
+
+}
+
+player.health-=amount;
+
+document.getElementById("health")
+.style.width=Math.max(0,player.health)+"%";
+
+document.getElementById("shield")
+.style.width=Math.max(0,player.shield)+"%";
+
+if(player.health<=0){
+
+alert("You were eliminated!");
+
+exitGame();
+
+}
+
+}
+
+
+/* TEST ENEMIES */
+
+function createEnemies(){
+
+enemies.length=0;
+
+for(let i=0;i<6;i++){
+
+enemies.push({
+
+x:(Math.random()*30)-15,
+y:0,
+z:(Math.random()*30)-15
+
+});
+
+}
+
+}
+
+
+/* GAME LOOP */
+
+function loop(){
+
+if(
+document.getElementById("game")
+.style.display==="block"
+){
+
+movePlayer();
+updateBullets();
 
 ctx.clearRect(0,0,W,H);
 
@@ -1471,46 +1615,53 @@ drawWorld();
 
 }
 
-requestAnimationFrame(gameLoop);
+requestAnimationFrame(loop);
 
 }
 
-gameLoop();
+loop();
 
 
-function play(){
+/* START */
 
-game.style.display="block";
+function startGame(){
 
-document.getElementById("gameMode")
-.textContent=selectedMode;
+closePanels();
+
+document.getElementById("lobby")
+.style.display="none";
+
+document.getElementById("game")
+.style.display="block";
+
+document.getElementById("currentMode")
+.textContent=mode;
 
 player.x=0;
 player.y=0;
-player.z=8;
+player.z=10;
 
 player.health=100;
 player.shield=100;
 
+structures.length=0;
+
+createEnemies();
+
 }
 
+
+/* EXIT */
 
 function exitGame(){
 
 document.exitPointerLock?.();
 
-game.style.display="none";
+document.getElementById("game")
+.style.display="none";
 
-}
-
-
-/* =====================================================
-   FULLSCREEN
-===================================================== */
-
-function fullscreen(){
-
-document.documentElement.requestFullscreen?.();
+document.getElementById("lobby")
+.style.display="block";
 
 }
 
