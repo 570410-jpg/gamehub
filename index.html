@@ -6,173 +6,458 @@
 <title>GameHub</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#080b12,#17233b);
+    font-family:Arial,Helvetica,sans-serif;
+    background:#080b12;
     color:white;
     min-height:100vh;
 }
 
-header{
-    height:70px;
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+/* ================= LOBBY ================= */
+
+#app{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% 10%,#30496e 0%,transparent 35%),
+        linear-gradient(135deg,#080b12,#111c30);
+}
+
+.topbar{
+    height:72px;
+    background:rgba(5,8,14,.94);
+    border-bottom:1px solid #29374d;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 30px;
-    background:#080b12;
-    border-bottom:1px solid #293449;
+    padding:0 28px;
+    position:sticky;
+    top:0;
+    z-index:50;
 }
 
 .logo{
-    font-size:28px;
+    font-size:27px;
     font-weight:900;
 }
 
-.logo span{color:#3b9cff}
+.logo span{
+    color:#3d9bff;
+}
 
-nav button{
-    background:transparent;
+.top-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.top-buttons button{
+    background:#172235;
+    color:white;
+    border:1px solid #2b3a53;
+    padding:10px 15px;
+    border-radius:8px;
+}
+
+.top-buttons button:hover{
+    background:#243451;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#3d9bff;
+    display:grid;
+    place-items:center;
+    font-weight:bold;
+}
+
+.coins{
+    color:#ffd84d;
+    font-weight:bold;
+}
+
+/* ================= HERO ================= */
+
+.lobby{
+    min-height:calc(100vh - 72px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.lobby-content{
+    text-align:center;
+    z-index:5;
+}
+
+.season{
+    color:#8fa4c1;
+    letter-spacing:3px;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+.lobby-title{
+    font-size:clamp(40px,7vw,76px);
+    font-weight:900;
+    margin-bottom:8px;
+}
+
+.lobby-title span{
+    color:#419aff;
+}
+
+.subtitle{
+    color:#9aa8bb;
+    margin-bottom:28px;
+}
+
+.character{
+    width:210px;
+    height:300px;
+    margin:0 auto 25px;
+    position:relative;
+}
+
+/* Original stylized character */
+
+.body{
+    position:absolute;
+    width:92px;
+    height:145px;
+    left:59px;
+    top:85px;
+    border-radius:28px 28px 18px 18px;
+    background:linear-gradient(135deg,#3e7ed0,#172f59);
+    border:3px solid #111;
+}
+
+.head{
+    position:absolute;
+    width:78px;
+    height:78px;
+    left:66px;
+    top:10px;
+    border-radius:50%;
+    background:#d9a47d;
+    border:4px solid #111;
+}
+
+.hair{
+    position:absolute;
+    width:76px;
+    height:30px;
+    left:67px;
+    top:8px;
+    border-radius:40px 40px 10px 10px;
+    background:#252525;
+}
+
+.arm{
+    position:absolute;
+    width:28px;
+    height:115px;
+    top:92px;
+    background:#315d9c;
+    border:3px solid #111;
+    border-radius:20px;
+}
+
+.arm.left{
+    left:28px;
+    transform:rotate(9deg);
+}
+
+.arm.right{
+    right:28px;
+    transform:rotate(-9deg);
+}
+
+.leg{
+    position:absolute;
+    width:32px;
+    height:95px;
+    top:218px;
+    background:#202c43;
+    border:3px solid #111;
+    border-radius:15px;
+}
+
+.leg.left{
+    left:62px;
+}
+
+.leg.right{
+    right:62px;
+}
+
+.shadow{
+    position:absolute;
+    width:190px;
+    height:35px;
+    bottom:0;
+    left:10px;
+    border-radius:50%;
+    background:rgba(0,0,0,.45);
+}
+
+/* ================= PLAY ================= */
+
+.play-button{
+    min-width:270px;
+    padding:18px 35px;
+    border:0;
+    border-radius:12px;
+    background:#3d9bff;
+    color:white;
+    font-size:22px;
+    font-weight:900;
+    box-shadow:0 10px 35px rgba(61,155,255,.25);
+}
+
+.play-button:hover{
+    background:#207be0;
+    transform:translateY(-2px);
+}
+
+.mode-select{
+    margin-top:12px;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.mode-select button{
+    padding:10px 13px;
+    background:#151f31;
+    color:#ccd5e3;
+    border:1px solid #2c3b54;
+    border-radius:8px;
+}
+
+.mode-select button.active{
+    background:#273e62;
+    border-color:#3d9bff;
+    color:white;
+}
+
+/* ================= PANELS ================= */
+
+.panel{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(5,8,14,.97);
+    overflow:auto;
+    padding:35px;
+}
+
+.panel-inner{
+    max-width:1100px;
+    margin:auto;
+}
+
+.panel h1{
+    font-size:40px;
+    margin-bottom:25px;
+}
+
+.close{
+    position:fixed;
+    right:25px;
+    top:20px;
+    background:#ef4444;
     color:white;
     border:0;
-    padding:10px 15px;
-    cursor:pointer;
-}
-
-.hero{
-    padding:60px 7% 35px;
-}
-
-.hero h1{
-    font-size:clamp(45px,7vw,80px);
-    line-height:.9;
-}
-
-.hero h1 span{color:#3b9cff}
-
-.hero p{
-    color:#9ca9bd;
-    font-size:18px;
-    margin-top:20px;
-    max-width:650px;
-    line-height:1.5;
-}
-
-.section{
-    padding:30px 7% 60px;
-}
-
-.title{
-    font-size:28px;
+    border-radius:8px;
+    padding:11px 17px;
     font-weight:bold;
-    margin-bottom:22px;
+    z-index:110;
 }
 
-.games{
+/* ================= SHOP ================= */
+
+.shop-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
     gap:18px;
 }
 
-.card{
-    background:#111a2b;
-    border:1px solid #2b3850;
+.item{
+    background:#121b2a;
+    border:1px solid #2b3950;
     border-radius:15px;
-    padding:22px;
-    min-height:225px;
-    transition:.2s;
+    padding:18px;
+    text-align:center;
 }
 
-.card:hover{
-    transform:translateY(-4px);
-    border-color:#3b9cff;
-}
-
-.icon{
-    width:58px;
-    height:58px;
-    border-radius:13px;
-    background:#202d44;
+.item-art{
+    height:150px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#263b5c,#101725);
     display:grid;
     place-items:center;
-    font-size:30px;
-    margin-bottom:16px;
+    font-size:70px;
+    margin-bottom:15px;
 }
 
-.card h2{
-    font-size:21px;
-    margin-bottom:9px;
+.item h3{
+    margin-bottom:8px;
 }
 
-.card p{
-    color:#8e9bb0;
-    min-height:50px;
-    line-height:1.4;
-    margin-bottom:16px;
+.price{
+    color:#ffd84d;
+    margin-bottom:13px;
 }
 
-button.play{
-    border:0;
-    border-radius:8px;
-    padding:11px 18px;
+.buy{
     background:#3289ff;
     color:white;
+    border:0;
+    padding:10px 20px;
+    border-radius:8px;
     font-weight:bold;
-    cursor:pointer;
 }
 
-button.play:hover{
-    background:#1e72df;
+/* ================= LOCKER ================= */
+
+.locker{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
 }
+
+.preview{
+    min-height:500px;
+    border-radius:18px;
+    background:
+        radial-gradient(circle at 50% 35%,#304e78,transparent 30%),
+        #101827;
+    display:grid;
+    place-items:center;
+}
+
+.big-character{
+    transform:scale(1.45);
+}
+
+.loadout{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.slot{
+    background:#151f30;
+    border:1px solid #2d3b52;
+    border-radius:10px;
+    padding:20px;
+}
+
+.slot strong{
+    display:block;
+    margin-bottom:8px;
+}
+
+.slot span{
+    color:#9ca9bb;
+}
+
+/* ================= SETTINGS ================= */
+
+.settings{
+    max-width:700px;
+}
+
+.setting{
+    background:#121b2a;
+    border:1px solid #2b3950;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.setting label{
+    color:#cbd5e1;
+}
+
+.setting input[type=range]{
+    width:200px;
+}
+
+.setting select{
+    background:#1b2940;
+    color:white;
+    border:1px solid #34445e;
+    padding:8px;
+    border-radius:7px;
+}
+
+/* ================= ROOM ================= */
 
 .room{
-    max-width:750px;
-    background:#0d1524;
-    border:1px solid #29374f;
+    max-width:700px;
+}
+
+.room-box{
+    background:#121b2a;
+    border:1px solid #2b3950;
     border-radius:15px;
     padding:25px;
 }
 
-.room p{
-    color:#8e9bb0;
-    margin:10px 0 18px;
+.room-box p{
+    color:#9ca9bb;
+    margin:10px 0 20px;
 }
 
 .room-controls{
     display:flex;
-    gap:10px;
     flex-wrap:wrap;
+    gap:10px;
 }
 
-input,select{
-    background:#18243a;
-    border:1px solid #34445f;
+.room-controls input,
+.room-controls select{
+    background:#1a273b;
+    border:1px solid #34445e;
     color:white;
     padding:12px;
     border-radius:8px;
 }
 
-#status{
-    margin-top:15px;
-    color:#55a9ff;
-}
+/* ================= GAME ================= */
 
-footer{
-    border-top:1px solid #293449;
-    padding:25px;
-    text-align:center;
-    color:#68758b;
-}
-
-/* GAME WINDOW */
-
-#gameWindow{
+#game{
     display:none;
     position:fixed;
     inset:0;
-    background:#05070b;
-    z-index:100;
+    z-index:200;
+    background:#000;
 }
 
 #gameCanvas{
@@ -181,98 +466,434 @@ footer{
     display:block;
 }
 
-#close{
+.game-title{
     position:absolute;
-    right:20px;
     top:20px;
-    z-index:101;
+    left:20px;
+    z-index:5;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.exit{
+    position:absolute;
+    top:20px;
+    right:20px;
+    z-index:10;
     background:#ef4444;
-    color:white;
     border:0;
+    color:white;
     padding:11px 18px;
     border-radius:8px;
     font-weight:bold;
-    cursor:pointer;
 }
 
-#gameTitle{
+.crosshair{
     position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    font-size:26px;
+    pointer-events:none;
+}
+
+.game-hud{
+    position:absolute;
+    bottom:20px;
     left:20px;
-    top:20px;
-    z-index:101;
-    font-size:20px;
-    font-weight:bold;
+    z-index:5;
+}
+
+.bar{
+    width:240px;
+    height:18px;
+    background:#111;
+    border:2px solid white;
+    margin:4px 0 10px;
+}
+
+.health{
+    width:100%;
+    height:100%;
+    background:#e53e3e;
+}
+
+.shield{
+    width:100%;
+    height:100%;
+    background:#3297ff;
+}
+
+@media(max-width:700px){
+
+    .topbar{
+        padding:0 12px;
+    }
+
+    .top-buttons button{
+        padding:8px;
+        font-size:12px;
+    }
+
+    .profile{
+        display:none;
+    }
+
+    .locker{
+        grid-template-columns:1fr;
+    }
+
+    .panel{
+        padding:20px;
+    }
+
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">🎮 Game<span>Hub</span></div>
+<div id="app">
 
-    <nav>
-        <button onclick="games.scrollIntoView({behavior:'smooth'})">
-            Games
+<header class="topbar">
+
+    <div class="logo">
+        🎮 Game<span>Hub</span>
+    </div>
+
+    <div class="top-buttons">
+
+        <button onclick="openPanel('shop')">
+            🛍️ Shop
         </button>
 
-        <button onclick="rooms.scrollIntoView({behavior:'smooth'})">
-            Rooms
+        <button onclick="openPanel('locker')">
+            👕 Locker
         </button>
-    </nav>
+
+        <button onclick="openPanel('settings')">
+            ⚙️ Settings
+        </button>
+
+        <button onclick="openPanel('rooms')">
+            🔐 Rooms
+        </button>
+
+    </div>
+
+    <div class="profile">
+
+        <div>
+            <div>Player</div>
+            <div class="coins">🪙 <span id="coins">1500</span></div>
+        </div>
+
+        <div class="avatar">P</div>
+
+    </div>
+
 </header>
 
-<section class="hero">
 
-<h1>
-PLAY.<br>
-<span>BUILD.</span><br>
-FIGHT.
-</h1>
+<main class="lobby">
 
-<p>
-GameHub is your browser gaming hub with build fights,
-box fights, battle royale, multiplayer games and more.
+<div class="lobby-content">
+
+    <div class="season">
+        GAMEHUB • SEASON 1
+    </div>
+
+    <div class="lobby-title">
+        READY TO <span>BUILD?</span>
+    </div>
+
+    <div class="subtitle">
+        Choose a mode and enter the arena.
+    </div>
+
+
+    <div class="character">
+
+        <div class="shadow"></div>
+
+        <div class="hair"></div>
+        <div class="head"></div>
+
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+
+        <div class="body"></div>
+
+        <div class="leg left"></div>
+        <div class="leg right"></div>
+
+    </div>
+
+
+    <button class="play-button" onclick="play()">
+        PLAY
+    </button>
+
+
+    <div class="mode-select">
+
+        <button class="active"
+        onclick="selectMode(this,'Battle Royale')">
+            🌎 Battle Royale
+        </button>
+
+        <button
+        onclick="selectMode(this,'1v1 Build Fight')">
+            🧱 1v1 Build
+        </button>
+
+        <button
+        onclick="selectMode(this,'1v1 Box Fight')">
+            📦 Box Fight
+        </button>
+
+        <button
+        onclick="selectMode(this,'2v2 Box Fight')">
+            👥 2v2
+        </button>
+
+    </div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- ================= SHOP ================= -->
+
+<div class="panel" id="shop">
+
+<button class="close" onclick="closePanels()">✕ CLOSE</button>
+
+<div class="panel-inner">
+
+<h1>🛍️ Daily Item Shop</h1>
+
+<p style="color:#8997aa;margin-bottom:25px">
+Items rotate daily. These are original GameHub cosmetics.
 </p>
 
-</section>
+<div class="shop-grid">
+
+<div class="item">
+<div class="item-art">🧑‍🚀</div>
+<h3>Star Runner</h3>
+<div class="price">🪙 800</div>
+<button class="buy" onclick="buyItem(800,'Star Runner')">BUY</button>
+</div>
+
+<div class="item">
+<div class="item-art">🤖</div>
+<h3>Chrome Bot</h3>
+<div class="price">🪙 1200</div>
+<button class="buy" onclick="buyItem(1200,'Chrome Bot')">BUY</button>
+</div>
+
+<div class="item">
+<div class="item-art">🥷</div>
+<h3>Shadow Strike</h3>
+<div class="price">🪙 1000</div>
+<button class="buy" onclick="buyItem(1000,'Shadow Strike')">BUY</button>
+</div>
+
+<div class="item">
+<div class="item-art">⚡</div>
+<h3>Energy Pickaxe</h3>
+<div class="price">🪙 500</div>
+<button class="buy" onclick="buyItem(500,'Energy Pickaxe')">BUY</button>
+</div>
+
+<div class="item">
+<div class="item-art">🚀</div>
+<h3>Rocket Glider</h3>
+<div class="price">🪙 700</div>
+<button class="buy" onclick="buyItem(700,'Rocket Glider')">BUY</button>
+</div>
+
+<div class="item">
+<div class="item-art">💃</div>
+<h3>Victory Dance</h3>
+<div class="price">🪙 300</div>
+<button class="buy" onclick="buyItem(300,'Victory Dance')">BUY</button>
+</div>
+
+</div>
+
+</div>
+</div>
 
 
-<section class="section" id="rooms">
+<!-- ================= LOCKER ================= -->
 
-<div class="title">🔐 Private Rooms</div>
+<div class="panel" id="locker">
 
-<div class="room">
+<button class="close" onclick="closePanels()">✕ CLOSE</button>
 
-<h2>Create or Join a Match</h2>
+<div class="panel-inner">
+
+<h1>👕 Locker</h1>
+
+<div class="locker">
+
+<div class="preview">
+
+<div class="character big-character">
+
+<div class="shadow"></div>
+<div class="hair"></div>
+<div class="head"></div>
+<div class="arm left"></div>
+<div class="arm right"></div>
+<div class="body"></div>
+<div class="leg left"></div>
+<div class="leg right"></div>
+
+</div>
+
+</div>
+
+<div>
+
+<div class="loadout">
+
+<div class="slot">
+<strong>OUTFIT</strong>
+<span>Default Runner</span>
+</div>
+
+<div class="slot">
+<strong>PICKAXE</strong>
+<span>Energy Pickaxe</span>
+</div>
+
+<div class="slot">
+<strong>GLIDER</strong>
+<span>Rocket Glider</span>
+</div>
+
+<div class="slot">
+<strong>BACK BLING</strong>
+<span>None</span>
+</div>
+
+<div class="slot">
+<strong>EMOTE 1</strong>
+<span>Victory Dance</span>
+</div>
+
+<div class="slot">
+<strong>EMOTE 2</strong>
+<span>None</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- ================= SETTINGS ================= -->
+
+<div class="panel" id="settings">
+
+<button class="close" onclick="closePanels()">✕ CLOSE</button>
+
+<div class="panel-inner">
+
+<h1>⚙️ Settings</h1>
+
+<div class="settings">
+
+<div class="setting">
+<label>Mouse Sensitivity</label>
+<input type="range" min="1" max="100" value="50">
+</div>
+
+<div class="setting">
+<label>Graphics Quality</label>
+<select>
+<option>Low</option>
+<option selected>Medium</option>
+<option>High</option>
+</select>
+</div>
+
+<div class="setting">
+<label>Master Volume</label>
+<input type="range" min="0" max="100" value="75">
+</div>
+
+<div class="setting">
+<label>Music Volume</label>
+<input type="range" min="0" max="100" value="50">
+</div>
+
+<div class="setting">
+<label>Fullscreen</label>
+<button class="play" onclick="fullscreen()">
+ENTER
+</button>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- ================= ROOMS ================= -->
+
+<div class="panel" id="rooms">
+
+<button class="close" onclick="closePanels()">✕ CLOSE</button>
+
+<div class="panel-inner room">
+
+<h1>🔐 Private Match</h1>
+
+<div class="room-box">
+
+<h2>Create a Room</h2>
 
 <p>
-Choose a mode and create a room for your friends.
-The multiplayer server will be connected when we deploy it.
+Create a private room and share the code with your friends.
 </p>
 
 <div class="room-controls">
 
-<select id="mode">
-
-<option value="battle">🌎 Battle Royale</option>
-
-<option value="build1v1">🧱 1v1 Build Fight</option>
-
-<option value="box1v1">📦 1v1 Box Fight</option>
-
-<option value="box2v2">👥 2v2 Box Fight</option>
-
+<select id="roomMode">
+<option>Battle Royale</option>
+<option>1v1 Build Fight</option>
+<option>1v1 Box Fight</option>
+<option>2v2 Box Fight</option>
 </select>
 
 <button class="play" onclick="createRoom()">
-CREATE ROOM
+CREATE
 </button>
 
-<input
-id="roomCode"
+</div>
+
+<hr style="border-color:#29374d;margin:25px 0">
+
+<h2>Join a Room</h2>
+
+<div class="room-controls">
+
+<input id="joinCode"
 maxlength="6"
-placeholder="ROOM CODE">
+placeholder="6-character code">
 
 <button class="play" onclick="joinRoom()">
 JOIN
@@ -280,279 +901,127 @@ JOIN
 
 </div>
 
-<div id="status"></div>
-
-</div>
-
-</section>
-
-
-<section class="section" id="games">
-
-<div class="title">🔥 Games</div>
-
-<div class="games">
-
-
-<!-- BATTLE ROYALE -->
-
-<div class="card">
-
-<div class="icon">🌎</div>
-
-<h2>Battle Royale</h2>
-
-<p>
-Original 3D battle-royale style game with
-building and weapons.
-</p>
-
-<button class="play"
-onclick="launchGame('Battle Royale')">
-PLAY
-</button>
-
-</div>
-
-
-<!-- BUILD FIGHT -->
-
-<div class="card">
-
-<div class="icon">🧱</div>
-
-<h2>1v1 Build Fight</h2>
-
-<p>
-Build ramps, walls and floors while fighting
-another player.
-</p>
-
-<button class="play"
-onclick="launchGame('1v1 Build Fight')">
-PLAY
-</button>
-
-</div>
-
-
-<!-- BOX FIGHT -->
-
-<div class="card">
-
-<div class="icon">📦</div>
-
-<h2>1v1 Box Fight</h2>
-
-<p>
-Fast close-range building and editing battles.
-</p>
-
-<button class="play"
-onclick="launchGame('1v1 Box Fight')">
-PLAY
-</button>
-
-</div>
-
-
-<!-- 2V2 -->
-
-<div class="card">
-
-<div class="icon">👥</div>
-
-<h2>2v2 Box Fight</h2>
-
-<p>
-Team up with a friend and fight another team.
-</p>
-
-<button class="play"
-onclick="launchGame('2v2 Box Fight')">
-PLAY
-</button>
-
-</div>
-
-
-<!-- TOSIOS -->
-
-<div class="card">
-
-<div class="icon">🔫</div>
-
-<h2>TOSIOS</h2>
-
-<p>
-Fast-paced multiplayer browser shooter.
-</p>
-
-<button class="play"
-onclick="window.open('https://tosios.online/','_blank')">
-PLAY
-</button>
-
-</div>
-
-
-<!-- SNAKE -->
-
-<div class="card">
-
-<div class="icon">🐍</div>
-
-<h2>Snake</h2>
-
-<p>
-Classic arcade game built into GameHub.
-</p>
-
-<button class="play"
-onclick="launchSnake()">
-PLAY
-</button>
-
+<div id="roomStatus"
+style="margin-top:15px;color:#58aaff">
 </div>
 
 </div>
 
-</section>
+</div>
+</div>
 
 
-<footer>
-GameHub • Original gaming project
-</footer>
+<!-- ================= GAME ================= -->
 
+<div id="game">
 
-<!-- GAME SCREEN -->
+<div class="game-title">
+GAMEHUB • <span id="gameMode"></span>
+</div>
 
-<div id="gameWindow">
-
-<div id="gameTitle"></div>
-
-<button id="close" onclick="closeGame()">
-✕ EXIT
-</button>
+<button class="exit" onclick="exitGame()">EXIT</button>
 
 <canvas id="gameCanvas"></canvas>
+
+<div class="crosshair">+</div>
+
+<div class="game-hud">
+
+<div>HEALTH</div>
+
+<div class="bar">
+<div class="health" id="health"></div>
+</div>
+
+<div>SHIELD</div>
+
+<div class="bar">
+<div class="shield" id="shield"></div>
+</div>
+
+<div id="gameInfo">
+WASD • SPACE • MOUSE • Q BUILD
+</div>
+
+</div>
 
 </div>
 
 
 <script>
 
-const gameWindow =
-document.getElementById("gameWindow");
+/* =====================================================
+   GAMEHUB LOBBY SYSTEM
+===================================================== */
 
-const canvas =
-document.getElementById("gameCanvas");
+let selectedMode="Battle Royale";
 
-const ctx =
-canvas.getContext("2d");
+function selectMode(button,mode){
 
-const title =
-document.getElementById("gameTitle");
+selectedMode=mode;
 
-const status =
-document.getElementById("status");
+document
+.querySelectorAll(".mode-select button")
+.forEach(b=>b.classList.remove("active"));
 
-
-/* =========================
-   GAME LAUNCHER
-========================= */
-
-function launchGame(mode){
-
-gameWindow.style.display="block";
-
-title.textContent=mode;
-
-resize();
-
-startPrototype(mode);
+button.classList.add("active");
 
 }
 
 
-function closeGame(){
+function openPanel(id){
 
-gameWindow.style.display="none";
+document
+.querySelectorAll(".panel")
+.forEach(p=>p.style.display="none");
 
-}
-
-
-function resize(){
-
-canvas.width=window.innerWidth;
-
-canvas.height=window.innerHeight;
-
-}
-
-window.addEventListener("resize",resize);
-
-
-/* =========================
-   TEMPORARY GAME SCREEN
-========================= */
-
-function startPrototype(mode){
-
-ctx.clearRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
-
-ctx.fillStyle="#18243a";
-
-ctx.fillRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
-
-ctx.fillStyle="white";
-
-ctx.textAlign="center";
-
-ctx.font="bold 42px Arial";
-
-ctx.fillText(
-mode,
-canvas.width/2,
-canvas.height/2-50
-);
-
-ctx.font="20px Arial";
-
-ctx.fillStyle="#9ca9bd";
-
-ctx.fillText(
-"3D multiplayer game is being connected here.",
-canvas.width/2,
-canvas.height/2
-);
-
-ctx.fillText(
-"WASD • Mouse • Space • Build",
-canvas.width/2,
-canvas.height/2+40
-);
-
-ctx.textAlign="left";
+document.getElementById(id).style.display="block";
 
 }
 
 
-/* =========================
+function closePanels(){
+
+document
+.querySelectorAll(".panel")
+.forEach(p=>p.style.display="none");
+
+}
+
+
+/* =====================================================
+   SHOP
+===================================================== */
+
+let coins=1500;
+
+function buyItem(price,name){
+
+if(coins<price){
+
+alert("You don't have enough coins.");
+
+return;
+
+}
+
+coins-=price;
+
+document.getElementById("coins")
+.textContent=coins;
+
+alert(
+"You bought "+name+"!"
+);
+
+}
+
+
+/* =====================================================
    ROOMS
-========================= */
+===================================================== */
 
-function randomCode(){
+function createRoom(){
 
 const chars=
 "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -562,29 +1031,18 @@ let code="";
 for(let i=0;i<6;i++){
 
 code+=chars[
-Math.floor(
-Math.random()*chars.length
-)
+Math.floor(Math.random()*chars.length)
 ];
 
 }
 
-return code;
+document.getElementById("joinCode")
+.value=code;
 
-}
-
-
-function createRoom(){
-
-const code=randomCode();
-
-document.getElementById(
-"roomCode"
-).value=code;
-
-status.textContent=
+document.getElementById("roomStatus")
+.textContent=
 "Room created: "+code+
-" — multiplayer server will connect here.";
+" — give this code to your friends.";
 
 }
 
@@ -592,179 +1050,467 @@ status.textContent=
 function joinRoom(){
 
 const code=
-document.getElementById(
-"roomCode"
-).value
+document.getElementById("joinCode")
+.value
 .trim()
 .toUpperCase();
 
 if(code.length!==6){
 
-status.textContent=
-"Please enter a 6-character room code.";
+document.getElementById("roomStatus")
+.textContent=
+"Enter a 6-character room code.";
 
 return;
 
 }
 
-status.textContent=
-"Joining room "+code+
-"... multiplayer server will connect here.";
+document.getElementById("roomStatus")
+.textContent=
+"Joining room "+code+"...";
 
 }
 
 
-/* =========================
-   SNAKE
-========================= */
+/* =====================================================
+   GAME
+===================================================== */
 
-function launchSnake(){
+const game=
+document.getElementById("game");
 
-gameWindow.style.display="block";
+const canvas=
+document.getElementById("gameCanvas");
 
-title.textContent="Snake";
+const ctx=
+canvas.getContext("2d");
+
+let W,H;
+
+function resize(){
+
+W=canvas.width=innerWidth;
+H=canvas.height=innerHeight;
+
+}
 
 resize();
 
-let snake=[
-{x:10,y:10}
-];
+addEventListener("resize",resize);
 
-let food={
-x:15,
-y:10
-};
 
-let dx=1;
-let dy=0;
+const player={
 
-document.onkeydown=function(e){
+x:0,
+y:0,
+z:8,
 
-if(e.key==="ArrowUp" && dy===0){
-dx=0;
-dy=-1;
-}
+vx:0,
+vy:0,
+vz:0,
 
-if(e.key==="ArrowDown" && dy===0){
-dx=0;
-dy=1;
-}
+yaw:0,
+pitch:0,
 
-if(e.key==="ArrowLeft" && dx===0){
-dx=-1;
-dy=0;
-}
+health:100,
+shield:100,
 
-if(e.key==="ArrowRight" && dx===0){
-dx=1;
-dy=0;
-}
+ground:true
 
 };
 
-function draw(){
 
-const size=25;
+const builds=[];
 
-ctx.fillStyle="#07101d";
+let buildMode=false;
 
-ctx.fillRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
+let buildPiece="wall";
 
-const cols=
-Math.floor(canvas.width/size);
+const keys={};
 
-const rows=
-Math.floor(canvas.height/size);
+addEventListener("keydown",e=>{
 
-let head={
-x:snake[0].x+dx,
-y:snake[0].y+dy
-};
+keys[e.key.toLowerCase()]=true;
 
-if(
-head.x<0 ||
-head.y<0 ||
-head.x>=cols ||
-head.y>=rows ||
-snake.some(
-p=>p.x===head.x&&p.y===head.y
-)
-){
+if(e.code==="Space")
+keys.space=true;
 
-snake=[
-{x:Math.floor(cols/2),
- y:Math.floor(rows/2)}
-];
+if(e.key.toLowerCase()==="q"){
 
-dx=1;
-dy=0;
-
-return;
+buildMode=!buildMode;
 
 }
 
-snake.unshift(head);
+if(e.key==="1")
+buildPiece="wall";
 
-if(
-head.x===food.x &&
-head.y===food.y
-){
+if(e.key==="2")
+buildPiece="floor";
 
-food={
-x:Math.floor(Math.random()*cols),
-y:Math.floor(Math.random()*rows)
-};
+if(e.key==="3")
+buildPiece="ramp";
 
-}else{
-
-snake.pop();
-
-}
-
-ctx.fillStyle="#3b9cff";
-
-snake.forEach(p=>{
-
-ctx.fillRect(
-p.x*size,
-p.y*size,
-size-2,
-size-2
-);
+if(e.key.toLowerCase()==="e")
+placeBuild();
 
 });
 
-ctx.fillStyle="#ef4444";
+addEventListener("keyup",e=>{
+
+keys[e.key.toLowerCase()]=false;
+
+if(e.code==="Space")
+keys.space=false;
+
+});
+
+
+let mouseLocked=false;
+
+canvas.addEventListener("click",()=>{
+
+canvas.requestPointerLock();
+
+});
+
+document.addEventListener(
+"pointerlockchange",
+()=>{
+
+mouseLocked=
+document.pointerLockElement===canvas;
+
+});
+
+
+document.addEventListener("mousemove",e=>{
+
+if(!mouseLocked)return;
+
+player.yaw-=e.movementX*.0025;
+
+player.pitch-=e.movementY*.002;
+
+player.pitch=
+Math.max(-1,
+Math.min(1,player.pitch));
+
+});
+
+
+function placeBuild(){
+
+if(!buildMode)return;
+
+const distance=5;
+
+builds.push({
+
+x:Math.round(
+player.x+
+Math.sin(player.yaw)*distance
+),
+
+z:Math.round(
+player.z+
+Math.cos(player.yaw)*distance
+),
+
+type:buildPiece
+
+});
+
+}
+
+
+function updatePlayer(){
+
+let speed=
+keys.shift?.20:.12;
+
+let forward=0;
+let side=0;
+
+if(keys.w)forward++;
+if(keys.s)forward--;
+
+if(keys.a)side--;
+if(keys.d)side++;
+
+const s=Math.sin(player.yaw);
+const c=Math.cos(player.yaw);
+
+player.x+=
+(s*forward+c*side)*speed;
+
+player.z+=
+(c*forward-s*side)*speed;
+
+player.vy-=.012;
+
+player.y+=player.vy;
+
+if(player.y<=0){
+
+player.y=0;
+player.vy=0;
+player.ground=true;
+
+}
+
+if(keys.space&&player.ground){
+
+player.vy=.22;
+player.ground=false;
+
+}
+
+}
+
+
+function project(x,y,z){
+
+let dx=x-player.x;
+let dy=y-player.y;
+let dz=z-player.z;
+
+let s=Math.sin(player.yaw);
+let c=Math.cos(player.yaw);
+
+let cx=dx*c-dz*s;
+let cz=dx*s+dz*c;
+
+if(cz<=.1)return null;
+
+let scale=600/cz;
+
+return{
+
+x:W/2+cx*scale,
+y:H/2-dy*scale,
+scale
+
+};
+
+}
+
+
+function drawWorld(){
+
+ctx.fillStyle="#78b4df";
+ctx.fillRect(0,0,W,H/2);
+
+ctx.fillStyle="#4c6e3b";
+ctx.fillRect(0,H/2,W,H/2);
+
+
+/* horizon grid */
+
+ctx.strokeStyle="rgba(255,255,255,.12)";
+
+for(let i=-30;i<=30;i++){
+
+let a=project(i,0,-30);
+let b=project(i,0,30);
+
+if(a&&b){
+
+ctx.beginPath();
+
+ctx.moveTo(a.x,a.y);
+ctx.lineTo(b.x,b.y);
+
+ctx.stroke();
+
+}
+
+}
+
+
+/* builds */
+
+builds
+.slice()
+.sort((a,b)=>{
+
+let da=
+(a.x-player.x)**2+
+(a.z-player.z)**2;
+
+let db=
+(b.x-player.x)**2+
+(b.z-player.z)**2;
+
+return db-da;
+
+})
+.forEach(drawBuild);
+
+
+/* character */
+
+let p=
+project(
+player.x,
+player.y+1.3,
+player.z
+);
+
+if(p){
+
+let size=
+Math.max(8,p.scale*1.4);
+
+ctx.fillStyle="#315e9e";
 
 ctx.fillRect(
-food.x*size,
-food.y*size,
-size-2,
-size-2
+p.x-size/2,
+p.y-size*2,
+size,
+size*2
+);
+
+ctx.fillStyle="#d9a47d";
+
+ctx.beginPath();
+
+ctx.arc(
+p.x,
+p.y-size*2.35,
+size*.55,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+}
+
+}
+
+
+function drawBuild(b){
+
+let p=
+project(
+b.x,
+b.type==="floor"?.2:1.5,
+b.z
+);
+
+if(!p)return;
+
+let size=
+Math.max(7,p.scale*3);
+
+if(b.type==="wall"){
+
+ctx.fillStyle="#566fa5";
+
+ctx.fillRect(
+p.x-size/2,
+p.y-size,
+size,
+size
+);
+
+ctx.strokeStyle="#19253b";
+
+ctx.strokeRect(
+p.x-size/2,
+p.y-size,
+size,
+size
 );
 
 }
 
-const interval=setInterval(draw,100);
+else if(b.type==="floor"){
 
-const oldClose=closeGame;
+ctx.fillStyle="#a47a43";
 
-window.closeGame=function(){
+ctx.fillRect(
+p.x-size,
+p.y-size/4,
+size*2,
+size/2
+);
 
-clearInterval(interval);
+}
 
-document.onkeydown=null;
+else{
 
-gameWindow.style.display="none";
+ctx.fillStyle="#a47a43";
 
-window.closeGame=oldClose;
+ctx.beginPath();
 
-};
+ctx.moveTo(p.x-size,p.y);
+
+ctx.lineTo(p.x,p.y-size);
+
+ctx.lineTo(p.x+size,p.y);
+
+ctx.closePath();
+
+ctx.fill();
+
+}
+
+}
+
+
+function gameLoop(){
+
+if(game.style.display==="block"){
+
+updatePlayer();
+
+ctx.clearRect(0,0,W,H);
+
+drawWorld();
+
+}
+
+requestAnimationFrame(gameLoop);
+
+}
+
+gameLoop();
+
+
+function play(){
+
+game.style.display="block";
+
+document.getElementById("gameMode")
+.textContent=selectedMode;
+
+player.x=0;
+player.y=0;
+player.z=8;
+
+player.health=100;
+player.shield=100;
+
+}
+
+
+function exitGame(){
+
+document.exitPointerLock?.();
+
+game.style.display="none";
+
+}
+
+
+/* =====================================================
+   FULLSCREEN
+===================================================== */
+
+function fullscreen(){
+
+document.documentElement.requestFullscreen?.();
 
 }
 
