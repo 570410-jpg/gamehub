@@ -2,269 +2,154 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>GameHub</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
+*{box-sizing:border-box}
 body{
-    font-family:Arial,sans-serif;
-    background:#07101d;
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#080b12;
     color:white;
-    overflow:hidden;
+    overflow-x:hidden;
 }
 
 button{
     border:0;
+    border-radius:8px;
+    padding:12px 18px;
+    font-weight:bold;
     cursor:pointer;
     color:white;
-    font-weight:bold;
+    background:#5865f2;
 }
 
-#lobby{
-    width:100vw;
-    height:100vh;
-    background:
-      radial-gradient(circle at 50% 25%,#294d78 0%,#101b2c 42%,#060b13 100%);
-}
+button:hover{filter:brightness(1.15)}
 
-/* TOP BAR */
-
-.top{
+#top{
     height:70px;
-    background:rgba(4,8,15,.92);
-    border-bottom:1px solid #33445d;
+    background:#101522;
     display:flex;
     align-items:center;
-    justify-content:space-between;
     padding:0 25px;
+    gap:30px;
+    border-bottom:1px solid #252c3c;
 }
 
 .logo{
-    font-size:27px;
+    font-size:25px;
     font-weight:900;
-}
-
-.logo span{
-    color:#45a3ff;
 }
 
 .nav{
     display:flex;
-    gap:8px;
-}
-
-.nav button{
-    background:#172438;
-    padding:11px 16px;
-    border-radius:8px;
-}
-
-.nav button:hover{
-    background:#29415f;
-}
-
-.player-info{
-    display:flex;
-    align-items:center;
     gap:10px;
 }
 
-.player-icon{
-    width:40px;
-    height:40px;
-    background:#358eea;
-    border-radius:50%;
-    display:grid;
-    place-items:center;
+.nav button{
+    background:transparent;
+}
+
+.nav button.active{
+    background:#5865f2;
+}
+
+.spacer{flex:1}
+
+.currency{
+    background:#181f30;
+    padding:10px 15px;
+    border-radius:8px;
+}
+
+.page{
+    display:none;
+    padding:30px;
+}
+
+.page.active{
+    display:block;
 }
 
 /* LOBBY */
 
-.lobby-center{
-    position:absolute;
-    left:50%;
-    top:53%;
-    transform:translate(-50%,-50%);
-    text-align:center;
-}
-
-.season{
-    color:#91a8c5;
-    letter-spacing:4px;
-    font-size:12px;
-    margin-bottom:10px;
-}
-
-.title{
-    font-size:64px;
-    font-weight:1000;
-    text-shadow:0 8px 30px #000;
-}
-
-.title span{
-    color:#42a1ff;
-}
-
-.subtitle{
-    color:#aebed2;
-    margin:8px 0 18px;
-}
-
-/* 3D-STYLE CHARACTER */
-
-.character{
-    width:220px;
-    height:320px;
+#lobby{
+    min-height:calc(100vh - 70px);
     position:relative;
-    margin:auto;
-    filter:drop-shadow(0 20px 20px rgba(0,0,0,.5));
-}
-
-.char-head{
-    position:absolute;
-    left:72px;
-    top:12px;
-    width:76px;
-    height:76px;
-    background:#d69b72;
-    border:5px solid #10141b;
-    border-radius:50%;
-    z-index:4;
-}
-
-.char-hair{
-    position:absolute;
-    left:70px;
-    top:7px;
-    width:80px;
-    height:34px;
-    background:#20242b;
-    border-radius:50px 50px 8px 8px;
-    z-index:5;
-}
-
-.char-body{
-    position:absolute;
-    left:60px;
-    top:82px;
-    width:100px;
-    height:150px;
+    overflow:hidden;
     background:
-      linear-gradient(90deg,#18345a,#397ac5,#172e50);
-    border:5px solid #10141b;
-    border-radius:30px 30px 18px 18px;
+      radial-gradient(circle at 50% 20%,#29385f 0,#101522 45%,#080b12 100%);
 }
 
-.char-arm{
-    position:absolute;
-    top:92px;
-    width:30px;
-    height:125px;
-    background:#28609c;
-    border:5px solid #10141b;
-    border-radius:20px;
+.hero{
+    max-width:1100px;
+    margin:auto;
+    text-align:center;
+    padding-top:55px;
 }
 
-.char-arm.left{
-    left:27px;
-    transform:rotate(8deg);
+.hero h1{
+    font-size:60px;
+    margin:0;
+    text-shadow:0 5px 25px #000;
 }
 
-.char-arm.right{
-    right:27px;
-    transform:rotate(-8deg);
+.hero p{
+    color:#b9c2d8;
+    font-size:18px;
 }
 
-.char-leg{
-    position:absolute;
-    top:220px;
-    width:37px;
-    height:95px;
-    background:#19283e;
-    border:5px solid #10141b;
+.play{
+    font-size:22px;
+    padding:17px 55px;
+    margin-top:20px;
+    background:#2ecc71;
+}
+
+.player-card{
+    margin:45px auto;
+    max-width:500px;
+    padding:25px;
+    background:#111827dd;
+    border:1px solid #303a52;
     border-radius:15px;
 }
 
-.char-leg.left{left:61px}
-.char-leg.right{right:61px}
+.avatar{
+    width:130px;
+    height:180px;
+    margin:auto;
+    position:relative;
+}
 
-.char-shadow{
-    position:absolute;
-    bottom:0;
-    left:20px;
-    width:180px;
-    height:30px;
+.head{
+    width:60px;
+    height:60px;
     border-radius:50%;
-    background:rgba(0,0,0,.6);
-}
-
-/* PLAY */
-
-.play{
-    margin-top:8px;
-    padding:16px 70px;
-    background:#348fff;
-    border-radius:10px;
-    font-size:22px;
-    box-shadow:0 10px 35px rgba(40,140,255,.3);
-}
-
-.play:hover{
-    background:#1675e0;
-    transform:scale(1.03);
-}
-
-.modes{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:7px;
-    margin-top:12px;
-}
-
-.mode{
-    background:#18263a;
-    border:1px solid #31445e;
-    padding:9px 12px;
-    border-radius:7px;
-}
-
-.mode.selected{
-    border-color:#42a1ff;
-    background:#274569;
-}
-
-/* PANELS */
-
-.panel{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:100;
-    background:rgba(5,9,16,.98);
-    overflow:auto;
-    padding:35px;
-}
-
-.panel-inner{
-    max-width:1100px;
+    background:#e2a878;
     margin:auto;
 }
 
-.panel h1{
-    font-size:42px;
-    margin-bottom:25px;
+.body3d{
+    width:80px;
+    height:90px;
+    background:#5865f2;
+    margin:5px auto;
+    border-radius:12px;
 }
 
-.close{
-    position:fixed;
-    right:22px;
-    top:18px;
-    padding:11px 17px;
-    background:#e13d4c;
-    border-radius:8px;
+.legs{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+}
+
+.leg{
+    width:28px;
+    height:55px;
+    background:#222b42;
+    border-radius:7px;
 }
 
 /* SHOP */
@@ -272,158 +157,131 @@ button{
 .shop-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-    gap:18px;
+    gap:20px;
+    max-width:1100px;
+    margin:auto;
 }
 
-.shop-item{
-    background:#121d2d;
-    border:1px solid #2e415c;
-    padding:17px;
-    border-radius:14px;
+.item{
+    background:#111827;
+    border:1px solid #303a52;
+    border-radius:12px;
+    padding:18px;
     text-align:center;
 }
 
-.item-picture{
-    height:150px;
+.item-preview{
+    height:170px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:80px;
+    background:#0b101c;
     border-radius:10px;
-    background:
-      radial-gradient(circle,#35577e,#101925);
-    display:grid;
-    place-items:center;
-    font-size:65px;
-    margin-bottom:14px;
+    margin-bottom:15px;
 }
 
 .price{
     color:#ffd84d;
-    margin:8px;
-}
-
-.buy{
-    background:#358fff;
-    padding:9px 22px;
-    border-radius:7px;
+    font-weight:bold;
 }
 
 /* LOCKER */
 
-.locker-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
-}
-
-.locker-preview{
-    height:520px;
-    background:
-      radial-gradient(circle at 50% 35%,#34577f,transparent 35%),
-      #111b2b;
-    border:1px solid #30435e;
-    border-radius:18px;
-    display:grid;
-    place-items:center;
+.locker{
+    max-width:1000px;
+    margin:auto;
 }
 
 .loadout{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
 }
 
 .slot{
-    background:#141f30;
-    border:1px solid #2d405a;
-    padding:20px;
-    border-radius:10px;
-}
-
-.slot small{
-    display:block;
-    color:#7f91a9;
-    margin-bottom:8px;
+    background:#111827;
+    padding:25px;
+    border-radius:12px;
+    border:1px solid #303a52;
+    text-align:center;
 }
 
 /* SETTINGS */
 
-.setting{
+.settings{
     max-width:700px;
-    background:#131e2e;
-    border:1px solid #2d405a;
+    margin:auto;
+}
+
+.setting{
+    background:#111827;
+    margin:12px 0;
     padding:18px;
-    margin-bottom:12px;
     border-radius:10px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
-.setting input{
-    width:230px;
-}
-
-.setting select,
-.room-box input,
-.room-box select{
-    background:#1b2a40;
+select,input{
+    background:#080b12;
     color:white;
-    border:1px solid #3a4d68;
-    padding:10px;
-    border-radius:7px;
+    border:1px solid #343d53;
+    padding:9px;
+    border-radius:6px;
 }
 
-/* ROOMS */
+/* MODAL */
 
-.room-box{
-    max-width:700px;
-    background:#131e2e;
-    border:1px solid #30425b;
+.modal{
+    position:fixed;
+    inset:0;
+    background:#000b;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+}
+
+.modal-box{
+    width:min(500px,90%);
+    background:#111827;
+    border:1px solid #3c4964;
     padding:25px;
     border-radius:15px;
 }
 
-.room-row{
-    display:flex;
-    gap:10px;
-    margin-top:15px;
+.modal input{
+    width:100%;
+    margin:10px 0;
+    font-size:18px;
 }
 
-.room-row button{
-    background:#358fff;
-    padding:10px 20px;
-    border-radius:7px;
+.close{
+    float:right;
+    background:#252c3c;
 }
 
 /* GAME */
 
-#game{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:500;
-    background:#000;
+#gamePage{
+    padding:0;
+    height:calc(100vh - 70px);
+    background:#05070b;
 }
 
 #gameCanvas{
     width:100%;
     height:100%;
     display:block;
+    background:linear-gradient(#6aa8d8,#c7e5f2);
 }
 
-.game-top{
+.hud{
     position:absolute;
-    top:18px;
-    left:20px;
-    right:20px;
-    display:flex;
-    justify-content:space-between;
+    inset:70px 0 0 0;
     pointer-events:none;
-}
-
-.game-top button{
-    pointer-events:auto;
-    background:#e13d4c;
-    padding:10px 16px;
-    border-radius:8px;
 }
 
 .crosshair{
@@ -431,1237 +289,1154 @@ button{
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
-    font-size:28px;
+    font-size:30px;
 }
 
-.hud{
+.health{
     position:absolute;
-    left:20px;
-    bottom:20px;
+    left:25px;
+    bottom:25px;
     width:260px;
 }
 
 .bar{
-    width:100%;
     height:18px;
-    background:#101010;
-    border:2px solid white;
-    margin:4px 0 9px;
+    background:#222;
+    margin-top:7px;
+    border-radius:10px;
+    overflow:hidden;
 }
 
-.health{
+.hp{
     height:100%;
+    background:#e74c3c;
     width:100%;
-    background:#e83f4c;
 }
 
 .shield{
     height:100%;
+    background:#3498db;
     width:100%;
-    background:#318fff;
 }
 
-.build-hud{
+.controls{
     position:absolute;
     right:20px;
     bottom:20px;
-    background:rgba(5,10,17,.8);
+    background:#111a;
     padding:15px;
     border-radius:10px;
-    line-height:1.8;
 }
 
-@media(max-width:700px){
+.mode-select{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    max-width:1000px;
+    margin:auto;
+}
 
-    .nav button{
-        padding:8px;
-        font-size:11px;
-    }
+.mode{
+    background:#111827;
+    border:1px solid #303a52;
+    padding:25px;
+    border-radius:12px;
+}
 
-    .player-info{
-        display:none;
-    }
+.mode h3{
+    margin-top:0;
+}
 
-    .title{
-        font-size:42px;
-    }
-
-    .locker-grid{
-        grid-template-columns:1fr;
-    }
-
+.small{
+    color:#9da8bd;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOBBY ================= -->
+<header id="top">
+    <div class="logo">🎮 GameHub</div>
 
-<div id="lobby">
+    <div class="nav">
+        <button class="active" onclick="showPage('lobby',this)">Lobby</button>
+        <button onclick="showPage('shop',this)">Shop</button>
+        <button onclick="showPage('locker',this)">Locker</button>
+        <button onclick="showPage('modes',this)">Play</button>
+        <button onclick="showPage('settings',this)">Settings</button>
+    </div>
 
-<header class="top">
+    <div class="spacer"></div>
 
-<div class="logo">
-🎮 Game<span>Hub</span>
-</div>
-
-<nav class="nav">
-
-<button onclick="openPanel('shop')">🛍 Shop</button>
-<button onclick="openPanel('locker')">👕 Locker</button>
-<button onclick="openPanel('settings')">⚙ Settings</button>
-<button onclick="openPanel('rooms')">🔐 Rooms</button>
-
-</nav>
-
-<div class="player-info">
-
-<div>
-Player
-<br>
-<span style="color:#ffd84d">🪙 <span id="coins">1500</span></span>
-</div>
-
-<div class="player-icon">P</div>
-
-</div>
-
+    <div class="currency">🪙 <span id="coins">2500</span></div>
 </header>
 
 
-<div class="lobby-center">
+<!-- LOBBY -->
 
-<div class="season">
-GAMEHUB • SEASON 1
-</div>
+<section id="lobby" class="page active">
 
-<div class="title">
-READY TO <span>BUILD?</span>
-</div>
+    <div class="hero">
 
-<div class="subtitle">
-Build. Fight. Survive.
-</div>
+        <h1>GAMEHUB</h1>
 
+        <p>
+            Build. Fight. Survive.
+        </p>
 
-<div class="character">
+        <button class="play" onclick="showPage('modes')">
+            PLAY
+        </button>
 
-<div class="char-shadow"></div>
+        <div class="player-card">
 
-<div class="char-hair"></div>
-<div class="char-head"></div>
+            <div class="avatar">
 
-<div class="char-arm left"></div>
-<div class="char-arm right"></div>
+                <div class="head"></div>
 
-<div class="char-body"></div>
+                <div class="body3d"></div>
 
-<div class="char-leg left"></div>
-<div class="char-leg right"></div>
+                <div class="legs">
+                    <div class="leg"></div>
+                    <div class="leg"></div>
+                </div>
 
-</div>
+            </div>
 
+            <h2 id="playerName">Player</h2>
 
-<button class="play" onclick="startGame()">
-PLAY
-</button>
+            <p class="small">
+                Level 1 • Ready
+            </p>
 
+        </div>
 
-<div class="modes">
+    </div>
 
-<button class="mode selected"
-onclick="setMode(this,'Battle Royale')">
-🌎 Battle Royale
-</button>
+</section>
 
-<button class="mode"
-onclick="setMode(this,'1v1 Build Fight')">
-🧱 1v1 Build
-</button>
 
-<button class="mode"
-onclick="setMode(this,'1v1 Box Fight')">
-📦 1v1 Box
-</button>
+<!-- SHOP -->
 
-<button class="mode"
-onclick="setMode(this,'2v2 Box Fight')">
-👥 2v2 Box
-</button>
+<section id="shop" class="page">
 
-</div>
+    <h1>Daily Shop</h1>
 
-</div>
+    <p class="small">
+        Items rotate every day.
+    </p>
 
-</div>
+    <div class="shop-grid">
 
+        <div class="item">
+            <div class="item-preview">🥷</div>
+            <h2>Shadow Runner</h2>
+            <p class="price">🪙 800</p>
+            <button onclick="buy(800,'Shadow Runner')">BUY</button>
+        </div>
 
-<!-- ================= SHOP ================= -->
+        <div class="item">
+            <div class="item-preview">🤖</div>
+            <h2>Cyber Soldier</h2>
+            <p class="price">🪙 1200</p>
+            <button onclick="buy(1200,'Cyber Soldier')">BUY</button>
+        </div>
 
-<div class="panel" id="shop">
+        <div class="item">
+            <div class="item-preview">⚡</div>
+            <h2>Storm Pickaxe</h2>
+            <p class="price">🪙 500</p>
+            <button onclick="buy(500,'Storm Pickaxe')">BUY</button>
+        </div>
 
-<button class="close" onclick="closePanels()">CLOSE</button>
+        <div class="item">
+            <div class="item-preview">🔥</div>
+            <h2>Fire Emote</h2>
+            <p class="price">🪙 300</p>
+            <button onclick="buy(300,'Fire Emote')">BUY</button>
+        </div>
 
-<div class="panel-inner">
+        <div class="item">
+            <div class="item-preview">👽</div>
+            <h2>Alien Outfit</h2>
+            <p class="price">🪙 1000</p>
+            <button onclick="buy(1000,'Alien Outfit')">BUY</button>
+        </div>
 
-<h1>🛍 Daily Shop</h1>
+        <div class="item">
+            <div class="item-preview">🪽</div>
+            <h2>Sky Glider</h2>
+            <p class="price">🪙 700</p>
+            <button onclick="buy(700,'Sky Glider')">BUY</button>
+        </div>
 
-<p style="color:#8fa0b5;margin-bottom:25px">
-New original GameHub cosmetics.
-</p>
+    </div>
 
-<div class="shop-grid">
+</section>
 
-<div class="shop-item">
-<div class="item-picture">🧑‍🚀</div>
-<h3>Star Runner</h3>
-<div class="price">🪙 800</div>
-<button class="buy" onclick="buy(800,'Star Runner')">BUY</button>
-</div>
 
-<div class="shop-item">
-<div class="item-picture">🤖</div>
-<h3>Chrome Bot</h3>
-<div class="price">🪙 1200</div>
-<button class="buy" onclick="buy(1200,'Chrome Bot')">BUY</button>
-</div>
+<!-- LOCKER -->
 
-<div class="shop-item">
-<div class="item-picture">🥷</div>
-<h3>Shadow Strike</h3>
-<div class="price">🪙 1000</div>
-<button class="buy" onclick="buy(1000,'Shadow Strike')">BUY</button>
-</div>
+<section id="locker" class="page">
 
-<div class="shop-item">
-<div class="item-picture">⚡</div>
-<h3>Energy Pickaxe</h3>
-<div class="price">🪙 500</div>
-<button class="buy" onclick="buy(500,'Energy Pickaxe')">BUY</button>
-</div>
+    <div class="locker">
 
-<div class="shop-item">
-<div class="item-picture">🚀</div>
-<h3>Rocket Glider</h3>
-<div class="price">🪙 700</div>
-<button class="buy" onclick="buy(700,'Rocket Glider')">BUY</button>
-</div>
+        <h1>Locker</h1>
 
-<div class="shop-item">
-<div class="item-picture">💃</div>
-<h3>Victory Dance</h3>
-<div class="price">🪙 300</div>
-<button class="buy" onclick="buy(300,'Victory Dance')">BUY</button>
-</div>
+        <p class="small">
+            Customize your character.
+        </p>
 
-</div>
+        <div class="loadout">
 
-</div>
-</div>
+            <div class="slot">
+                <div style="font-size:70px">🥷</div>
+                <h3>Outfit</h3>
+                <button onclick="changeSkin()">CHANGE</button>
+            </div>
 
+            <div class="slot">
+                <div style="font-size:70px">⚡</div>
+                <h3>Pickaxe</h3>
+                <button>CHANGE</button>
+            </div>
 
-<!-- ================= LOCKER ================= -->
+            <div class="slot">
+                <div style="font-size:70px">🪽</div>
+                <h3>Glider</h3>
+                <button>CHANGE</button>
+            </div>
 
-<div class="panel" id="locker">
+            <div class="slot">
+                <div style="font-size:70px">🔥</div>
+                <h3>Emote</h3>
+                <button>CHANGE</button>
+            </div>
 
-<button class="close" onclick="closePanels()">CLOSE</button>
+        </div>
 
-<div class="panel-inner">
+    </div>
 
-<h1>👕 Locker</h1>
+</section>
 
-<div class="locker-grid">
 
-<div class="locker-preview">
+<!-- MODES -->
 
-<div class="character">
+<section id="modes" class="page">
 
-<div class="char-shadow"></div>
-<div class="char-hair"></div>
-<div class="char-head"></div>
-<div class="char-arm left"></div>
-<div class="char-arm right"></div>
-<div class="char-body"></div>
-<div class="char-leg left"></div>
-<div class="char-leg right"></div>
+    <h1>Play</h1>
 
-</div>
+    <div class="mode-select">
 
-</div>
+        <div class="mode">
+            <h3>🏝️ Battle Royale</h3>
+            <p class="small">
+                Fight other players and be the last player standing.
+            </p>
+            <button onclick="startGame('Battle Royale')">PLAY</button>
+        </div>
 
-<div class="loadout">
+        <div class="mode">
+            <h3>⚔️ 1v1 Build Fight</h3>
+            <p class="small">
+                Build ramps, walls and floors while fighting your opponent.
+            </p>
+            <button onclick="openRoom('1v1 Build Fight')">PLAY</button>
+        </div>
 
-<div class="slot">
-<small>OUTFIT</small>
-Default Runner
-</div>
+        <div class="mode">
+            <h3>📦 1v1 Box Fight</h3>
+            <p class="small">
+                Fast close-range building combat.
+            </p>
+            <button onclick="openRoom('1v1 Box Fight')">PLAY</button>
+        </div>
 
-<div class="slot">
-<small>PICKAXE</small>
-Energy Pickaxe
-</div>
+        <div class="mode">
+            <h3>👥 2v2 Box Fight</h3>
+            <p class="small">
+                Team up with a friend and fight another team.
+            </p>
+            <button onclick="openRoom('2v2 Box Fight')">PLAY</button>
+        </div>
 
-<div class="slot">
-<small>GLIDER</small>
-Rocket Glider
-</div>
+    </div>
 
-<div class="slot">
-<small>BACK BLING</small>
-None
-</div>
+    <br>
 
-<div class="slot">
-<small>EMOTE 1</small>
-Victory Dance
-</div>
+    <button onclick="openRoom('Private Match')">
+        🔒 CREATE / JOIN PRIVATE ROOM
+    </button>
 
-<div class="slot">
-<small>EMOTE 2</small>
-None
-</div>
+</section>
 
-</div>
 
-</div>
+<!-- SETTINGS -->
 
-</div>
-</div>
+<section id="settings" class="page">
 
+    <div class="settings">
 
-<!-- ================= SETTINGS ================= -->
+        <h1>Settings</h1>
 
-<div class="panel" id="settings">
+        <div class="setting">
+            <span>Mouse Sensitivity</span>
+            <input id="sens" type="range" min="1" max="100" value="50">
+        </div>
 
-<button class="close" onclick="closePanels()">CLOSE</button>
+        <div class="setting">
+            <span>Graphics</span>
 
-<div class="panel-inner">
+            <select>
+                <option>Low</option>
+                <option selected>Medium</option>
+                <option>High</option>
+                <option>Ultra</option>
+            </select>
+        </div>
 
-<h1>⚙ Settings</h1>
+        <div class="setting">
+            <span>Sound</span>
+            <input type="range" min="0" max="100" value="70">
+        </div>
 
-<div class="setting">
-<span>Mouse Sensitivity</span>
-<input type="range" min="1" max="100" value="50">
-</div>
+        <div class="setting">
+            <span>Music</span>
+            <input type="range" min="0" max="100" value="50">
+        </div>
 
-<div class="setting">
-<span>Graphics Quality</span>
-<select>
-<option>Low</option>
-<option selected>Medium</option>
-<option>High</option>
-<option>Ultra</option>
-</select>
-</div>
+        <div class="setting">
+            <span>Fullscreen</span>
+            <button onclick="fullscreen()">ENABLE</button>
+        </div>
 
-<div class="setting">
-<span>Master Volume</span>
-<input type="range" min="0" max="100" value="80">
-</div>
+        <div class="setting">
+            <span>Crosshair</span>
+            <select>
+                <option>Dot</option>
+                <option selected>Cross</option>
+                <option>Circle</option>
+            </select>
+        </div>
 
-<div class="setting">
-<span>Music Volume</span>
-<input type="range" min="0" max="100" value="50">
-</div>
+    </div>
 
-<div class="setting">
-<span>Fullscreen</span>
-<button onclick="document.documentElement.requestFullscreen()"
-style="background:#358fff;padding:10px;border-radius:7px">
-ENABLE
-</button>
-</div>
+</section>
 
-</div>
-</div>
 
+<!-- GAME -->
 
-<!-- ================= ROOMS ================= -->
+<section id="gamePage" class="page">
 
-<div class="panel" id="rooms">
+    <canvas id="gameCanvas"></canvas>
 
-<button class="close" onclick="closePanels()">CLOSE</button>
+    <div class="hud">
 
-<div class="panel-inner">
+        <div class="crosshair">+</div>
 
-<h1>🔐 Private Matches</h1>
+        <div class="health">
 
-<div class="room-box">
+            <div>❤️ HEALTH</div>
 
-<h2>Create Room</h2>
+            <div class="bar">
+                <div class="hp" id="hp"></div>
+            </div>
 
-<div class="room-row">
+            <div>🛡️ SHIELD</div>
 
-<select id="roomMode">
-<option>1v1 Build Fight</option>
-<option>1v1 Box Fight</option>
-<option>2v2 Box Fight</option>
-<option>Battle Royale</option>
-</select>
+            <div class="bar">
+                <div class="shield" id="shield"></div>
+            </div>
 
-<button onclick="createRoom()">CREATE</button>
+        </div>
 
-</div>
+        <div class="controls">
 
-<hr style="margin:25px 0;border-color:#304057">
+            <b>CONTROLS</b><br><br>
 
-<h2>Join Room</h2>
+            WASD — Move<br>
+            SHIFT — Sprint<br>
+            SPACE — Jump<br>
+            Mouse — Aim<br>
+            Left Click — Shoot<br>
+            Q — Build Mode<br>
+            1 — Wall<br>
+            2 — Floor<br>
+            3 — Ramp<br>
+            ESC — Exit
 
-<div class="room-row">
+        </div>
 
-<input id="roomCode"
-placeholder="Room code"
-maxlength="6">
+    </div>
 
-<button onclick="joinRoom()">JOIN</button>
+</section>
 
-</div>
 
-<p id="roomMessage"
-style="color:#51a7ff;margin-top:15px">
-</p>
+<!-- PRIVATE ROOM MODAL -->
 
-</div>
+<div id="roomModal" class="modal">
 
-</div>
+    <div class="modal-box">
 
-</div>
+        <button class="close" onclick="closeRoom()">X</button>
 
+        <h2 id="roomTitle">Private Match</h2>
 
-<!-- ================= 3D GAME ================= -->
+        <p>
+            Create a room or enter your friend's code.
+        </p>
 
-<div id="game">
+        <button onclick="createRoom()">
+            CREATE ROOM
+        </button>
 
-<div class="game-top">
+        <hr>
 
-<div>
-🎮 GAMEHUB • <span id="currentMode"></span>
-</div>
+        <input
+            id="roomCode"
+            placeholder="Enter room code"
+            maxlength="8"
+        >
 
-<button onclick="exitGame()">EXIT</button>
+        <button onclick="joinRoom()">
+            JOIN ROOM
+        </button>
 
-</div>
+        <p id="roomStatus" class="small"></p>
 
-<canvas id="gameCanvas"></canvas>
-
-<div class="crosshair">+</div>
-
-<div class="hud">
-
-<div>HEALTH</div>
-
-<div class="bar">
-<div class="health" id="health"></div>
-</div>
-
-<div>SHIELD</div>
-
-<div class="bar">
-<div class="shield" id="shield"></div>
-</div>
-
-</div>
-
-<div class="build-hud">
-
-<b>BUILD</b><br>
-Q = Build Mode<br>
-1 = Wall<br>
-2 = Floor<br>
-3 = Ramp<br>
-4 = Roof<br>
-E = Place<br>
-WASD = Move<br>
-SHIFT = Sprint<br>
-SPACE = Jump<br>
-CLICK = Shoot
-
-</div>
+    </div>
 
 </div>
 
 
 <script>
 
-/* =====================================================
-   GAMEHUB
-===================================================== */
+/* -------------------------
+   NAVIGATION
+------------------------- */
 
-let mode="Battle Royale";
+function showPage(id,button){
 
-let coins=1500;
+    document.querySelectorAll('.page')
+        .forEach(p=>p.classList.remove('active'));
 
-function setMode(button,newMode){
+    document.getElementById(id)
+        .classList.add('active');
 
-mode=newMode;
+    document.querySelectorAll('.nav button')
+        .forEach(b=>b.classList.remove('active'));
 
-document
-.querySelectorAll(".mode")
-.forEach(x=>x.classList.remove("selected"));
-
-button.classList.add("selected");
-
-}
-
-
-function openPanel(id){
-
-document
-.querySelectorAll(".panel")
-.forEach(x=>x.style.display="none");
-
-document.getElementById(id).style.display="block";
+    if(button)
+        button.classList.add('active');
 
 }
 
 
-function closePanels(){
+/* -------------------------
+   SHOP
+------------------------- */
 
-document
-.querySelectorAll(".panel")
-.forEach(x=>x.style.display="none");
+let coins =
+    Number(localStorage.getItem('gamehubCoins')) || 2500;
 
-}
-
-
-/* SHOP */
+document.getElementById('coins').textContent = coins;
 
 function buy(price,item){
 
-if(coins<price){
+    if(coins < price){
 
-alert("Not enough coins.");
+        alert('You do not have enough coins.');
 
-return;
+        return;
+    }
+
+    coins -= price;
+
+    localStorage.setItem('gamehubCoins',coins);
+
+    document.getElementById('coins').textContent = coins;
+
+    alert('Purchased ' + item + '!');
+}
+
+
+/* -------------------------
+   PLAYER
+------------------------- */
+
+let playerName =
+    localStorage.getItem('gamehubName') || 'Player';
+
+document.getElementById('playerName')
+    .textContent = playerName;
+
+
+function changeSkin(){
+
+    const skins=[
+        'Shadow Runner',
+        'Cyber Soldier',
+        'Alien',
+        'Storm Warrior'
+    ];
+
+    const selected =
+        prompt(
+            'Choose your skin:\n\n' +
+            skins.join('\n')
+        );
+
+    if(selected){
+
+        localStorage.setItem(
+            'gamehubSkin',
+            selected
+        );
+
+        alert(
+            'Equipped: ' + selected
+        );
+    }
+}
+
+
+/* -------------------------
+   ROOMS
+------------------------- */
+
+let selectedMode='';
+
+function openRoom(mode){
+
+    selectedMode=mode;
+
+    document.getElementById('roomTitle')
+        .textContent=mode;
+
+    document.getElementById('roomModal')
+        .style.display='flex';
 
 }
 
-coins-=price;
+function closeRoom(){
 
-document.getElementById("coins").textContent=coins;
-
-alert("Purchased "+item+"!");
+    document.getElementById('roomModal')
+        .style.display='none';
 
 }
-
-
-/* ROOMS */
 
 function createRoom(){
 
-const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    const code =
+        Math.random()
+        .toString(36)
+        .substring(2,8)
+        .toUpperCase();
 
-let code="";
+    document.getElementById('roomCode')
+        .value=code;
 
-for(let i=0;i<6;i++){
-
-code+=chars[
-Math.floor(Math.random()*chars.length)
-];
-
-}
-
-document.getElementById("roomCode").value=code;
-
-document.getElementById("roomMessage")
-.textContent=
-"Room created! Share "+code+" with your friends.";
+    document.getElementById('roomStatus')
+        .textContent=
+        'Your room code is '+
+        code+
+        '. Give it to your friend.';
 
 }
-
 
 function joinRoom(){
 
-let code=
-document.getElementById("roomCode")
-.value
-.toUpperCase()
-.trim();
+    const code =
+        document.getElementById('roomCode')
+        .value
+        .trim()
+        .toUpperCase();
 
-if(code.length!==6){
+    if(!code){
 
-document.getElementById("roomMessage")
-.textContent=
-"Enter a 6-character code.";
+        alert('Enter a room code.');
 
-return;
+        return;
+    }
 
-}
+    closeRoom();
 
-document.getElementById("roomMessage")
-.textContent=
-"Joining room "+code+"...";
+    startGame(selectedMode);
 
 }
 
 
-/* =====================================================
-   GAME ENGINE
-===================================================== */
+/* -------------------------
+   FULLSCREEN
+------------------------- */
 
-const canvas=
-document.getElementById("gameCanvas");
+function fullscreen(){
 
-const ctx=
-canvas.getContext("2d");
+    document.documentElement
+        .requestFullscreen?.();
 
-let W=innerWidth;
-let H=innerHeight;
-
-canvas.width=W;
-canvas.height=H;
-
-addEventListener("resize",()=>{
-
-W=innerWidth;
-H=innerHeight;
-
-canvas.width=W;
-canvas.height=H;
-
-});
+}
 
 
-const player={
+/* -------------------------
+   GAME
+------------------------- */
 
-x:0,
-y:0,
-z:10,
+const canvas =
+    document.getElementById('gameCanvas');
 
-velocityY:0,
+const ctx =
+    canvas.getContext('2d');
 
-yaw:0,
-pitch:0,
+let gameRunning=false;
 
-health:100,
-shield:100,
-
-ground:true
-
+let player={
+    x:0,
+    y:0,
+    z:0,
+    vx:0,
+    vy:0,
+    vz:0,
+    health:100,
+    shield:100
 };
 
-
-const keys={};
+let keys={};
 
 let buildMode=false;
-let selectedBuild="wall";
 
-const structures=[];
+let builds=[];
 
-const bullets=[];
+let bullets=[];
 
-const enemies=[];
+let enemies=[
+    {x:350,y:0,z:250,health:100},
+    {x:-300,y:0,z:450,health:100},
+    {x:100,y:0,z:650,health:100}
+];
 
+function resizeCanvas(){
 
-/* KEYS */
+    canvas.width=
+        window.innerWidth;
 
-addEventListener("keydown",e=>{
-
-keys[e.key.toLowerCase()]=true;
-
-if(e.code==="Space")
-keys.space=true;
-
-if(e.key.toLowerCase()==="q")
-buildMode=!buildMode;
-
-if(e.key==="1")
-selectedBuild="wall";
-
-if(e.key==="2")
-selectedBuild="floor";
-
-if(e.key==="3")
-selectedBuild="ramp";
-
-if(e.key==="4")
-selectedBuild="roof";
-
-if(e.key.toLowerCase()==="e")
-placeStructure();
-
-});
-
-
-addEventListener("keyup",e=>{
-
-keys[e.key.toLowerCase()]=false;
-
-if(e.code==="Space")
-keys.space=false;
-
-});
-
-
-/* MOUSE */
-
-let mouseLocked=false;
-
-canvas.addEventListener("click",()=>{
-
-if(!mouseLocked){
-
-canvas.requestPointerLock();
-
-}else{
-
-shoot();
+    canvas.height=
+        window.innerHeight-70;
 
 }
 
-});
+window.addEventListener(
+    'resize',
+    resizeCanvas
+);
+
+resizeCanvas();
 
 
-document.addEventListener("pointerlockchange",()=>{
+document.addEventListener(
+    'keydown',
+    e=>{
 
-mouseLocked=
-document.pointerLockElement===canvas;
+        keys[e.key.toLowerCase()]=true;
 
-});
+        if(e.key.toLowerCase()==='q')
+            buildMode=!buildMode;
 
+        if(e.key==='Escape')
+            stopGame();
 
-document.addEventListener("mousemove",e=>{
+    }
+);
 
-if(!mouseLocked)return;
-
-player.yaw-=e.movementX*.0025;
-
-player.pitch-=e.movementY*.002;
-
-player.pitch=
-Math.max(-1,
-Math.min(1,player.pitch));
-
-});
-
-
-/* MOVEMENT */
-
-function movePlayer(){
-
-let speed=keys.shift?.24:.13;
-
-let forward=0;
-let side=0;
-
-if(keys.w)forward++;
-if(keys.s)forward--;
-
-if(keys.a)side--;
-if(keys.d)side++;
-
-const sin=Math.sin(player.yaw);
-const cos=Math.cos(player.yaw);
-
-player.x+=(sin*forward+cos*side)*speed;
-
-player.z+=(cos*forward-sin*side)*speed;
+document.addEventListener(
+    'keyup',
+    e=>{
+        keys[e.key.toLowerCase()]=false;
+    }
+);
 
 
-/* jump */
+canvas.addEventListener(
+    'mousedown',
+    e=>{
 
-player.velocityY-=.012;
+        if(!gameRunning)
+            return;
 
-player.y+=player.velocityY;
+        if(buildMode){
 
-if(player.y<=0){
+            buildPiece();
 
-player.y=0;
-player.velocityY=0;
-player.ground=true;
+        }else{
 
-}
+            shoot();
 
-if(keys.space&&player.ground){
+        }
 
-player.velocityY=.23;
-player.ground=false;
+    }
+);
 
-}
+
+function startGame(mode){
+
+    showPage('gamePage');
+
+    gameRunning=true;
+
+    player.x=0;
+    player.y=0;
+    player.z=0;
+    player.health=100;
+    player.shield=100;
+
+    gameLoop();
 
 }
 
 
-/* PROJECT 3D */
+function stopGame(){
+
+    gameRunning=false;
+
+    showPage('lobby');
+
+}
+
+
+/* -------------------------
+   MOVEMENT
+------------------------- */
+
+function updatePlayer(){
+
+    let speed=
+        keys['shift'] ? 9 : 5;
+
+    player.vx=0;
+    player.vz=0;
+
+    if(keys['w'])
+        player.vz-=speed;
+
+    if(keys['s'])
+        player.vz+=speed;
+
+    if(keys['a'])
+        player.vx-=speed;
+
+    if(keys['d'])
+        player.vx+=speed;
+
+    player.x+=player.vx;
+    player.z+=player.vz;
+
+    if(keys[' '] && player.y<=0)
+        player.vy=14;
+
+    player.vy-=0.7;
+
+    player.y+=player.vy;
+
+    if(player.y<0){
+
+        player.y=0;
+        player.vy=0;
+
+    }
+
+}
+
+
+/* -------------------------
+   CAMERA / 3D PROJECTION
+------------------------- */
 
 function project(x,y,z){
 
-let dx=x-player.x;
-let dy=y-player.y;
-let dz=z-player.z;
+    const scale=
+        500/(z-player.z+500);
 
-const sin=Math.sin(player.yaw);
-const cos=Math.cos(player.yaw);
+    return {
 
-let cameraX=
-dx*cos-dz*sin;
+        x:
+            canvas.width/2+
+            (x-player.x)*scale,
 
-let cameraZ=
-dx*sin+dz*cos;
+        y:
+            canvas.height/2-
+            (y-player.y)*scale,
 
-if(cameraZ<=.1)
-return null;
+        scale
 
-let scale=700/cameraZ;
-
-return{
-
-x:W/2+cameraX*scale,
-
-y:H/2-dy*scale,
-
-scale:scale
-
-};
+    };
 
 }
 
 
-/* WORLD */
+/* -------------------------
+   WORLD
+------------------------- */
 
 function drawWorld(){
 
-/* SKY */
+    ctx.clearRect(
+        0,0,
+        canvas.width,
+        canvas.height
+    );
 
-let sky=ctx.createLinearGradient(0,0,0,H);
+    /* ground */
 
-sky.addColorStop(0,"#62a8db");
-sky.addColorStop(.5,"#a8d0e8");
-sky.addColorStop(.5,"#506f3d");
-sky.addColorStop(1,"#27371e");
+    ctx.fillStyle='#5c9149';
 
-ctx.fillStyle=sky;
-ctx.fillRect(0,0,W,H);
+    ctx.fillRect(
+        0,
+        canvas.height/2,
+        canvas.width,
+        canvas.height/2
+    );
 
+    /* grid */
 
-/* TERRAIN GRID */
+    ctx.strokeStyle='#ffffff18';
 
-ctx.strokeStyle="rgba(255,255,255,.12)";
-ctx.lineWidth=1;
+    for(let z=-500;z<3000;z+=100){
 
-for(let i=-30;i<=30;i++){
+        const a=project(-1500,0,z);
+        const b=project(1500,0,z);
 
-let a=project(i,0,-50);
-let b=project(i,0,50);
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.stroke();
 
-if(a&&b){
+    }
 
-ctx.beginPath();
-ctx.moveTo(a.x,a.y);
-ctx.lineTo(b.x,b.y);
-ctx.stroke();
+    for(let x=-1500;x<1500;x+=100){
 
-}
+        const a=project(x,0,-500);
+        const b=project(x,0,3000);
 
-}
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.stroke();
 
-
-/* DISTANT OBJECTS */
-
-for(let i=-20;i<=20;i+=4){
-
-let p=project(i,0,35);
-
-if(p){
-
-let size=Math.max(3,p.scale*.8);
-
-ctx.fillStyle="#365c38";
-
-ctx.beginPath();
-
-ctx.moveTo(p.x-size*2,p.y);
-ctx.lineTo(p.x,p.y-size*3);
-ctx.lineTo(p.x+size*2,p.y);
-
-ctx.fill();
-
-}
+    }
 
 }
 
 
-/* STRUCTURES */
+/* -------------------------
+   BUILDING
+------------------------- */
 
-structures
-.slice()
-.sort((a,b)=>{
+function buildPiece(){
 
-let da=
-(a.x-player.x)**2+
-(a.z-player.z)**2;
+    const type=
+        keys['1']?'wall':
+        keys['2']?'floor':
+        keys['3']?'ramp':
+        'wall';
 
-let db=
-(b.x-player.x)**2+
-(b.z-player.z)**2;
+    builds.push({
 
-return db-da;
+        x:
+            Math.round(player.x/100)*100,
 
-})
-.forEach(drawStructure);
+        y:
+            Math.round(player.y/100)*100,
 
+        z:
+            Math.round((player.z+400)/100)*100,
 
-/* ENEMIES */
+        type
 
-enemies.forEach(enemy=>{
-
-let p=
-project(
-enemy.x,
-enemy.y+1.2,
-enemy.z
-);
-
-if(!p)return;
-
-let size=
-Math.max(8,p.scale*1.3);
-
-ctx.fillStyle="#a83232";
-
-ctx.fillRect(
-p.x-size/2,
-p.y-size*2,
-size,
-size*2
-);
-
-ctx.fillStyle="#d99a70";
-
-ctx.beginPath();
-
-ctx.arc(
-p.x,
-p.y-size*2.35,
-size*.55,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-});
-
-
-/* PLAYER */
-
-let p=
-project(
-player.x,
-player.y+1.2,
-player.z
-);
-
-if(p){
-
-let size=
-Math.max(8,p.scale*1.3);
-
-ctx.fillStyle="#3378c8";
-
-ctx.fillRect(
-p.x-size/2,
-p.y-size*2,
-size,
-size*2
-);
-
-ctx.fillStyle="#d99a70";
-
-ctx.beginPath();
-
-ctx.arc(
-p.x,
-p.y-size*2.35,
-size*.55,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-}
+    });
 
 }
 
 
-/* BUILDING */
+function drawBuilds(){
 
-function placeStructure(){
+    builds.forEach(b=>{
 
-if(!buildMode)return;
+        const p=
+            project(
+                b.x,
+                b.y+50,
+                b.z
+            );
 
-let distance=5;
+        const size=
+            100*p.scale;
 
-let x=
-Math.round(
-player.x+
-Math.sin(player.yaw)*distance
-);
+        ctx.save();
 
-let z=
-Math.round(
-player.z+
-Math.cos(player.yaw)*distance
-);
+        ctx.strokeStyle='#8dd7ff';
+        ctx.fillStyle='#5eb7dc55';
 
-structures.push({
+        if(b.type==='wall'){
 
-x:x,
-z:z,
-type:selectedBuild
+            ctx.fillRect(
+                p.x-size/2,
+                p.y-size,
+                size,
+                size
+            );
 
-});
+            ctx.strokeRect(
+                p.x-size/2,
+                p.y-size,
+                size,
+                size
+            );
 
-}
+        }
 
+        if(b.type==='floor'){
 
-function drawStructure(s){
+            ctx.beginPath();
 
-let height=
-s.type==="floor"?.15:1.5;
+            ctx.moveTo(
+                p.x-size,
+                p.y
+            );
 
-let p=
-project(s.x,height,s.z);
+            ctx.lineTo(
+                p.x+size,
+                p.y
+            );
 
-if(!p)return;
+            ctx.lineTo(
+                p.x+size/2,
+                p.y+size/2
+            );
 
-let size=
-Math.max(8,p.scale*3);
+            ctx.lineTo(
+                p.x-size/2,
+                p.y+size/2
+            );
 
-if(s.type==="wall"){
+            ctx.closePath();
 
-ctx.fillStyle="#6c86a6";
+            ctx.fill();
+            ctx.stroke();
 
-ctx.fillRect(
-p.x-size/2,
-p.y-size,
-size,
-size
-);
+        }
 
-ctx.strokeStyle="#1b293b";
+        if(b.type==='ramp'){
 
-ctx.strokeRect(
-p.x-size/2,
-p.y-size,
-size,
-size
-);
+            ctx.beginPath();
 
-}
+            ctx.moveTo(
+                p.x-size,
+                p.y+size/2
+            );
 
-else if(s.type==="floor"){
+            ctx.lineTo(
+                p.x+size,
+                p.y
+            );
 
-ctx.fillStyle="#9b7240";
+            ctx.lineTo(
+                p.x+size,
+                p.y+size/2
+            );
 
-ctx.fillRect(
-p.x-size,
-p.y-size/5,
-size*2,
-size/2
-);
+            ctx.closePath();
 
-}
+            ctx.fill();
+            ctx.stroke();
 
-else if(s.type==="ramp"){
+        }
 
-ctx.fillStyle="#a77b43";
+        ctx.restore();
 
-ctx.beginPath();
-
-ctx.moveTo(p.x-size,p.y);
-ctx.lineTo(p.x,p.y-size);
-ctx.lineTo(p.x+size,p.y);
-
-ctx.closePath();
-ctx.fill();
-
-}
-
-else{
-
-ctx.fillStyle="#80613b";
-
-ctx.beginPath();
-
-ctx.moveTo(p.x-size,p.y-size*.4);
-ctx.lineTo(p.x,p.y-size);
-ctx.lineTo(p.x+size,p.y-size*.4);
-ctx.lineTo(p.x,p.y);
-
-ctx.closePath();
-ctx.fill();
-
-}
+    });
 
 }
 
 
-/* SHOOTING */
+/* -------------------------
+   SHOOTING
+------------------------- */
 
 function shoot(){
 
-bullets.push({
+    bullets.push({
 
-x:player.x,
-y:player.y+1.2,
-z:player.z,
+        x:player.x,
 
-angle:player.yaw,
+        y:player.y+60,
 
-life:100
+        z:player.z+100,
 
-});
+        life:60
+
+    });
 
 }
 
 
 function updateBullets(){
 
-bullets.forEach(b=>{
+    bullets.forEach(b=>{
 
-b.x+=
-Math.sin(b.angle)*.7;
+        b.z+=30;
+        b.life--;
 
-b.z+=
-Math.cos(b.angle)*.7;
+        enemies.forEach(enemy=>{
 
-b.life--;
+            const dx=
+                enemy.x-b.x;
 
-});
+            const dz=
+                enemy.z-b.z;
 
-for(let i=bullets.length-1;i>=0;i--){
+            const distance=
+                Math.sqrt(dx*dx+dz*dz);
 
-if(bullets[i].life<=0)
-bullets.splice(i,1);
+            if(distance<80){
 
-}
+                enemy.health-=25;
 
-}
+                b.life=0;
 
+            }
 
-/* DAMAGE */
+        });
 
-function damage(amount){
+    });
 
-if(player.shield>0){
-
-let absorbed=
-Math.min(player.shield,amount);
-
-player.shield-=absorbed;
-
-amount-=absorbed;
-
-}
-
-player.health-=amount;
-
-document.getElementById("health")
-.style.width=Math.max(0,player.health)+"%";
-
-document.getElementById("shield")
-.style.width=Math.max(0,player.shield)+"%";
-
-if(player.health<=0){
-
-alert("You were eliminated!");
-
-exitGame();
-
-}
+    bullets=
+        bullets.filter(
+            b=>b.life>0
+        );
 
 }
 
 
-/* TEST ENEMIES */
+function drawBullets(){
 
-function createEnemies(){
+    bullets.forEach(b=>{
 
-enemies.length=0;
+        const p=
+            project(b.x,b.y,b.z);
 
-for(let i=0;i<6;i++){
+        ctx.fillStyle='yellow';
 
-enemies.push({
+        ctx.beginPath();
 
-x:(Math.random()*30)-15,
-y:0,
-z:(Math.random()*30)-15
+        ctx.arc(
+            p.x,
+            p.y,
+            Math.max(2,8*p.scale),
+            0,
+            Math.PI*2
+        );
 
-});
+        ctx.fill();
 
-}
-
-}
-
-
-/* GAME LOOP */
-
-function loop(){
-
-if(
-document.getElementById("game")
-.style.display==="block"
-){
-
-movePlayer();
-updateBullets();
-
-ctx.clearRect(0,0,W,H);
-
-drawWorld();
-
-}
-
-requestAnimationFrame(loop);
-
-}
-
-loop();
-
-
-/* START */
-
-function startGame(){
-
-closePanels();
-
-document.getElementById("lobby")
-.style.display="none";
-
-document.getElementById("game")
-.style.display="block";
-
-document.getElementById("currentMode")
-.textContent=mode;
-
-player.x=0;
-player.y=0;
-player.z=10;
-
-player.health=100;
-player.shield=100;
-
-structures.length=0;
-
-createEnemies();
+    });
 
 }
 
 
-/* EXIT */
+/* -------------------------
+   ENEMIES
+------------------------- */
 
-function exitGame(){
+function drawEnemies(){
 
-document.exitPointerLock?.();
+    enemies.forEach(enemy=>{
 
-document.getElementById("game")
-.style.display="none";
+        if(enemy.health<=0)
+            return;
 
-document.getElementById("lobby")
-.style.display="block";
+        const p=
+            project(
+                enemy.x,
+                enemy.y+80,
+                enemy.z
+            );
+
+        const size=
+            70*p.scale;
+
+        ctx.fillStyle='#d94c4c';
+
+        ctx.fillRect(
+            p.x-size/2,
+            p.y-size,
+            size,
+            size
+        );
+
+        ctx.fillStyle='#222';
+
+        ctx.fillRect(
+            p.x-size/2,
+            p.y-size-12,
+            size,
+            6
+        );
+
+        ctx.fillStyle='#43e06f';
+
+        ctx.fillRect(
+            p.x-size/2,
+            p.y-size-12,
+            size*(enemy.health/100),
+            6
+        );
+
+    });
+
+}
+
+
+/* -------------------------
+   HUD
+------------------------- */
+
+function updateHUD(){
+
+    document.getElementById('hp')
+        .style.width=
+        player.health+'%';
+
+    document.getElementById('shield')
+        .style.width=
+        player.shield+'%';
+
+}
+
+
+/* -------------------------
+   LOOP
+------------------------- */
+
+function gameLoop(){
+
+    if(!gameRunning)
+        return;
+
+    updatePlayer();
+
+    updateBullets();
+
+    drawWorld();
+
+    drawBuilds();
+
+    drawEnemies();
+
+    drawBullets();
+
+    updateHUD();
+
+    requestAnimationFrame(gameLoop);
 
 }
 
