@@ -6,247 +6,202 @@
 <title>GameHub</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#080b12,#17233b);
+    color:white;
+    min-height:100vh;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background:
-        radial-gradient(circle at top right, #263b68 0%, transparent 35%),
-        linear-gradient(135deg, #080b12, #111827);
-    color: white;
-    min-height: 100vh;
+header{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    background:#080b12;
+    border-bottom:1px solid #293449;
 }
 
-header {
-    height: 75px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 30px;
-    background: rgba(8, 11, 18, .92);
-    border-bottom: 1px solid #293246;
-    position: sticky;
-    top: 0;
-    z-index: 20;
+.logo{
+    font-size:28px;
+    font-weight:900;
 }
 
-.logo {
-    font-size: 27px;
-    font-weight: 900;
-    letter-spacing: 1px;
+.logo span{color:#3b9cff}
+
+nav button{
+    background:transparent;
+    color:white;
+    border:0;
+    padding:10px 15px;
+    cursor:pointer;
 }
 
-.logo span {
-    color: #4da3ff;
+.hero{
+    padding:60px 7% 35px;
 }
 
-nav {
-    display: flex;
-    gap: 10px;
+.hero h1{
+    font-size:clamp(45px,7vw,80px);
+    line-height:.9;
 }
 
-nav button {
-    border: 0;
-    background: transparent;
-    color: #cbd5e1;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
+.hero h1 span{color:#3b9cff}
+
+.hero p{
+    color:#9ca9bd;
+    font-size:18px;
+    margin-top:20px;
+    max-width:650px;
+    line-height:1.5;
 }
 
-nav button:hover {
-    background: #1e293b;
-    color: white;
+.section{
+    padding:30px 7% 60px;
 }
 
-.hero {
-    padding: 55px 7% 35px;
+.title{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:22px;
 }
 
-.hero h1 {
-    font-size: clamp(40px, 6vw, 75px);
-    line-height: .95;
-    margin-bottom: 18px;
+.games{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
 }
 
-.hero h1 span {
-    color: #4da3ff;
+.card{
+    background:#111a2b;
+    border:1px solid #2b3850;
+    border-radius:15px;
+    padding:22px;
+    min-height:225px;
+    transition:.2s;
 }
 
-.hero p {
-    color: #aab4c5;
-    font-size: 18px;
-    max-width: 700px;
-    line-height: 1.5;
+.card:hover{
+    transform:translateY(-4px);
+    border-color:#3b9cff;
 }
 
-.section {
-    padding: 25px 7% 60px;
+.icon{
+    width:58px;
+    height:58px;
+    border-radius:13px;
+    background:#202d44;
+    display:grid;
+    place-items:center;
+    font-size:30px;
+    margin-bottom:16px;
 }
 
-.section-title {
-    font-size: 28px;
-    margin-bottom: 22px;
+.card h2{
+    font-size:21px;
+    margin-bottom:9px;
 }
 
-.games {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
-    gap: 18px;
+.card p{
+    color:#8e9bb0;
+    min-height:50px;
+    line-height:1.4;
+    margin-bottom:16px;
 }
 
-.card {
-    background: linear-gradient(145deg, #151c2c, #0e1420);
-    border: 1px solid #293449;
-    border-radius: 16px;
-    padding: 22px;
-    min-height: 230px;
-    transition: .2s;
-    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+button.play{
+    border:0;
+    border-radius:8px;
+    padding:11px 18px;
+    background:#3289ff;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    border-color: #4da3ff;
+button.play:hover{
+    background:#1e72df;
 }
 
-.icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 14px;
-    background: #202c42;
-    display: grid;
-    place-items: center;
-    font-size: 31px;
-    margin-bottom: 18px;
+.room{
+    max-width:750px;
+    background:#0d1524;
+    border:1px solid #29374f;
+    border-radius:15px;
+    padding:25px;
 }
 
-.card h3 {
-    font-size: 21px;
-    margin-bottom: 9px;
+.room p{
+    color:#8e9bb0;
+    margin:10px 0 18px;
 }
 
-.card p {
-    color: #8995aa;
-    min-height: 45px;
-    line-height: 1.35;
-    margin-bottom: 17px;
+.room-controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
-.play {
-    border: 0;
-    border-radius: 9px;
-    padding: 11px 17px;
-    background: #3289ff;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+input,select{
+    background:#18243a;
+    border:1px solid #34445f;
+    color:white;
+    padding:12px;
+    border-radius:8px;
 }
 
-.play:hover {
-    background: #1f75e8;
+#status{
+    margin-top:15px;
+    color:#55a9ff;
 }
 
-.external {
-    background: #334155;
+footer{
+    border-top:1px solid #293449;
+    padding:25px;
+    text-align:center;
+    color:#68758b;
 }
 
-.room-box {
-    background: #0d1420;
-    border: 1px solid #293449;
-    border-radius: 16px;
-    padding: 25px;
-    max-width: 700px;
-    margin-bottom: 30px;
+/* GAME WINDOW */
+
+#gameWindow{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#05070b;
+    z-index:100;
 }
 
-.room-box h2 {
-    margin-bottom: 8px;
+#gameCanvas{
+    width:100%;
+    height:100%;
+    display:block;
 }
 
-.room-box p {
-    color: #8995aa;
-    margin-bottom: 18px;
+#close{
+    position:absolute;
+    right:20px;
+    top:20px;
+    z-index:101;
+    background:#ef4444;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.room-controls {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-input, select {
-    background: #182235;
-    color: white;
-    border: 1px solid #34415a;
-    border-radius: 8px;
-    padding: 12px;
-    outline: none;
-}
-
-input:focus, select:focus {
-    border-color: #4da3ff;
-}
-
-footer {
-    border-top: 1px solid #293246;
-    padding: 25px 7%;
-    color: #68758b;
-    text-align: center;
-}
-
-#gameScreen {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    background: #05070b;
-}
-
-#gameScreen iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-#closeGame {
-    position: fixed;
-    right: 20px;
-    top: 20px;
-    z-index: 101;
-    border: 0;
-    border-radius: 8px;
-    background: #ef4444;
-    color: white;
-    padding: 11px 17px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-@media(max-width:700px) {
-    header {
-        padding: 0 15px;
-    }
-
-    nav button {
-        padding: 8px;
-        font-size: 13px;
-    }
-
-    .hero {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .section {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+#gameTitle{
+    position:absolute;
+    left:20px;
+    top:20px;
+    z-index:101;
+    font-size:20px;
+    font-weight:bold;
 }
 </style>
 </head>
@@ -257,356 +212,560 @@ footer {
     <div class="logo">🎮 Game<span>Hub</span></div>
 
     <nav>
-        <button onclick="scrollToGames()">Games</button>
-        <button onclick="scrollToRooms()">Rooms</button>
+        <button onclick="games.scrollIntoView({behavior:'smooth'})">
+            Games
+        </button>
+
+        <button onclick="rooms.scrollIntoView({behavior:'smooth'})">
+            Rooms
+        </button>
     </nav>
 </header>
 
 <section class="hero">
-    <h1>PLAY.<br><span>BUILD.</span><br>FIGHT.</h1>
 
-    <p>
-        Your own browser gaming hub featuring battle royale,
-        build fights, box fights, multiplayer games, and more.
-    </p>
+<h1>
+PLAY.<br>
+<span>BUILD.</span><br>
+FIGHT.
+</h1>
+
+<p>
+GameHub is your browser gaming hub with build fights,
+box fights, battle royale, multiplayer games and more.
+</p>
+
 </section>
+
 
 <section class="section" id="rooms">
 
-    <div class="section-title">🔐 Private Multiplayer Rooms</div>
+<div class="title">🔐 Private Rooms</div>
 
-    <div class="room-box">
+<div class="room">
 
-        <h2>Create or Join a Match</h2>
+<h2>Create or Join a Match</h2>
 
-        <p>
-            Create a private room and give your friends the
-            room code so they can join from their computers.
-        </p>
+<p>
+Choose a mode and create a room for your friends.
+The multiplayer server will be connected when we deploy it.
+</p>
 
-        <div class="room-controls">
+<div class="room-controls">
 
-            <select id="mode">
-                <option value="battle-royale">Battle Royale</option>
-                <option value="1v1-build">1v1 Build Fight</option>
-                <option value="box-fight">1v1 Box Fight</option>
-                <option value="2v2-box">2v2 Box Fight</option>
-            </select>
+<select id="mode">
 
-            <button class="play" onclick="createRoom()">
-                Create Room
-            </button>
+<option value="battle">🌎 Battle Royale</option>
 
-            <input
-                id="roomCode"
-                maxlength="6"
-                placeholder="ROOM CODE"
-            >
+<option value="build1v1">🧱 1v1 Build Fight</option>
 
-            <button class="play" onclick="joinRoom()">
-                Join Room
-            </button>
+<option value="box1v1">📦 1v1 Box Fight</option>
 
-        </div>
+<option value="box2v2">👥 2v2 Box Fight</option>
 
-        <p id="roomStatus" style="margin-top:15px;"></p>
+</select>
 
-    </div>
+<button class="play" onclick="createRoom()">
+CREATE ROOM
+</button>
 
-</section>
+<input
+id="roomCode"
+maxlength="6"
+placeholder="ROOM CODE">
 
-<section class="section" id="games">
-
-    <div class="section-title">🔥 Featured Games</div>
-
-    <div class="games">
-
-        <div class="card">
-            <div class="icon">🌎</div>
-            <h3>Battle Royale</h3>
-            <p>
-                Large multiplayer survival battle with
-                building, weapons and the shrinking zone.
-            </p>
-            <button class="play" onclick="startGame('battle-royale')">
-                PLAY
-            </button>
-        </div>
-
-        <div class="card">
-            <div class="icon">🧱</div>
-            <h3>1v1 Build Fight</h3>
-            <p>
-                Fight another player using walls,
-                ramps, floors and roofs.
-            </p>
-            <button class="play" onclick="startGame('1v1-build')">
-                PLAY
-            </button>
-        </div>
-
-        <div class="card">
-            <div class="icon">📦</div>
-            <h3>1v1 Box Fight</h3>
-            <p>
-                Build, edit and fight inside a compact
-                combat arena.
-            </p>
-            <button class="play" onclick="startGame('box-fight')">
-                PLAY
-            </button>
-        </div>
-
-        <div class="card">
-            <div class="icon">👥</div>
-            <h3>2v2 Box Fight</h3>
-            <p>
-                Team up with a friend and battle another
-                two-player team.
-            </p>
-            <button class="play" onclick="startGame('2v2-box')">
-                PLAY
-            </button>
-        </div>
-
-        <div class="card">
-            <div class="icon">🔫</div>
-            <h3>TOSIOS</h3>
-            <p>
-                Fast-paced multiplayer browser shooter.
-            </p>
-            <button class="play external" onclick="openExternal('https://tosios.online/')">
-                PLAY
-            </button>
-        </div>
-
-        <div class="card">
-            <div class="icon">🐍</div>
-            <h3>Snake</h3>
-            <p>
-                Classic arcade game built directly into
-                GameHub.
-            </p>
-            <button class="play" onclick="startSnake()">
-                PLAY
-            </button>
-        </div>
-
-    </div>
-</section>
-
-<footer>
-    GameHub • Original browser gaming project
-</footer>
-
-<div id="gameScreen">
-
-    <button id="closeGame" onclick="closeGame()">
-        ✕ EXIT
-    </button>
-
-    <iframe
-        id="gameFrame"
-        allow="fullscreen; autoplay; gamepad"
-        allowfullscreen>
-    </iframe>
+<button class="play" onclick="joinRoom()">
+JOIN
+</button>
 
 </div>
 
+<div id="status"></div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="games">
+
+<div class="title">🔥 Games</div>
+
+<div class="games">
+
+
+<!-- BATTLE ROYALE -->
+
+<div class="card">
+
+<div class="icon">🌎</div>
+
+<h2>Battle Royale</h2>
+
+<p>
+Original 3D battle-royale style game with
+building and weapons.
+</p>
+
+<button class="play"
+onclick="launchGame('Battle Royale')">
+PLAY
+</button>
+
+</div>
+
+
+<!-- BUILD FIGHT -->
+
+<div class="card">
+
+<div class="icon">🧱</div>
+
+<h2>1v1 Build Fight</h2>
+
+<p>
+Build ramps, walls and floors while fighting
+another player.
+</p>
+
+<button class="play"
+onclick="launchGame('1v1 Build Fight')">
+PLAY
+</button>
+
+</div>
+
+
+<!-- BOX FIGHT -->
+
+<div class="card">
+
+<div class="icon">📦</div>
+
+<h2>1v1 Box Fight</h2>
+
+<p>
+Fast close-range building and editing battles.
+</p>
+
+<button class="play"
+onclick="launchGame('1v1 Box Fight')">
+PLAY
+</button>
+
+</div>
+
+
+<!-- 2V2 -->
+
+<div class="card">
+
+<div class="icon">👥</div>
+
+<h2>2v2 Box Fight</h2>
+
+<p>
+Team up with a friend and fight another team.
+</p>
+
+<button class="play"
+onclick="launchGame('2v2 Box Fight')">
+PLAY
+</button>
+
+</div>
+
+
+<!-- TOSIOS -->
+
+<div class="card">
+
+<div class="icon">🔫</div>
+
+<h2>TOSIOS</h2>
+
+<p>
+Fast-paced multiplayer browser shooter.
+</p>
+
+<button class="play"
+onclick="window.open('https://tosios.online/','_blank')">
+PLAY
+</button>
+
+</div>
+
+
+<!-- SNAKE -->
+
+<div class="card">
+
+<div class="icon">🐍</div>
+
+<h2>Snake</h2>
+
+<p>
+Classic arcade game built into GameHub.
+</p>
+
+<button class="play"
+onclick="launchSnake()">
+PLAY
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+GameHub • Original gaming project
+</footer>
+
+
+<!-- GAME SCREEN -->
+
+<div id="gameWindow">
+
+<div id="gameTitle"></div>
+
+<button id="close" onclick="closeGame()">
+✕ EXIT
+</button>
+
+<canvas id="gameCanvas"></canvas>
+
+</div>
+
+
 <script>
 
-const gameScreen = document.getElementById("gameScreen");
-const gameFrame = document.getElementById("gameFrame");
-const roomStatus = document.getElementById("roomStatus");
+const gameWindow =
+document.getElementById("gameWindow");
 
-function scrollToGames() {
-    document.getElementById("games")
-        .scrollIntoView({ behavior: "smooth" });
+const canvas =
+document.getElementById("gameCanvas");
+
+const ctx =
+canvas.getContext("2d");
+
+const title =
+document.getElementById("gameTitle");
+
+const status =
+document.getElementById("status");
+
+
+/* =========================
+   GAME LAUNCHER
+========================= */
+
+function launchGame(mode){
+
+gameWindow.style.display="block";
+
+title.textContent=mode;
+
+resize();
+
+startPrototype(mode);
+
 }
 
-function scrollToRooms() {
-    document.getElementById("rooms")
-        .scrollIntoView({ behavior: "smooth" });
+
+function closeGame(){
+
+gameWindow.style.display="none";
+
 }
 
-function openExternal(url) {
-    window.open(url, "_blank");
+
+function resize(){
+
+canvas.width=window.innerWidth;
+
+canvas.height=window.innerHeight;
+
 }
 
-/*
-    Multiplayer game launcher.
+window.addEventListener("resize",resize);
 
-    The actual 3D game will be loaded by game.js.
-*/
-function startGame(mode) {
 
-    gameScreen.style.display = "block";
+/* =========================
+   TEMPORARY GAME SCREEN
+========================= */
 
-    /*
-       For now this loads a local game page.
+function startPrototype(mode){
 
-       Once the 3D game files are connected,
-       game.js will handle the actual gameplay.
-    */
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
 
-    gameFrame.src =
-        "game.html?mode=" +
-        encodeURIComponent(mode);
+ctx.fillStyle="#18243a";
+
+ctx.fillRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+ctx.fillStyle="white";
+
+ctx.textAlign="center";
+
+ctx.font="bold 42px Arial";
+
+ctx.fillText(
+mode,
+canvas.width/2,
+canvas.height/2-50
+);
+
+ctx.font="20px Arial";
+
+ctx.fillStyle="#9ca9bd";
+
+ctx.fillText(
+"3D multiplayer game is being connected here.",
+canvas.width/2,
+canvas.height/2
+);
+
+ctx.fillText(
+"WASD • Mouse • Space • Build",
+canvas.width/2,
+canvas.height/2+40
+);
+
+ctx.textAlign="left";
+
 }
 
-function closeGame() {
-    gameFrame.src = "";
-    gameScreen.style.display = "none";
+
+/* =========================
+   ROOMS
+========================= */
+
+function randomCode(){
+
+const chars=
+"ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+let code="";
+
+for(let i=0;i<6;i++){
+
+code+=chars[
+Math.floor(
+Math.random()*chars.length
+)
+];
+
 }
 
-/*
-    Room system.
-    These functions are ready for the multiplayer
-    WebSocket server.
-*/
+return code;
 
-let socket = null;
-
-function connectServer() {
-
-    /*
-       IMPORTANT:
-       Replace this with your multiplayer server address
-       once server.js is deployed.
-
-       Example:
-       wss://your-server.example.com
-    */
-
-    const SERVER_URL =
-        window.GAMEHUB_SERVER || "";
-
-    if (!SERVER_URL) {
-        roomStatus.textContent =
-            "Multiplayer server isn't connected yet. The room system will work after server.js is deployed.";
-        return null;
-    }
-
-    socket = new WebSocket(SERVER_URL);
-
-    socket.onopen = () => {
-        roomStatus.textContent =
-            "Connected to multiplayer server!";
-    };
-
-    socket.onclose = () => {
-        roomStatus.textContent =
-            "Disconnected from multiplayer server.";
-    };
-
-    socket.onerror = () => {
-        roomStatus.textContent =
-            "Could not connect to multiplayer server.";
-    };
-
-    socket.onmessage = event => {
-
-        const data = JSON.parse(event.data);
-
-        if (data.type === "roomCreated") {
-
-            roomStatus.textContent =
-                "Room created! Code: " +
-                data.code;
-
-            document.getElementById("roomCode")
-                .value = data.code;
-        }
-
-        if (data.type === "joinedRoom") {
-
-            roomStatus.textContent =
-                "Joined room " +
-                data.code +
-                " • Team " +
-                data.team;
-        }
-
-        if (data.type === "error") {
-
-            roomStatus.textContent =
-                data.message;
-        }
-    };
-
-    return socket;
 }
 
-function createRoom() {
 
-    const mode =
-        document.getElementById("mode").value;
+function createRoom(){
 
-    if (!socket) {
+const code=randomCode();
 
-        if (!connectServer()) return;
+document.getElementById(
+"roomCode"
+).value=code;
 
-        setTimeout(() => {
+status.textContent=
+"Room created: "+code+
+" — multiplayer server will connect here.";
 
-            socket.send(JSON.stringify({
-                type: "createRoom",
-                mode
-            }));
-
-        }, 500);
-
-        return;
-    }
-
-    socket.send(JSON.stringify({
-        type: "createRoom",
-        mode
-    }));
 }
 
-function joinRoom() {
 
-    const code =
-        document.getElementById("roomCode")
-            .value
-            .trim()
-            .toUpperCase();
+function joinRoom(){
 
-    if (code.length !== 6) {
+const code=
+document.getElementById(
+"roomCode"
+).value
+.trim()
+.toUpperCase();
 
-        roomStatus.textContent =
-            "Enter a 6-character room code.";
+if(code.length!==6){
 
-        return;
-    }
+status.textContent=
+"Please enter a 6-character room code.";
 
-    if (!socket) {
+return;
 
-        if (!connectServer()) return;
-
-        setTimeout(() => {
-
-            socket.send(JSON.stringify({
-                type: "joinRoom",
-                code
-            }));
-
-        }, 500);
-
-        return;
-    }
-
-    socket.send(JSON.stringify({
-        type: "joinRoom",
-        code
-    }));
 }
 
-function startSnake() {
+status.textContent=
+"Joining room "+code+
+"... multiplayer server will connect here.";
 
-    alert(
-        "Snake will be added to the local GameHub game collection."
-    );
+}
+
+
+/* =========================
+   SNAKE
+========================= */
+
+function launchSnake(){
+
+gameWindow.style.display="block";
+
+title.textContent="Snake";
+
+resize();
+
+let snake=[
+{x:10,y:10}
+];
+
+let food={
+x:15,
+y:10
+};
+
+let dx=1;
+let dy=0;
+
+document.onkeydown=function(e){
+
+if(e.key==="ArrowUp" && dy===0){
+dx=0;
+dy=-1;
+}
+
+if(e.key==="ArrowDown" && dy===0){
+dx=0;
+dy=1;
+}
+
+if(e.key==="ArrowLeft" && dx===0){
+dx=-1;
+dy=0;
+}
+
+if(e.key==="ArrowRight" && dx===0){
+dx=1;
+dy=0;
+}
+
+};
+
+function draw(){
+
+const size=25;
+
+ctx.fillStyle="#07101d";
+
+ctx.fillRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+const cols=
+Math.floor(canvas.width/size);
+
+const rows=
+Math.floor(canvas.height/size);
+
+let head={
+x:snake[0].x+dx,
+y:snake[0].y+dy
+};
+
+if(
+head.x<0 ||
+head.y<0 ||
+head.x>=cols ||
+head.y>=rows ||
+snake.some(
+p=>p.x===head.x&&p.y===head.y
+)
+){
+
+snake=[
+{x:Math.floor(cols/2),
+ y:Math.floor(rows/2)}
+];
+
+dx=1;
+dy=0;
+
+return;
+
+}
+
+snake.unshift(head);
+
+if(
+head.x===food.x &&
+head.y===food.y
+){
+
+food={
+x:Math.floor(Math.random()*cols),
+y:Math.floor(Math.random()*rows)
+};
+
+}else{
+
+snake.pop();
+
+}
+
+ctx.fillStyle="#3b9cff";
+
+snake.forEach(p=>{
+
+ctx.fillRect(
+p.x*size,
+p.y*size,
+size-2,
+size-2
+);
+
+});
+
+ctx.fillStyle="#ef4444";
+
+ctx.fillRect(
+food.x*size,
+food.y*size,
+size-2,
+size-2
+);
+
+}
+
+const interval=setInterval(draw,100);
+
+const oldClose=closeGame;
+
+window.closeGame=function(){
+
+clearInterval(interval);
+
+document.onkeydown=null;
+
+gameWindow.style.display="none";
+
+window.closeGame=oldClose;
+
+};
+
 }
 
 </script>
